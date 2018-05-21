@@ -17,7 +17,7 @@ public:
     // a selector callback
     void menuCloseCallback(cocos2d::Ref* pSender);
 
-	GameChar *getChar() { return &mainCharacter; };
+
 
 	virtual void onKeyPressed(EventKeyboard::KeyCode, Event*);
 	virtual void onKeyReleased(EventKeyboard::KeyCode, Event*);

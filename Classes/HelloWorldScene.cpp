@@ -6,16 +6,17 @@ USING_NS_CC;
 
 Scene* HelloWorld::createScene()
 {
-	// 'scene' is an autorelease object
-	auto scene = HelloWorld::create();
+	auto scene = Scene::createWithPhysics();
 
-	//// 'layer' is an autorelease object
-	//auto layer = HelloWorld::create();
+	scene->getPhysicsWorld()->setGravity(Vec2(0, -98));
 
-	//// add layer as a child to scene
-	//scene->addChild(layer, 999);
+	//
+	scene->getPhysicsWorld()->setDebugDrawMask(0xffff);
 
-	return scene;
+	auto layer = HelloWorld::create();
+	scene->addChild(layer);
+
+    return HelloWorld::create();
 }
 
 // Print useful error message instead of segfaulting when files are not there.
@@ -30,7 +31,7 @@ bool HelloWorld::init()
 {
     //////////////////////////////
     // 1. super init first
-    if ( !Scene::init() )
+    if ( !Scene::initWithPhysics() )
     {
         return false;
     }
@@ -55,7 +56,7 @@ bool HelloWorld::init()
 	auto sprite = Sprite::create("ZigzagGrass_Mud_Round.png");
 
 	// Load Main Sprite
-	mainCharacter.Init("Blue_Front1.png", "mainSprite", 100, (visibleSize.height - playingSize.height));
+	mainCharacter.Init("Blue_Front1.png", "mainSprite", 100, (visibleSize.height - playingSize.height), 0);
 	//auto mainSprite = Sprite::create("Blue_Front1.png");
 	//mainSprite->setAnchorPoint(Vec2(0, 0));
 	//mainSprite->setPosition(100, (visibleSize.height - playingSize.height));
@@ -64,8 +65,6 @@ bool HelloWorld::init()
 	// Set anchor point and position of object
 	sprite->setAnchorPoint(Vec2::ZERO);
 	//sprite->setPosition(0, 0);
-
-	
 
 	// Add object into the node container
 	int loopSize = std::ceil(visibleSize.width / sprite->getContentSize().width);
@@ -78,6 +77,11 @@ bool HelloWorld::init()
 		newNode->setAnchorPoint(Vec2::ZERO);
 		newNode->setPosition(sX, sY);
 		sX += newNode->getContentSize().width;
+		
+		auto physicsBody = PhysicsBody::createBox(Size(newNode->getContentSize().width, newNode->getContentSize().height),
+			PhysicsMaterial(1.0f, 0.0f, 0.0f));
+		physicsBody->setDynamic(false);
+		newNode->addComponent(physicsBody);
 
 		nodeItems->addChild(newNode, 0);
 	}
@@ -218,11 +222,17 @@ void HelloWorld::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 {
 	switch (keyCode)
 	{
-	case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
+	/*case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
 		mainCharacter.MoveChar(EAction::eRight);
 		break;
 	case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
 		mainCharacter.MoveChar(EAction::eLeft);
+		break;*/
+	case EventKeyboard::KeyCode::KEY_A:
+		mainCharacter.RotateCharByDir(EAction::eRight);
+		break;
+	case EventKeyboard::KeyCode::KEY_D:
+		mainCharacter.RotateCharByDir(EAction::eLeft);
 		break;
 	default:
 		break;
@@ -239,6 +249,8 @@ void HelloWorld::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event)
 
 void HelloWorld::onMouseMove(Event * mouse)
 {
+	EventMouse* eventMouse = static_cast<EventMouse*>(mouse);
+	mainCharacter.SetCharAim(eventMouse->getLocationInView());
 }
 
 void HelloWorld::onMouseUp(Event * mouse)
