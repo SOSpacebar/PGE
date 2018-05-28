@@ -6,17 +6,17 @@ USING_NS_CC;
 
 Scene* HelloWorld::createScene()
 {
-	auto scene = Scene::createWithPhysics();
+	auto scene = HelloWorld::create();
 
-	scene->getPhysicsWorld()->setGravity(Vec2(0, -98));
+	//scene->getPhysicsWorld()->setGravity(Vec2(0, -98));
 
-	//
-	scene->getPhysicsWorld()->setDebugDrawMask(0xffff);
+	////
+	//scene->getPhysicsWorld()->setDebugDrawMask(0xffff);
 
-	auto layer = HelloWorld::create();
-	scene->addChild(layer);
+	//auto layer = HelloWorld::create();
+	//scene->addChild(layer);
 
-    return HelloWorld::create();
+    return scene;
 }
 
 // Print useful error message instead of segfaulting when files are not there.
@@ -35,6 +35,14 @@ bool HelloWorld::init()
     {
         return false;
     }
+
+	//GRAVITY
+	this->getPhysicsWorld()->setGravity(Vec2(0, -98));
+
+	//
+	this->getPhysicsWorld()->setDebugDrawMask(0xffff);
+
+
 
 	this->scheduleUpdate();
 
@@ -56,7 +64,10 @@ bool HelloWorld::init()
 	auto sprite = Sprite::create("ZigzagGrass_Mud_Round.png");
 
 	// Load Main Sprite
-	mainCharacter.Init("Blue_Front1.png", "mainSprite", 100, (visibleSize.height - playingSize.height), 0);
+	mainCharacter.Init("MainCannon.png", "mainSprite", 100, (visibleSize.height - playingSize.height), 0);
+	// Loading Bullet Sprites
+	Bullet.Init("Bullet.png", "Bullets", 100, (visibleSize.height - playingSize.height), 0);
+
 	//auto mainSprite = Sprite::create("Blue_Front1.png");
 	//mainSprite->setAnchorPoint(Vec2(0, 0));
 	//mainSprite->setPosition(100, (visibleSize.height - playingSize.height));
@@ -88,6 +99,8 @@ bool HelloWorld::init()
 
 	// Add mainSprite to moveable
 	moveableItems->addChild(mainCharacter.getSprite(), 1);
+	// Add Bullets to Movable
+	moveableItems->addChild(Bullet.getSprite(), 1);
 
 	// Add the note container into the scene graph
 	this->addChild(nodeItems, 1);
@@ -216,6 +229,7 @@ void HelloWorld::menuCloseCallback(Ref* pSender)
 void HelloWorld::update(float delta)
 {
 	mainCharacter.Update(delta);
+	Bullet.Update(delta);
 }
 
 void HelloWorld::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
@@ -250,17 +264,26 @@ void HelloWorld::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event)
 void HelloWorld::onMouseMove(Event * mouse)
 {
 	EventMouse* eventMouse = static_cast<EventMouse*>(mouse);
+	EventMouse *e = (EventMouse*)mouse;
+
 	mainCharacter.SetCharAim(eventMouse->getLocationInView());
+	if (!b_mouseclicked)
+		Bullet.SetShoot(eventMouse->getLocationInView());
 }
 
 void HelloWorld::onMouseUp(Event * mouse)
 {
+	EventMouse* eventMouse = static_cast<EventMouse*>(mouse);
+	EventMouse *e = (EventMouse*)mouse;
+
+//	Bullet.SetShoot(eventMouse->getLocationInView());
+	Bullet.BulletMove(e->getCursorX(), e->getCursorY());
+	b_mouseclicked = true;
 }
 
 void HelloWorld::onMouseDown(Event * mouse)
 {
-	EventMouse *e = (EventMouse*)mouse;
-	mainCharacter.MoveCharByCoord(e->getCursorX(), e->getCursorY());
+	
 }
 
 void HelloWorld::onMouseScroll(Event * mouse)

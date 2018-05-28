@@ -8,9 +8,12 @@ void GameChar::Init(const char * pngName, const char * name, float posX, float p
 	mainSprite->setPosition(posX, posY);
 	mainSprite->setRotation(Rotation);
 	mainSprite->setName(name);
+
 	auto physicsBody = PhysicsBody::createBox(Size(mainSprite->getContentSize().width, mainSprite->getContentSize().height),
 		PhysicsMaterial(1.0f,0.0f,0.0f));
+	
 	physicsBody->setDynamic(false);
+
 	mainSprite->addComponent(physicsBody);
 	eDir = eStop;
 	fSpeed = 0.01f;
@@ -62,4 +65,5 @@ void GameChar::SetCharAim(Vec2 mouseCursorPos)
 	angle = CC_RADIANS_TO_DEGREES(angle) - 90;
 	mainSprite->setRotation(-angle);
 }
+
 

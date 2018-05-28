@@ -24,6 +24,7 @@ public:
 
 	void SetCharAim(Vec2 mouseCursorPs);
 
+
 	Sprite* getSprite(void) { return mainSprite; }
 
 private:
@@ -31,7 +32,5 @@ private:
 	Sprite* mainSprite;
 	float fSpeed;
 };
-
-
 
 #endif

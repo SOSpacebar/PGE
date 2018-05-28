@@ -3,6 +3,7 @@
 
 #include "cocos2d.h"
 #include "Character.h"
+#include "Bullet.h"
 
 using namespace cocos2d;
 
@@ -27,12 +28,13 @@ public:
 	virtual void onMouseDown(Event* mouse);
 	virtual void onMouseScroll(Event* mouse);
 
+	bool b_mouseclicked = false;
 	// implement the "static create()" method manually
     CREATE_FUNC(HelloWorld);
 
 private:
 	GameChar mainCharacter;
-
+	GameBullet Bullet;
 };
 
 #endif // __HELLOWORLD_SCENE_H__
