@@ -4,6 +4,7 @@
 #include "cocos2d.h"
 #include "Character.h"
 #include "Bullet.h"
+#include "Asteroid.h"
 
 using namespace cocos2d;
 
@@ -35,6 +36,7 @@ public:
 private:
 	GameChar mainCharacter;
 	GameBullet Bullet;
+	GameAsteroid Asteroid;
 };
 
 #endif // __HELLOWORLD_SCENE_H__

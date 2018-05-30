@@ -67,6 +67,8 @@ bool HelloWorld::init()
 	mainCharacter.Init("MainCannon.png", "mainSprite", 100, (visibleSize.height - playingSize.height), 0);
 	// Loading Bullet Sprites
 	Bullet.Init("Bullet.png", "Bullets", 100, (visibleSize.height - playingSize.height), 0);
+	// Loading Asteroid Sprites
+	Asteroid.Init("Asteroid.png", "Asteroids", 500, (visibleSize.height - 10), 0);
 
 	//auto mainSprite = Sprite::create("Blue_Front1.png");
 	//mainSprite->setAnchorPoint(Vec2(0, 0));
@@ -101,6 +103,8 @@ bool HelloWorld::init()
 	moveableItems->addChild(mainCharacter.getSprite(), 1);
 	// Add Bullets to Movable
 	moveableItems->addChild(Bullet.getSprite(), 1);
+	// Add Asteroids to Movable
+	moveableItems->addChild(Asteroid.getSprite(), 1);
 
 	// Add the note container into the scene graph
 	this->addChild(nodeItems, 1);
@@ -230,6 +234,7 @@ void HelloWorld::update(float delta)
 {
 	mainCharacter.Update(delta);
 	Bullet.Update(delta);
+	Asteroid.Update(delta);
 }
 
 void HelloWorld::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
