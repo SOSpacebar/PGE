@@ -112,3 +112,11 @@ proj.win32/Debug.*/
 proj.win32/Release.*/
 
 # others
+*.opendb
+*.db
+*.db
+*.db
+proj.win32/MyCppGame.VC.db
+proj.win32/MyCppGame.VC.db
+*.db
+proj.win32/MyCppGame.VC.db

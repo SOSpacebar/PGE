@@ -1,14 +1,14 @@
-#ifndef __HELLOWORLD_SCENE_H__
-#define __HELLOWORLD_SCENE_H__
+#ifndef __MAINMENU_SCENE_H__
+#define __MAINMENU_SCENE_H__
 
 #include "cocos2d.h"
-#include "Character.h"
-#include "Bullet.h"
-#include "Asteroid.h"
+#include "Humans.h"
+//#include "Bullet.h"
+//#include "Asteroid.h"
 
 using namespace cocos2d;
 
-class HelloWorld : public cocos2d::Scene
+class MainMenu : public cocos2d::Scene
 {
 public:
     static cocos2d::Scene* createScene();
@@ -18,7 +18,6 @@ public:
     
     // a selector callback
     void menuCloseCallback(cocos2d::Ref* pSender);
-	bool OnContactBegin(cocos2d::PhysicsContact &contact);
 
 
 
@@ -32,22 +31,15 @@ public:
 
 	bool b_mouseclicked = false;
 	// implement the "static create()" method manually
-    CREATE_FUNC(HelloWorld);
+    CREATE_FUNC(MainMenu);
 
 private:
-	GameChar mainCharacter;
-
-	Node* moveableItems;
-	Node* moveableItems2;
-
-	std::vector<GameBullet*> m_Bullets;
-
-	std::vector<GameAsteroid*> Asteroid;
-
-	int asteroidsCount;
-	float spawnTimer;
+	GameHumans Males;
+	GameHumans Females;
+	//int asteroidsCount;
+	//float SpawnTimer;
 	Size visibleSize;
 	Size playingSize;
 };
 
-#endif // __HELLOWORLD_SCENE_H__
+#endif // __MainMenu_SCENE_H__

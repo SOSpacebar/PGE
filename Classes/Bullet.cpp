@@ -1,6 +1,8 @@
 #include "Bullet.h"
+#include "AudioManager.h"
+#include "Constants.h"
 
-void GameBullet::Init(const char * pngName, const char * name, float posX, float posY,float Rotation)
+void GameBullet::Init(const char * pngName, const char * name, float posX, float posY,float Rotation, float mouseX, float mouseY)
 {
 	// Load Main Sprite
 	Bullets = Sprite::create(pngName);
@@ -13,10 +15,17 @@ void GameBullet::Init(const char * pngName, const char * name, float posX, float
 		PhysicsMaterial(1.0f,0.0f,0.0f));
 	
 	physicsBody->setDynamic(false);
+	physicsBody->setCollisionBitmask(static_cast<int>(CollisionType::ROCKET)); // This is like tagging a number to the game object, i have set 2 to be for rocket;
+	physicsBody->setContactTestBitmask(true); //Enables the collision
 
 	Bullets->addComponent(physicsBody);
 	eDir = eStopBullet;
 	fSpeed = 0.001f;
+
+	dirX = mouseX;
+	dirY = mouseY;
+
+	AudioManager::GetInstance()->SFXPlay("SFX_Rocket");
 }
 
 void GameBullet::MoveChar(EBullet dir)
@@ -59,15 +68,16 @@ void GameBullet::SetShoot(Vec2 mouseCursorPos)
 	Bullets->setRotation(-angle);
 }
 
-void GameBullet::BulletMove(float posX, float posY)
+void GameBullet::BulletMove()
 {
 	Bullets->stopAllActions();
 	//float diffX = posX - Bullets->getPosition().x;
 	//float diffY = posY - Bullets->getPosition().y;
-	float diffX = posX;
-	float diffY = posY;
+	float diffX = dirX;
+	float diffY = dirY;
 	Vec2 vec = Vec2(diffX, diffY);
-	auto moveEvent = MoveBy::create(vec.length() * fSpeed, vec * 2);
+	// auto moveEvent = MoveBy::create(vec.length() * fSpeed, vec * 10);
+	auto moveEvent = MoveBy::create(5, vec.getNormalized() * 5000);
 	Bullets->runAction(moveEvent);
 }
 

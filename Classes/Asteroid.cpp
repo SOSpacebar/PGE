@@ -1,4 +1,5 @@
 #include "Asteroid.h"
+#include "Constants.h"
 
 void GameAsteroid::Init(const char * pngName, const char * name, float posX, float posY, float Rotation)
 {
@@ -16,6 +17,8 @@ void GameAsteroid::Init(const char * pngName, const char * name, float posX, flo
 	physicsBody->setVelocity(Vect(0, -200));
 	physicsBody->applyForce(Vect(0, -200));
 	physicsBody->applyImpulse(Vect(0, -100));
+	physicsBody->setCollisionBitmask(static_cast<int>(CollisionType::ASTEROID)); // This is like tagging a number to the game object, i have set 1 to be for asteroid;
+	physicsBody->setContactTestBitmask(true); //Enables the collision
 
 	Asteroids->addComponent(physicsBody);
 	eDir = eStopAsteroid;
@@ -35,26 +38,6 @@ void GameAsteroid::Update(float dt)
 		auto moveEvent = MoveBy::create(0.0f, Vec2(eDir, 0.f));
 		Asteroids->runAction(moveEvent);
 	}
-
-	//RotateChar(EAsteroid::eRightAsteroid);
-	/*int loopSize = std::ceil(visibleSize.width / sprite->getContentSize().width);
-	int sX = 0;
-	int sY = (visibleSize.height - playingSize.height) - sprite->getContentSize().height;
-
-	for (size_t i = 0; i < loopSize; ++i)
-	{
-		auto newNode = Sprite::createWithSpriteFrame(sprite->getSpriteFrame());
-		newNode->setAnchorPoint(Vec2::ZERO);
-		newNode->setPosition(sX, sY);
-		sX += newNode->getContentSize().width;
-
-		auto physicsBody = PhysicsBody::createBox(Size(newNode->getContentSize().width, newNode->getContentSize().height),
-			PhysicsMaterial(1.0f, 0.0f, 0.0f));
-		physicsBody->setDynamic(false);
-		newNode->addComponent(physicsBody);
-
-		nodeItems->addChild(newNode, 0);
-	}*/
 }
 
 void GameAsteroid::RotateChar(EAsteroid dir)
