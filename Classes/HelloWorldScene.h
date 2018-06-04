@@ -49,7 +49,10 @@ private:
 	Size visibleSize;
 	Size playingSize;
 
-	//float health;
+
+	int scoreNum;
+	Label* label;
+
 	ProgressTimer *progressTimer;
 };
 
