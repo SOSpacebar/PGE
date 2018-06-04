@@ -51,6 +51,7 @@ bool HelloWorld::init()
 	// Playing Size
 	playingSize = Size(visibleSize.width, visibleSize.height - (visibleSize.height / 8));
 
+
 	// Node container for non-moveable sprites
 	auto nodeItems = Node::create();
 	nodeItems->setName("nodeItems");
@@ -93,13 +94,14 @@ bool HelloWorld::init()
 	float tempNum = 1.1f;
 	int loopSize = std::ceil(visibleSize.width / sprite->getContentSize().width);
 	int sX = 0;
-	int sY = (visibleSize.height - playingSize.height) - sprite->getContentSize().height/ tempNum;
+	int sY = (visibleSize.height - playingSize.height) - sprite->getContentSize().height;
 
 	for (size_t i = 0; i < loopSize; ++i)
 	{
 		auto newNode = Sprite::createWithSpriteFrame(sprite->getSpriteFrame());
 		newNode->setAnchorPoint(Vec2::ZERO);
 		newNode->setPosition(sX, sY);
+		newNode->setScaleY(1.2f);
 		sX += newNode->getContentSize().width;
 		
 		auto physicsBody = PhysicsBody::createBox(Size(newNode->getContentSize().width, newNode->getContentSize().height),
@@ -257,20 +259,23 @@ bool HelloWorld::init()
     // add a label shows "Hello World"
     // create and initialize a label
 
-    //auto label = Label::createWithTTF("Hello World", "fonts/Marker Felt.ttf", 24);
-    //if (label == nullptr)
-    //{
-    //    problemLoading("'fonts/Marker Felt.ttf'");
-    //}
-    //else
-    //{
-    //    // position the label on the center of the screen
-    //    label->setPosition(Vec2(origin.x + visibleSize.width/2,
-    //                            origin.y + visibleSize.height - label->getContentSize().height));
+	scoreNum = 0;
 
-    //    // add the label as a child to this layer
-    //    this->addChild(label, 1);
-    //}
+    label = Label::createWithTTF("Score: "+ std::to_string(scoreNum), "fonts/Marker Felt.ttf", 45);
+    if (label == nullptr)
+    {
+        problemLoading("'fonts/Marker Felt.ttf'");
+    }
+    else
+    {
+        // position the label on the center of the screen
+        label->setPosition(Vec2(origin.x + visibleSize.width/2,
+                                origin.y + visibleSize.height - label->getContentSize().height));
+		label->setColor(Color3B(0, 0, 0));
+
+        // add the label as a child to this layer
+        this->addChild(label, 1);
+    }
 
     //// add "HelloWorld" splash screen"
     //auto sprite = Sprite::create("HelloWorld.png");
@@ -318,6 +323,8 @@ bool HelloWorld::OnContactBegin(cocos2d::PhysicsContact & contact)
 		{
 			nodeA->getNode()->removeFromParentAndCleanup(true);
 			nodeB->getNode()->removeFromParentAndCleanup(true);
+			scoreNum += 10;
+			label->setString("Score: " + std::to_string(scoreNum));
 		}
 	}
 

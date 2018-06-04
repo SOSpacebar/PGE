@@ -50,6 +50,8 @@ private:
 	Size playingSize;
 
 	float health;
+	int scoreNum;
+	Label* label;
 	ProgressTimer *progressTimer;
 };
 
