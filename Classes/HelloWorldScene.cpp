@@ -168,10 +168,10 @@ bool HelloWorld::init()
 	progressTimer->setBarChangeRate(Vec2(1.0f, 0.0f));
 
 	//Set Percent value
-	health = 100;
+	mainCharacter.health = 100;
 
 	// set the filling of the gauge in percent; from 0-100%
-	progressTimer->setPercentage(health);
+	progressTimer->setPercentage(mainCharacter.health);
 
 	// add the progress timer as a child to the clipper, so the gauge will follow the
 	// image form
@@ -340,11 +340,11 @@ void HelloWorld::update(float delta)
 	//Asteroid.Update(delta);
 
 	for (auto asteroid : Asteroid) {
-		if (asteroid->getSprite()->getPosition().y < playingSize.height)
-		{
-			asteroid->getSprite()->removeFromParentAndCleanup(true);
-			health -= 5;
-		}
+		//if (asteroid->getSprite()->getPosition().y < playingSize.height)
+		//{
+		//	asteroid->getSprite()->removeFromParentAndCleanup(true);
+		//	health -= 5;
+		//}
 	}
 
 	
@@ -354,14 +354,14 @@ void HelloWorld::update(float delta)
 	{
 		GameAsteroid* Asteroids = new GameAsteroid();
 		float AsteroidRandX = random(0, (int)(visibleSize.width - 10));
-		Asteroids->Init("Asteroid.png", "Asteroids", AsteroidRandX, (visibleSize.height - 10), 0);
+		Asteroids->Init("Asteroid.png", "Asteroids", AsteroidRandX, (visibleSize.height - 10), 0, &mainCharacter);
 
 		// Add Bullets to Movable
-		moveableItems->addChild(Asteroids->getSprite(), 1);
+		moveableItems->addChild(Asteroids, 1);
 		spawnTimer = 0;
 	}
 
-	progressTimer->setPercentage(health);
+	progressTimer->setPercentage(mainCharacter.health);
 
 	//if (health > 0)
 	//{

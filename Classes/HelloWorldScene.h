@@ -34,9 +34,9 @@ public:
 	// implement the "static create()" method manually
     CREATE_FUNC(HelloWorld);
 
-private:
 	GameChar mainCharacter;
 
+private:
 	Node* moveableItems;
 	Node* moveableItems2;
 
@@ -49,7 +49,7 @@ private:
 	Size visibleSize;
 	Size playingSize;
 
-	float health;
+	//float health;
 	ProgressTimer *progressTimer;
 };
 

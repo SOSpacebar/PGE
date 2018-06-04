@@ -77,7 +77,7 @@ void GameBullet::BulletMove()
 	float diffY = dirY;
 	Vec2 vec = Vec2(diffX, diffY);
 	// auto moveEvent = MoveBy::create(vec.length() * fSpeed, vec * 10);
-	auto moveEvent = MoveBy::create(5, vec.getNormalized() * 5000);
+	auto moveEvent = MoveBy::create(5, vec.getNormalized() * 3000);
 	Bullets->runAction(moveEvent);
 }
 

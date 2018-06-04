@@ -27,10 +27,13 @@ public:
 
 	Sprite* getSprite(void) { return mainSprite; }
 
+	float health;
+
 private:
 	EAction eDir;
 	Sprite* mainSprite;
 	float fSpeed;
+
 };
 
 #endif

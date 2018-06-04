@@ -1,16 +1,19 @@
 #include "Asteroid.h"
 #include "Constants.h"
+#include "Character.h"
 
-void GameAsteroid::Init(const char * pngName, const char * name, float posX, float posY, float Rotation)
+void GameAsteroid::Init(const char * pngName, const char * name, float posX, float posY, float Rotation, GameChar* player)
 {
 	// Load Main Sprite
-	Asteroids = Sprite::create(pngName);
-	Asteroids->setAnchorPoint(Vec2(0.5, 0.5));
-	Asteroids->setPosition(posX, posY);
-	Asteroids->setRotation(Rotation);
-	Asteroids->setName(name);
+	//this->Sprite::create(pngName);
+	this->setTexture(pngName);
+	this->setAnchorPoint(Vec2(0.5, 0.5));
+	this->setPosition(posX, posY);
+	this->setRotation(Rotation);
+	this->setName(name);
+	this->SetActive(true);
 
-	auto physicsBody = PhysicsBody::createBox(Size(Asteroids->getContentSize().width, Asteroids->getContentSize().height),
+	auto physicsBody = PhysicsBody::createBox(Size(this->getContentSize().width, this->getContentSize().height),
 		PhysicsMaterial(1.0f, 0.0f, 0.0f));
 
 	physicsBody->setDynamic(false);
@@ -20,10 +23,13 @@ void GameAsteroid::Init(const char * pngName, const char * name, float posX, flo
 	physicsBody->setCollisionBitmask(static_cast<int>(CollisionType::ASTEROID)); // This is like tagging a number to the game object, i have set 1 to be for asteroid;
 	physicsBody->setContactTestBitmask(true); //Enables the collision
 
-	Asteroids->addComponent(physicsBody);
+	this->addComponent(physicsBody);
 	eDir = eStopAsteroid;
 	fSpeed = 0.001f;
 
+	this->player = player;
+
+	this->scheduleUpdate();
 }
 
 void GameAsteroid::MoveChar(EAsteroid dir)
@@ -31,12 +37,18 @@ void GameAsteroid::MoveChar(EAsteroid dir)
 	eDir = dir;
 }
 
-void GameAsteroid::Update(float dt)
+void GameAsteroid::update(float dt)
 {
 	if (eDir != EAsteroid::eStopAsteroid)
 	{
 		auto moveEvent = MoveBy::create(0.0f, Vec2(eDir, 0.f));
-		Asteroids->runAction(moveEvent);
+		this->runAction(moveEvent);
+	}
+
+	if (this->getPosition().y < 0)
+	{
+		this->removeFromParentAndCleanup(true);
+		player->health -= 5;
 	}
 }
 
@@ -47,12 +59,12 @@ void GameAsteroid::RotateChar(EAsteroid dir)
 
 void GameAsteroid::AsteroidMove(float posX, float posY)
 {
-	Asteroids->stopAllActions();
+	this->stopAllActions();
 	//float diffX = posX - Bullets->getPosition().x;
 	//float diffY = posY - Bullets->getPosition().y;
 	float diffX = posX;
 	float diffY = posY;
 	Vec2 vec = Vec2(diffX, diffY);
 	auto moveEvent = MoveBy::create(vec.length() * fSpeed, vec * 2);
-	Asteroids->runAction(moveEvent);
+	this->runAction(moveEvent);
 }
