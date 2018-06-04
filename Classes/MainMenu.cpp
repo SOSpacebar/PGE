@@ -2,6 +2,7 @@
 #include "SimpleAudioEngine.h"
 #include "SceneManager.h"
 #include "Constants.h"
+#include "AudioManager.h"
 
 USING_NS_CC;
 
@@ -138,6 +139,9 @@ bool MainMenu::init()
 	//this->addChild(moveableItems, 2);
 	//this->addChild(groundItems, 2);
 	//this->addChild(moveableItems2, 3);
+
+	//PLAY MUSIC
+	AudioManager::GetInstance()->MusicPlay("BGM_Main", true);
 
 	// Movement 
 	//auto moveEvent = MoveBy::create(5, Vec2(200, 0));

@@ -134,6 +134,52 @@ bool HelloWorld::init()
 	this->addChild(groundItems, 2);
 	this->addChild(moveableItems2, 3);
 
+	//Health Bar
+	// create the sprite used as a stencil
+	auto baseSprite = Sprite::create();
+	baseSprite->setTexture("dull_bar.png");
+
+	// create the clipping node
+	auto clipper = ClippingNode::create();
+	clipper->setPosition((Vec2((int)visibleSize.width >> 1, visibleSize.height - playingSize.height - 40.f)));
+
+	// attach the stencil to the clipping node and add it as a child,
+	// so the iamge itself can act as the background layer
+	clipper->setStencil(baseSprite);
+	clipper->addChild(baseSprite);
+
+	// create the sprite used for the gauge
+	// image needs the same width as the stencil
+	auto gaugeSprite = Sprite::create();
+	gaugeSprite->setTexture("red_bar.png");
+
+	// create a progress timer, working on the gauge sprite
+	progressTimer = ProgressTimer::create(gaugeSprite);
+
+	// set the midpoint to the center bottom, as the gauge is filling up from the bottom
+	// to the top
+	progressTimer->setMidpoint(Point(0, 0));
+
+	// the gauge is working linear
+	progressTimer->setType(ProgressTimer::Type::BAR);
+
+	// the progress timer is only working on the y axis of the gauge
+	// the x axis stays at 100 % all the time
+	progressTimer->setBarChangeRate(Vec2(1.0f, 0.0f));
+
+	//Set Percent value
+	health = 100;
+
+	// set the filling of the gauge in percent; from 0-100%
+	progressTimer->setPercentage(health);
+
+	// add the progress timer as a child to the clipper, so the gauge will follow the
+	// image form
+	clipper->addChild(progressTimer);
+
+	// add the clipping node to the layer
+	addChild(clipper, 1000, "loadingimage");
+
 	// Movement 
 	//auto moveEvent = MoveBy::create(5, Vec2(200, 0));
 	//mainSprite->runAction(moveEvent);
@@ -294,9 +340,10 @@ void HelloWorld::update(float delta)
 	//Asteroid.Update(delta);
 
 	for (auto asteroid : Asteroid) {
-		if (asteroid->getSprite()->getPosition().y < 0)
+		if (asteroid->getSprite()->getPosition().y < playingSize.height)
 		{
 			asteroid->getSprite()->removeFromParentAndCleanup(true);
+			health -= 5;
 		}
 	}
 
@@ -313,6 +360,17 @@ void HelloWorld::update(float delta)
 		moveableItems->addChild(Asteroids->getSprite(), 1);
 		spawnTimer = 0;
 	}
+
+	progressTimer->setPercentage(health);
+
+	//if (health > 0)
+	//{
+	//	health -= delta * 15;
+	//}
+	//else if (percent > 100.f)
+	//{
+	//	SceneManager::GetInstance()->RunSceneWithType(SceneType::GAMEPLAY, TransitionType::FADE);
+	//}
 
 	//if (Asteroid.size() < asteroidsCount)
 	//{

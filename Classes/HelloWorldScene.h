@@ -48,6 +48,9 @@ private:
 	float spawnTimer;
 	Size visibleSize;
 	Size playingSize;
+
+	float health;
+	ProgressTimer *progressTimer;
 };
 
 #endif // __HELLOWORLD_SCENE_H__

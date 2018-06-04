@@ -60,23 +60,9 @@ bool LoadingScene::init()
 		this->addChild(textLabel, 1);
 	}
 
-	/*resources[0] = "lol";
-	resources[1] = "lol";
-	resources[2] = "lol";
-	resources[3] = "lol";
-	resources[4] = "lol";
-	resources[5] = "lol";
-	resources[6] = "lol";
-	resources[7] = "lol";
-	resources[8] = "lol";
-
-	auto director = Director::getInstance();
-	TextureCache* textureCache = director->getTextureCache();
-	textureCache->addImageAsync(resources[0], CC_CALLBACK_1(LoadingScene::LoadingTextureFinished, this));*/
-
 	// create the sprite used as a stencil
-	auto dropletSprite = Sprite::create();
-	dropletSprite->setTexture("White_Front1.png");
+	auto baseSprite = Sprite::create();
+	baseSprite->setTexture("White_Front1.png");
 
 	// create the clipping node
 	auto clipper = ClippingNode::create();
@@ -84,8 +70,8 @@ bool LoadingScene::init()
 
 	// attach the stencil to the clipping node and add it as a child,
 	// so the iamge itself can act as the background layer
-	clipper->setStencil(dropletSprite);
-	clipper->addChild(dropletSprite);
+	clipper->setStencil(baseSprite);
+	clipper->addChild(baseSprite);
 
 	// create the sprite used for the gauge
 	// image needs the same width as the stencil
