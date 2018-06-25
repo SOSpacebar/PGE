@@ -2,7 +2,6 @@
 #define AUDIOMANAGER_H
 
 #include "cocos2d.h"
-#include "audio/include/AudioEngine.h"
 
 using namespace cocos2d;
 using namespace cocos2d::experimental;
@@ -14,7 +13,9 @@ public:
 	void MusicStop();
 	void MusicPause();
 
-	void SFXPlay(std::string file);
+	void SFXPlay(std::string file, bool loop = false);
+	void SFXStop();
+	void SFXPause();
 
 	static AudioManager* GetInstance();
 	~AudioManager();
@@ -22,8 +23,6 @@ public:
 protected:
 	AudioManager();
 	static AudioManager * _instance;
-
-	int _backgroundMusicId;
 public:
 
 };

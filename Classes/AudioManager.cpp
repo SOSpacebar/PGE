@@ -1,4 +1,5 @@
 #include "AudioManager.h"
+#include "SimpleAudioEngine.h"
 
 // Singleton
 AudioManager * AudioManager::_instance = NULL;
@@ -19,12 +20,12 @@ static std::string audioExtension = ".ogg";
 
 AudioManager* AudioManager::GetInstance()
 {
-	if (!_instance) _instance = new AudioManager();
+	if (!_instance) 
+		_instance = new AudioManager();
 	return _instance;
 }
 
-AudioManager::AudioManager() :
-	_backgroundMusicId(-1)
+AudioManager::AudioManager()
 {
 
 }
@@ -38,26 +39,39 @@ void AudioManager::MusicPlay(std::string file, bool loop)
 {
 	std::string path;
 	path = "audio/" + file + audioExtension;
-	if (_backgroundMusicId > -1) {
-		this->MusicStop();
-	}
-	_backgroundMusicId = AudioEngine::play2d(path, loop);
+	auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
+	audio->playBackgroundMusic(path.c_str(), loop);
 }
 
 void AudioManager::MusicStop()
 {
-	AudioEngine::stop(_backgroundMusicId);
-	_backgroundMusicId = -1;
+	auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
+	audio->stopBackgroundMusic();
 }
 
 void AudioManager::MusicPause()
 {
-	AudioEngine::pause(_backgroundMusicId);
+	auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
+	audio->pauseBackgroundMusic();
 }
 
-void AudioManager::SFXPlay(std::string file)
+void AudioManager::SFXPlay(std::string file, bool loop)
 {
 	std::string path;
 	path = "audio/" + file + audioExtension;
-	AudioEngine::play2d(path);
+
+	auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
+	audio->playEffect(path.c_str(), loop);
+}
+
+void AudioManager::SFXPause()
+{
+	auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
+	audio->pauseAllEffects();
+}
+
+void AudioManager::SFXStop()
+{
+	auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
+	audio->stopAllEffects();
 }
