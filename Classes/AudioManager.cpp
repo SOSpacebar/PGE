@@ -32,7 +32,11 @@ AudioManager::AudioManager()
 
 AudioManager::~AudioManager()
 {
-
+	if (_instance)
+	{
+		delete _instance;
+		_instance = 0;
+	}
 }
 
 void AudioManager::MusicPlay(std::string file, bool loop)
@@ -74,4 +78,66 @@ void AudioManager::SFXStop()
 {
 	auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
 	audio->stopAllEffects();
+}
+
+void AudioManager::PreLoadAudio(std::string file, bool isBGM)
+{
+	std::string path;
+	path = "audio/" + file + audioExtension;
+	auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
+
+	if (isBGM)
+		audio->preloadBackgroundMusic(path.c_str());
+	else
+		audio->preloadEffect(path.c_str());
+
+}
+
+void AudioManager::PreLoadAudioByScene(SceneType scene)
+{
+	auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
+
+	switch (scene)
+	{
+	case SceneType::NONE:
+		break;
+	case SceneType::MAINMENU:
+		audio->preloadBackgroundMusic("audio/BGM_Main.mp3");
+		break;
+	case SceneType::GAMEPLAY:
+		audio->preloadEffect("audio/SFX_Rocket.mp3");
+		break;
+	case SceneType::LOADING:
+		break;
+	default:
+		break;
+	}
+}
+
+void AudioManager::UnLoadAudio(std::string file)
+{
+	std::string path;
+	path = "audio/" + file + audioExtension;
+	auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
+
+	audio->unloadEffect(path.c_str());
+}
+
+void AudioManager::UnLoadAudioByScene(SceneType scene)
+{
+	auto audio = CocosDenshion::SimpleAudioEngine::getInstance();
+
+	switch (scene)
+	{
+	case SceneType::NONE:
+		break;
+	case SceneType::MAINMENU:
+		break;
+	case SceneType::GAMEPLAY:
+		break;
+	case SceneType::LOADING:
+		break;
+	default:
+		break;
+	}
 }

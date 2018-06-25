@@ -2,6 +2,7 @@
 #include "MainMenu.h"
 #include "HelloWorldScene.h"
 #include "LoadingScene.h"
+#include "AudioManager.h"
 
 // Singleton
 SceneManager * SceneManager::_instance = NULL;
@@ -32,12 +33,15 @@ void SceneManager::RunSceneWithType(const SceneType sceneType, const TransitionT
 	switch (sceneType) {
 	case SceneType::MAINMENU:
 		sceneToRun = MainMenu::createScene();
+		AudioManager::GetInstance()->PreLoadAudioByScene(SceneType::MAINMENU);
 		break;
 	case SceneType::GAMEPLAY:
 		sceneToRun = HelloWorld::createScene();
+		AudioManager::GetInstance()->PreLoadAudioByScene(SceneType::GAMEPLAY);
 		break;
 	case SceneType::LOADING:
 		sceneToRun = LoadingScene::createScene();
+		AudioManager::GetInstance()->PreLoadAudioByScene(SceneType::LOADING);
 		break;
 	default:
 		log("WARNING! Default value when trying to run scene with id %d", static_cast<int>(sceneType));

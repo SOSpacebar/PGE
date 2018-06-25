@@ -2,6 +2,7 @@
 #define AUDIOMANAGER_H
 
 #include "cocos2d.h"
+#include "Constants.h"
 
 using namespace cocos2d;
 using namespace cocos2d::experimental;
@@ -16,6 +17,13 @@ public:
 	void SFXPlay(std::string file, bool loop = false);
 	void SFXStop();
 	void SFXPause();
+
+	void PreLoadAudio(std::string file, bool isBGM = false);
+	void PreLoadAudioByScene(SceneType scene);
+
+	void UnLoadAudio(std::string file);
+	void UnLoadAudioByScene(SceneType scene);
+
 
 	static AudioManager* GetInstance();
 	~AudioManager();
