@@ -76,10 +76,10 @@ bool MainMenu::init()
 
 
 	// Load Main Sprite
-	Males.Init("Humans/Man_Right_1.png", "maleSprite", (visibleSize.width * 0.5f)+150, visibleSize.height * 0.5f, 0, 9,1);
-	Females.Init("Humans/Female_Right_1.png", "femaleSprite", (visibleSize.width * 0.5f) - 150, visibleSize.height * 0.5f, 0, 9,2);
-	nodeItems->addChild(Males.getSprite(), 1);
-	nodeItems->addChild(Females.getSprite(), 1);
+	males.Init("Humans/Man_Right_1.png", "maleSprite", (visibleSize.width * 0.5f)+150, visibleSize.height * 0.5f, 0, 9,1);
+	females.Init("Humans/Female_Right_1.png", "femaleSprite", (visibleSize.width * 0.5f) - 150, visibleSize.height * 0.5f, 0, 9,2);
+	nodeItems->addChild(males.getSprite(), 1);
+	nodeItems->addChild(females.getSprite(), 1);
 	//// Loading Bullet Sprites
 	//Bullet.Init("Bullet.png", "Bullets", 100, (visibleSize.height - playingSize.height), 0);
 	// Loading Asteroid Sprites

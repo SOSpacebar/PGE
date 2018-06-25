@@ -14,7 +14,7 @@ enum EAction {
 class GameChar
 {
 public:
-	void Init(const char * pngName, const char * name, float posX, float posY, float Rotation);
+	void Init(const char * pngName, const char * name, float posX, float posY, float rotation);
 	void MoveChar(EAction dir);
 	void MoveCharByCoord(float posX, float posY);
 	void Update(float dt);

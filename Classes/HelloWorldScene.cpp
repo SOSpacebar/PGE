@@ -75,6 +75,11 @@ bool HelloWorld::init()
 
 	// Load Main Sprite
 	mainCharacter.Init("MainCannon.png", "mainSprite", visibleSize.width * 0.5f, (visibleSize.height - playingSize.height), 0);
+	males.Init("Humans/Man_Right_1.png", "maleSprite", (visibleSize.width * 0.5f) + 150, visibleSize.height * 0.5f, 0, 2, 1);
+	females.Init("Humans/Female_Right_1.png", "femaleSprite", (visibleSize.width * 0.5f) - 150, visibleSize.height * 0.5f, 0, 2, 2);
+
+	nodeItems->addChild(males.getSprite(), 1);
+	nodeItems->addChild(females.getSprite(), 1);
 	//// Loading Bullet Sprites
 	//Bullet.Init("Bullet.png", "Bullets", 100, (visibleSize.height - playingSize.height), 0);
 	// Loading Asteroid Sprites
@@ -129,6 +134,14 @@ bool HelloWorld::init()
 	/*moveableItems->addChild(Bullet.getSprite(), 1);*/
 	// Add Asteroids to Movable
 	//moveableItems->addChild(Asteroid.getSprite(), 1);
+
+	//auto moveEvent = MoveBy::create(5, Vec2(500, 0));
+	//males->runAction(moveEvent);
+
+	//auto delay = DelayTime::create(5.0f);
+	//auto delaySequence = Sequence::create(delay, delay->clone(), nullptr);
+	//auto sequence = Sequence::create(moveEvent, moveEvent->reverse(), delaySequence, nullptr);
+	//humans->runAction(sequence);
 
 	// Add the note container into the scene graph
 	this->addChild(nodeItems, 1);
@@ -346,7 +359,7 @@ void HelloWorld::update(float delta)
 
 	//Asteroid.Update(delta);
 
-	for (auto asteroid : Asteroid) {
+	for (auto asteroid : asteroid) {
 		//if (asteroid->getSprite()->getPosition().y < playingSize.height)
 		//{
 		//	asteroid->getSprite()->removeFromParentAndCleanup(true);
@@ -359,12 +372,12 @@ void HelloWorld::update(float delta)
 	
 	if (spawnTimer > 1.f)
 	{
-		GameAsteroid* Asteroids = new GameAsteroid();
-		float AsteroidRandX = random(0, (int)(visibleSize.width - 10));
-		Asteroids->Init("Asteroid.png", "Asteroids", AsteroidRandX, (visibleSize.height - 10), 0, &mainCharacter);
+		GameAsteroid* asteroids = new GameAsteroid();
+		float asteroidRandX = random(0, (int)(visibleSize.width - 10));
+		asteroids->Init("Asteroid.png", "Asteroids", asteroidRandX, (visibleSize.height - 10), 0, &mainCharacter);
 
 		// Add Bullets to Movable
-		moveableItems->addChild(Asteroids, 1);
+		moveableItems->addChild(asteroids, 1);
 		spawnTimer = 0;
 	}
 

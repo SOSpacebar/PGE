@@ -1,12 +1,12 @@
 #include "Character.h"
 
-void GameChar::Init(const char * pngName, const char * name, float posX, float posY,float Rotation)
+void GameChar::Init(const char * pngName, const char * name, float posX, float posY,float rotation)
 {
 	// Load Main Sprite
 	mainSprite = Sprite::create(pngName);
 	mainSprite->setAnchorPoint(Vec2(0.5, 0.5));
 	mainSprite->setPosition(posX, posY);
-	mainSprite->setRotation(Rotation);
+	mainSprite->setRotation(rotation);
 	mainSprite->setName(name);
 
 	auto physicsBody = PhysicsBody::createBox(Size(mainSprite->getContentSize().width, mainSprite->getContentSize().height),

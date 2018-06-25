@@ -5,6 +5,7 @@
 #include "Character.h"
 #include "Bullet.h"
 #include "Asteroid.h"
+#include "Humans.h"
 
 using namespace cocos2d;
 
@@ -40,9 +41,12 @@ private:
 	Node* moveableItems;
 	Node* moveableItems2;
 
+	GameHumans males;
+	GameHumans females;
+
 	std::vector<GameBullet*> m_Bullets;
 
-	std::vector<GameAsteroid*> Asteroid;
+	std::vector<GameAsteroid*> asteroid;
 
 	int asteroidsCount;
 	float spawnTimer;

@@ -2,14 +2,14 @@
 #include "Constants.h"
 #include "Character.h"
 
-void GameAsteroid::Init(const char * pngName, const char * name, float posX, float posY, float Rotation, GameChar* player)
+void GameAsteroid::Init(const char * pngName, const char * name, float posX, float posY, float rotation, GameChar* player)
 {
 	// Load Main Sprite
 	//this->Sprite::create(pngName);
 	this->setTexture(pngName);
 	this->setAnchorPoint(Vec2(0.5, 0.5));
 	this->setPosition(posX, posY);
-	this->setRotation(Rotation);
+	this->setRotation(rotation);
 	this->setName(name);
 	this->SetActive(true);
 

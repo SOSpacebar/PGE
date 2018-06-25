@@ -34,8 +34,8 @@ public:
     CREATE_FUNC(MainMenu);
 
 private:
-	GameHumans Males;
-	GameHumans Females;
+	GameHumans males;
+	GameHumans females;
 	//int asteroidsCount;
 	//float SpawnTimer;
 	Size visibleSize;
