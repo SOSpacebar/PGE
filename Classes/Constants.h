@@ -7,6 +7,10 @@ enum class SceneType
 	MAINMENU,
 	GAMEPLAY,
 	LOADING,
+	WINSCENE,
+	LOSESCENE,
+	SETTING,
+	UPGRADESCENE,
 };
 
 enum class TransitionType

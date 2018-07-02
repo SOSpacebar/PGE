@@ -43,6 +43,18 @@ void SceneManager::RunSceneWithType(const SceneType sceneType, const TransitionT
 		sceneToRun = LoadingScene::createScene();
 		AudioManager::GetInstance()->PreLoadAudioByScene(SceneType::LOADING);
 		break;
+	case SceneType::UPGRADESCENE:
+		sceneToRun = LoadingScene::createScene();
+		AudioManager::GetInstance()->PreLoadAudioByScene(SceneType::UPGRADESCENE);
+		break;
+	case SceneType::WINSCENE:
+		sceneToRun = LoadingScene::createScene();
+		AudioManager::GetInstance()->PreLoadAudioByScene(SceneType::WINSCENE);
+		break;
+	case SceneType::LOSESCENE:
+		sceneToRun = LoadingScene::createScene();
+		AudioManager::GetInstance()->PreLoadAudioByScene(SceneType::LOSESCENE);
+		break;
 	default:
 		log("WARNING! Default value when trying to run scene with id %d", static_cast<int>(sceneType));
 		return;

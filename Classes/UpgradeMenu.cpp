@@ -1,5 +1,4 @@
-#include "LoseMenu.h"
-#include "ui\CocosGUI.h"
+#include "UpgradeMenu.h"
 #include "SimpleAudioEngine.h"
 #include "SceneManager.h"
 #include "Constants.h"
@@ -7,9 +6,9 @@
 
 USING_NS_CC;
 
-Scene* LoseMenu::createScene()
+Scene* UpgradeMenu::createScene()
 {
-	auto scene = LoseMenu::create();
+	auto scene = UpgradeMenu::create();
 
 	//scene->getPhysicsWorld()->setGravity(Vec2(0, -98));
 
@@ -30,7 +29,7 @@ static void problemLoading(const char* filename)
 }
 
 // on "init" you need to initialize your instance
-bool LoseMenu::init()
+bool UpgradeMenu::init()
 {
     //////////////////////////////
     // 1. super init first
@@ -71,16 +70,16 @@ bool LoseMenu::init()
 
 	// Create a sprite object to load the image
 	//auto sprite = Sprite::create("ground.png");
-	auto background = Sprite::create("LoseMenu.png");
+	auto background = Sprite::create("UpgradeMenu.png");
 
 
 
 
 	// Load Main Sprite
-	//Males.Init("Humans/Man_Right_1.png", "maleSprite", (visibleSize.width * 0.5f)+150, visibleSize.height * 0.5f, 0, 9,1);
-	//Females.Init("Humans/Female_Right_1.png", "femaleSprite", (visibleSize.width * 0.5f) - 150, visibleSize.height * 0.5f, 0, 9,2);
-	//nodeItems->addChild(Males.getSprite(), 1);
-	//nodeItems->addChild(Females.getSprite(), 1);
+	males.Init("Humans/Man_Right_1.png", "maleSprite", (visibleSize.width * 0.5f)+150, visibleSize.height * 0.5f, 0, 9,1);
+	females.Init("Humans/Female_Right_1.png", "femaleSprite", (visibleSize.width * 0.5f) - 150, visibleSize.height * 0.5f, 0, 9,2);
+	nodeItems->addChild(males.getSprite(), 1);
+	nodeItems->addChild(females.getSprite(), 1);
 	//// Loading Bullet Sprites
 	//Bullet.Init("Bullet.png", "Bullets", 100, (visibleSize.height - playingSize.height), 0);
 	// Loading Asteroid Sprites
@@ -156,16 +155,16 @@ bool LoseMenu::init()
 
 	// Keyboard Event
 	auto keyboardListener = EventListenerKeyboard::create();
-	keyboardListener->onKeyPressed = CC_CALLBACK_2(LoseMenu::onKeyPressed, this);
-	keyboardListener->onKeyReleased = CC_CALLBACK_2(LoseMenu::onKeyReleased, this);
+	keyboardListener->onKeyPressed = CC_CALLBACK_2(UpgradeMenu::onKeyPressed, this);
+	keyboardListener->onKeyReleased = CC_CALLBACK_2(UpgradeMenu::onKeyReleased, this);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(keyboardListener, this);
 
 	// Mouse Event
 	auto mouseListener = EventListenerMouse::create();
-	mouseListener->onMouseMove = CC_CALLBACK_1(LoseMenu::onMouseMove, this);
-	mouseListener->onMouseUp = CC_CALLBACK_1(LoseMenu::onMouseUp, this);
-	mouseListener->onMouseDown = CC_CALLBACK_1(LoseMenu::onMouseDown, this);
-	mouseListener->onMouseScroll = CC_CALLBACK_1(LoseMenu::onMouseScroll, this);
+	mouseListener->onMouseMove = CC_CALLBACK_1(UpgradeMenu::onMouseMove, this);
+	mouseListener->onMouseUp = CC_CALLBACK_1(UpgradeMenu::onMouseUp, this);
+	mouseListener->onMouseDown = CC_CALLBACK_1(UpgradeMenu::onMouseDown, this);
+	mouseListener->onMouseScroll = CC_CALLBACK_1(UpgradeMenu::onMouseScroll, this);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(mouseListener, this);
 
 	// Touch Event
@@ -247,7 +246,7 @@ bool LoseMenu::init()
 }
 
 
-void LoseMenu::menuCloseCallback(Ref* pSender)
+void UpgradeMenu::menuCloseCallback(Ref* pSender)
 {
     //Close the cocos2d-x game scene and quit the application
     Director::getInstance()->end();
@@ -264,7 +263,7 @@ void LoseMenu::menuCloseCallback(Ref* pSender)
 
 }
 
-void LoseMenu::update(float delta)
+void UpgradeMenu::update(float delta)
 {
 	//mainCharacter.Update(delta);
 
@@ -300,7 +299,7 @@ void LoseMenu::update(float delta)
 	//}
 }
 
-void LoseMenu::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
+void UpgradeMenu::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 {
 	switch (keyCode)
 	{
@@ -314,7 +313,16 @@ void LoseMenu::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 		SceneManager::GetInstance()->RunSceneWithType(SceneType::LOADING, TransitionType::CROSSFADE);
 		break;
 	case EventKeyboard::KeyCode::KEY_D:
-		//mainCharacter.RotateCharByDir(EAction::eLeft);
+		SceneManager::GetInstance()->RunSceneWithType(SceneType::WINSCENE, TransitionType::CROSSFADE);
+		break;
+	case EventKeyboard::KeyCode::KEY_A:
+		SceneManager::GetInstance()->RunSceneWithType(SceneType::LOSESCENE, TransitionType::CROSSFADE);
+		break;
+	case EventKeyboard::KeyCode::KEY_S:
+		SceneManager::GetInstance()->RunSceneWithType(SceneType::UPGRADESCENE, TransitionType::CROSSFADE);
+		break;
+	case EventKeyboard::KeyCode::KEY_W:
+		SceneManager::GetInstance()->RunSceneWithType(SceneType::SETTING, TransitionType::CROSSFADE);
 		break;
 	default:
 		break;
@@ -323,13 +331,13 @@ void LoseMenu::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 	log("Key with keycode %d pressed", keyCode);
 }
 
-void LoseMenu::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event)
+void UpgradeMenu::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event)
 {
 	//mainCharacter.MoveChar(EAction::eStop);
 	log("Key with keycode %d released", keyCode);
 }
 
-void LoseMenu::onMouseMove(Event * mouse)
+void UpgradeMenu::onMouseMove(Event * mouse)
 {
 	EventMouse* eventMouse = static_cast<EventMouse*>(mouse);
 	EventMouse *e = (EventMouse*)mouse;
@@ -339,7 +347,7 @@ void LoseMenu::onMouseMove(Event * mouse)
 		Bullet.SetShoot(eventMouse->getLocationInView());*/
 }
 
-void LoseMenu::onMouseUp(Event * mouse)
+void UpgradeMenu::onMouseUp(Event * mouse)
 {
 	EventMouse* eventMouse = static_cast<EventMouse*>(mouse);
 	EventMouse *e = (EventMouse*)mouse;
@@ -359,12 +367,12 @@ void LoseMenu::onMouseUp(Event * mouse)
 	b_mouseclicked = true;
 }
 
-void LoseMenu::onMouseDown(Event * mouse)
+void UpgradeMenu::onMouseDown(Event * mouse)
 {
 	
 }
 
-void LoseMenu::onMouseScroll(Event * mouse)
+void UpgradeMenu::onMouseScroll(Event * mouse)
 {
 }
 

@@ -313,7 +313,16 @@ void MainMenu::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 		SceneManager::GetInstance()->RunSceneWithType(SceneType::LOADING, TransitionType::CROSSFADE);
 		break;
 	case EventKeyboard::KeyCode::KEY_D:
-		//mainCharacter.RotateCharByDir(EAction::eLeft);
+		SceneManager::GetInstance()->RunSceneWithType(SceneType::WINSCENE, TransitionType::CROSSFADE);
+		break;
+	case EventKeyboard::KeyCode::KEY_A:
+		SceneManager::GetInstance()->RunSceneWithType(SceneType::LOSESCENE, TransitionType::CROSSFADE);
+		break;
+	case EventKeyboard::KeyCode::KEY_S:
+		SceneManager::GetInstance()->RunSceneWithType(SceneType::UPGRADESCENE, TransitionType::CROSSFADE);
+		break;
+	case EventKeyboard::KeyCode::KEY_W:
+		SceneManager::GetInstance()->RunSceneWithType(SceneType::SETTING, TransitionType::CROSSFADE);
 		break;
 	default:
 		break;

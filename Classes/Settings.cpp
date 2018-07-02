@@ -1,4 +1,4 @@
-#include "LoseMenu.h"
+#include "Settings.h"
 #include "ui\CocosGUI.h"
 #include "SimpleAudioEngine.h"
 #include "SceneManager.h"
@@ -7,9 +7,9 @@
 
 USING_NS_CC;
 
-Scene* LoseMenu::createScene()
+Scene* Settings::createScene()
 {
-	auto scene = LoseMenu::create();
+	auto scene = Settings::create();
 
 	//scene->getPhysicsWorld()->setGravity(Vec2(0, -98));
 
@@ -30,7 +30,7 @@ static void problemLoading(const char* filename)
 }
 
 // on "init" you need to initialize your instance
-bool LoseMenu::init()
+bool Settings::init()
 {
     //////////////////////////////
     // 1. super init first
@@ -71,7 +71,7 @@ bool LoseMenu::init()
 
 	// Create a sprite object to load the image
 	//auto sprite = Sprite::create("ground.png");
-	auto background = Sprite::create("LoseMenu.png");
+	auto background = Sprite::create("Settings.png");
 
 
 
@@ -156,16 +156,16 @@ bool LoseMenu::init()
 
 	// Keyboard Event
 	auto keyboardListener = EventListenerKeyboard::create();
-	keyboardListener->onKeyPressed = CC_CALLBACK_2(LoseMenu::onKeyPressed, this);
-	keyboardListener->onKeyReleased = CC_CALLBACK_2(LoseMenu::onKeyReleased, this);
+	keyboardListener->onKeyPressed = CC_CALLBACK_2(Settings::onKeyPressed, this);
+	keyboardListener->onKeyReleased = CC_CALLBACK_2(Settings::onKeyReleased, this);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(keyboardListener, this);
 
 	// Mouse Event
 	auto mouseListener = EventListenerMouse::create();
-	mouseListener->onMouseMove = CC_CALLBACK_1(LoseMenu::onMouseMove, this);
-	mouseListener->onMouseUp = CC_CALLBACK_1(LoseMenu::onMouseUp, this);
-	mouseListener->onMouseDown = CC_CALLBACK_1(LoseMenu::onMouseDown, this);
-	mouseListener->onMouseScroll = CC_CALLBACK_1(LoseMenu::onMouseScroll, this);
+	mouseListener->onMouseMove = CC_CALLBACK_1(Settings::onMouseMove, this);
+	mouseListener->onMouseUp = CC_CALLBACK_1(Settings::onMouseUp, this);
+	mouseListener->onMouseDown = CC_CALLBACK_1(Settings::onMouseDown, this);
+	mouseListener->onMouseScroll = CC_CALLBACK_1(Settings::onMouseScroll, this);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(mouseListener, this);
 
 	// Touch Event
@@ -247,7 +247,7 @@ bool LoseMenu::init()
 }
 
 
-void LoseMenu::menuCloseCallback(Ref* pSender)
+void Settings::menuCloseCallback(Ref* pSender)
 {
     //Close the cocos2d-x game scene and quit the application
     Director::getInstance()->end();
@@ -264,7 +264,7 @@ void LoseMenu::menuCloseCallback(Ref* pSender)
 
 }
 
-void LoseMenu::update(float delta)
+void Settings::update(float delta)
 {
 	//mainCharacter.Update(delta);
 
@@ -300,7 +300,7 @@ void LoseMenu::update(float delta)
 	//}
 }
 
-void LoseMenu::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
+void Settings::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 {
 	switch (keyCode)
 	{
@@ -323,13 +323,13 @@ void LoseMenu::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 	log("Key with keycode %d pressed", keyCode);
 }
 
-void LoseMenu::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event)
+void Settings::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event)
 {
 	//mainCharacter.MoveChar(EAction::eStop);
 	log("Key with keycode %d released", keyCode);
 }
 
-void LoseMenu::onMouseMove(Event * mouse)
+void Settings::onMouseMove(Event * mouse)
 {
 	EventMouse* eventMouse = static_cast<EventMouse*>(mouse);
 	EventMouse *e = (EventMouse*)mouse;
@@ -339,7 +339,7 @@ void LoseMenu::onMouseMove(Event * mouse)
 		Bullet.SetShoot(eventMouse->getLocationInView());*/
 }
 
-void LoseMenu::onMouseUp(Event * mouse)
+void Settings::onMouseUp(Event * mouse)
 {
 	EventMouse* eventMouse = static_cast<EventMouse*>(mouse);
 	EventMouse *e = (EventMouse*)mouse;
@@ -359,12 +359,12 @@ void LoseMenu::onMouseUp(Event * mouse)
 	b_mouseclicked = true;
 }
 
-void LoseMenu::onMouseDown(Event * mouse)
+void Settings::onMouseDown(Event * mouse)
 {
 	
 }
 
-void LoseMenu::onMouseScroll(Event * mouse)
+void Settings::onMouseScroll(Event * mouse)
 {
 }
 

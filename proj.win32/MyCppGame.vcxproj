@@ -161,6 +161,8 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClCompile Include="..\Classes\LoseMenu.cpp" />
     <ClCompile Include="..\Classes\MainMenu.cpp" />
     <ClCompile Include="..\Classes\SceneManager.cpp" />
+    <ClCompile Include="..\Classes\Settings.cpp" />
+    <ClCompile Include="..\Classes\UpgradeMenu.cpp" />
     <ClCompile Include="..\Classes\WinMenu.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
@@ -178,6 +180,8 @@ xcopy "$(ProjectDir)..\Resources" "$(OutDir)" /D /E /I /F /Y
     <ClInclude Include="..\Classes\LoseMenu.h" />
     <ClInclude Include="..\Classes\MainMenu.h" />
     <ClInclude Include="..\Classes\SceneManager.h" />
+    <ClInclude Include="..\Classes\Settings.h" />
+    <ClInclude Include="..\Classes\UpgradeMenu.h" />
     <ClInclude Include="..\Classes\WinMenu.h" />
     <ClInclude Include="main.h" />
   </ItemGroup>
