@@ -2,7 +2,7 @@
 #define SCENEMANAGER_H
 
 #include "cocos2d.h"
-#include "Classes\Constants.h"
+#include "Constants.h"
 
 using namespace cocos2d;
 

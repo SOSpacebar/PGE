@@ -2,7 +2,7 @@
 #define __UPGRADEMENU_SCENE_H__
 
 #include "cocos2d.h"
-#include "Humans.h"
+//#include "Humans.h"
 //#include "Bullet.h"
 //#include "Asteroid.h"
 
@@ -34,8 +34,8 @@ public:
     CREATE_FUNC(UpgradeMenu);
 
 private:
-	GameHumans males;
-	GameHumans females;
+	//GameHumans males;
+	//GameHumans females;
 	//int asteroidsCount;
 	//float SpawnTimer;
 	Size visibleSize;

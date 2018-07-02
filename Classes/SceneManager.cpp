@@ -1,5 +1,9 @@
 #include "SceneManager.h"
 #include "MainMenu.h"
+#include "UpgradeMenu.h"
+#include "Settings.h"
+#include "LoseMenu.h"
+#include "WinMenu.h"
 #include "HelloWorldScene.h"
 #include "LoadingScene.h"
 #include "AudioManager.h"
@@ -44,16 +48,20 @@ void SceneManager::RunSceneWithType(const SceneType sceneType, const TransitionT
 		AudioManager::GetInstance()->PreLoadAudioByScene(SceneType::LOADING);
 		break;
 	case SceneType::UPGRADESCENE:
-		sceneToRun = LoadingScene::createScene();
+		sceneToRun = UpgradeMenu::createScene();
 		AudioManager::GetInstance()->PreLoadAudioByScene(SceneType::UPGRADESCENE);
 		break;
 	case SceneType::WINSCENE:
-		sceneToRun = LoadingScene::createScene();
+		sceneToRun = WinMenu::createScene();
 		AudioManager::GetInstance()->PreLoadAudioByScene(SceneType::WINSCENE);
 		break;
 	case SceneType::LOSESCENE:
-		sceneToRun = LoadingScene::createScene();
+		sceneToRun = LoseMenu::createScene();
 		AudioManager::GetInstance()->PreLoadAudioByScene(SceneType::LOSESCENE);
+		break;
+	case SceneType::SETTING:
+		sceneToRun = Settings::createScene();
+		AudioManager::GetInstance()->PreLoadAudioByScene(SceneType::SETTING);
 		break;
 	default:
 		log("WARNING! Default value when trying to run scene with id %d", static_cast<int>(sceneType));

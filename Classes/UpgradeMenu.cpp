@@ -78,8 +78,8 @@ bool UpgradeMenu::init()
 	// Load Main Sprite
 //	males.Init("Humans/Man_Right_1.png", "maleSprite", (visibleSize.width * 0.5f)+150, visibleSize.height * 0.5f, 0, 9,1);
 	//females.Init("Humans/Female_Right_1.png", "femaleSprite", (visibleSize.width * 0.5f) - 150, visibleSize.height * 0.5f, 0, 9,2);
-	nodeItems->addChild(males.getSprite(), 1);
-	nodeItems->addChild(females.getSprite(), 1);
+	//nodeItems->addChild(males.getSprite(), 1);
+	//nodeItems->addChild(females.getSprite(), 1);
 	//// Loading Bullet Sprites
 	//Bullet.Init("Bullet.png", "Bullets", 100, (visibleSize.height - playingSize.height), 0);
 	// Loading Asteroid Sprites
@@ -116,8 +116,8 @@ bool UpgradeMenu::init()
 		groundItems->addChild(newNode, 1);
 	}*/
 
-	float bS = 1.9f;
-	int bX = (visibleSize.width - playingSize.width) - (background->getContentSize().width/5.2f);
+	float bS = 1.6f;
+	int bX = (visibleSize.width - playingSize.width) - (background->getContentSize().width/360.0f);
 	int bY = (visibleSize.height - playingSize.height)- (background->getContentSize().height*0.2f);
 
 	auto newBackgroundNode = Sprite::createWithSpriteFrame(background->getSpriteFrame());
@@ -309,21 +309,21 @@ void UpgradeMenu::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 	case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
 		mainCharacter.MoveChar(EAction::eLeft);
 		break;*/
-	case EventKeyboard::KeyCode::KEY_SPACE:
-		SceneManager::GetInstance()->RunSceneWithType(SceneType::LOADING, TransitionType::CROSSFADE);
-		break;
-	case EventKeyboard::KeyCode::KEY_D:
-		SceneManager::GetInstance()->RunSceneWithType(SceneType::WINSCENE, TransitionType::CROSSFADE);
-		break;
-	case EventKeyboard::KeyCode::KEY_A:
-		SceneManager::GetInstance()->RunSceneWithType(SceneType::LOSESCENE, TransitionType::CROSSFADE);
-		break;
-	case EventKeyboard::KeyCode::KEY_S:
-		SceneManager::GetInstance()->RunSceneWithType(SceneType::UPGRADESCENE, TransitionType::CROSSFADE);
-		break;
-	case EventKeyboard::KeyCode::KEY_W:
-		SceneManager::GetInstance()->RunSceneWithType(SceneType::SETTING, TransitionType::CROSSFADE);
-		break;
+	//case EventKeyboard::KeyCode::KEY_SPACE:
+	//	SceneManager::GetInstance()->RunSceneWithType(SceneType::LOADING, TransitionType::CROSSFADE);
+	//	break;
+	//case EventKeyboard::KeyCode::KEY_D:
+	//	SceneManager::GetInstance()->RunSceneWithType(SceneType::WINSCENE, TransitionType::CROSSFADE);
+	//	break;
+	//case EventKeyboard::KeyCode::KEY_A:
+	//	SceneManager::GetInstance()->RunSceneWithType(SceneType::LOSESCENE, TransitionType::CROSSFADE);
+	//	break;
+	//case EventKeyboard::KeyCode::KEY_S:
+	//	SceneManager::GetInstance()->RunSceneWithType(SceneType::UPGRADESCENE, TransitionType::CROSSFADE);
+	//	break;
+	//case EventKeyboard::KeyCode::KEY_W:
+	//	SceneManager::GetInstance()->RunSceneWithType(SceneType::SETTING, TransitionType::CROSSFADE);
+	//	break;
 	default:
 		break;
 	}
