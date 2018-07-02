@@ -76,8 +76,8 @@ bool MainMenu::init()
 
 
 	// Load Main Sprite
-	males.Init("Humans/Man_Right_1.png", "maleSprite", (visibleSize.width * 0.5f)+150, visibleSize.height * 0.5f, 0, 9,1);
-	females.Init("Humans/Female_Right_1.png", "femaleSprite", (visibleSize.width * 0.5f) - 150, visibleSize.height * 0.5f, 0, 9,2);
+	males.Init("Humans/Man_Right_1.png", "maleSprite", 100, visibleSize.height * 0.5f, 0, 9,1,playingSize.width);
+	females.Init("Humans/Female_Right_1.png", "femaleSprite", 0 , visibleSize.height * 0.5f, 0, 9,2, playingSize.width);
 	nodeItems->addChild(males.getSprite(), 1);
 	nodeItems->addChild(females.getSprite(), 1);
 	//// Loading Bullet Sprites
@@ -266,7 +266,8 @@ void MainMenu::menuCloseCallback(Ref* pSender)
 void MainMenu::update(float delta)
 {
 	//mainCharacter.Update(delta);
-
+	males.Update(delta);
+	females.Update(delta);
 	//for (auto bullet : m_Bullets) {
 	//	// bullet->BulletMove();
 	//}
