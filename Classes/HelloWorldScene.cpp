@@ -75,8 +75,8 @@ bool HelloWorld::init()
 
 	// Load Main Sprite
 	mainCharacter.Init("MainCannon.png", "mainSprite", visibleSize.width * 0.5f, (visibleSize.height - playingSize.height), 0);
-	males.Init("Humans/Man_Right_1.png", "maleSprite", (visibleSize.width * 0.5f) + 150, visibleSize.height * 0.5f, 0, 2, 1);
-	females.Init("Humans/Female_Right_1.png", "femaleSprite", (visibleSize.width * 0.5f) - 150, visibleSize.height * 0.5f, 0, 2, 2);
+	males.Init("Humans/Man_Right_1.png", "maleSprite", (visibleSize.width * 0.5f) + 150, visibleSize.height * 0.5f, 0, 2, 1, playingSize.width);
+	females.Init("Humans/Female_Right_1.png", "femaleSprite", (visibleSize.width * 0.5f) - 150, visibleSize.height * 0.5f, 0, 2, 2, playingSize.width);
 
 	nodeItems->addChild(males.getSprite(), 1);
 	nodeItems->addChild(females.getSprite(), 1);
@@ -238,6 +238,9 @@ bool HelloWorld::init()
     contactListener->onContactBegin = CC_CALLBACK_1(HelloWorld::OnContactBegin, this);
     _eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
 
+	// Set into Constants
+	Constant::GetInstance()->SetVisableSize(visibleSize);
+
     /////////////////////////////
     // 2. add a menu item with "X" image, which is clicked to quit the program
     //    you may modify it.
@@ -350,22 +353,22 @@ void HelloWorld::update(float delta)
 {
 	mainCharacter.Update(delta);
 
-	for (auto bullet : m_Bullets) {
-		if (bullet->getSprite()->getPosition().y > visibleSize.height)
-		{
-			bullet->getSprite()->removeFromParentAndCleanup(true);
-		}
-	}
+	//for (auto bullet : m_Bullets) {
+	//	if (bullet->getSprite()->getPosition().y > visibleSize.height)
+	//	{
+	//		bullet->getSprite()->removeFromParentAndCleanup(true);
+	//	}
+	//}
 
 	//Asteroid.Update(delta);
 
-	for (auto asteroid : asteroid) {
-		//if (asteroid->getSprite()->getPosition().y < playingSize.height)
-		//{
-		//	asteroid->getSprite()->removeFromParentAndCleanup(true);
-		//	health -= 5;
-		//}
-	}
+	//for (auto asteroid : asteroid) {
+	//	//if (asteroid->getSprite()->getPosition().y < playingSize.height)
+	//	//{
+	//	//	asteroid->getSprite()->removeFromParentAndCleanup(true);
+	//	//	health -= 5;
+	//	//}
+	//}
 
 	
 	spawnTimer += delta;
@@ -457,7 +460,7 @@ void HelloWorld::onMouseUp(Event * mouse)
 	//m_Bullets.push_back(proBullet);
 
 	// Add Bullets to Movable
-	moveableItems->addChild(proBullet->getSprite(), 1);
+	moveableItems->addChild(proBullet, 1);
 	b_mouseclicked = true;
 }
 

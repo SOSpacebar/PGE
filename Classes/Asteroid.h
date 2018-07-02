@@ -25,11 +25,8 @@ public:
 
 	void AsteroidMove(float posX, float posY);
 
-	//Sprite* getSprite(void) { return Asteroids; }
-
 private:
 	EAsteroid eDir;
-	//Sprite* Asteroids;
 	float fSpeed;
 	GameChar* player;
 };

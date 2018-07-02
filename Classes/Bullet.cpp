@@ -5,20 +5,22 @@
 void GameBullet::Init(const char * pngName, const char * name, float posX, float posY,float Rotation, float mouseX, float mouseY)
 {
 	// Load Main Sprite
-	Bullets = Sprite::create(pngName);
-	Bullets->setAnchorPoint(Vec2(0.5, 0.5));
-	Bullets->setPosition(posX, posY);
-	Bullets->setRotation(Rotation);
-	Bullets->setName(name);
+	//this = Sprite::create(pngName);
+	this->setTexture(pngName);
+	this->setAnchorPoint(Vec2(0.5, 0.5));
+	this->setPosition(posX, posY);
+	this->setRotation(Rotation);
+	this->setName(name);
+	this->SetActive(true);
 
-	auto physicsBody = PhysicsBody::createBox(Size(Bullets->getContentSize().width, Bullets->getContentSize().height),
+	auto physicsBody = PhysicsBody::createBox(Size(this->getContentSize().width, this->getContentSize().height),
 		PhysicsMaterial(1.0f,0.0f,0.0f));
 	
 	physicsBody->setDynamic(false);
 	physicsBody->setCollisionBitmask(static_cast<int>(CollisionType::ROCKET)); // This is like tagging a number to the game object, i have set 2 to be for rocket;
 	physicsBody->setContactTestBitmask(true); //Enables the collision
 
-	Bullets->addComponent(physicsBody);
+	this->addComponent(physicsBody);
 	eDir = eStopBullet;
 	fSpeed = 0.001f;
 
@@ -26,6 +28,8 @@ void GameBullet::Init(const char * pngName, const char * name, float posX, float
 	dirY = mouseY;
 
 	AudioManager::GetInstance()->SFXPlay("SFX_Rocket");
+
+	this->scheduleUpdate();
 }
 
 void GameBullet::MoveChar(EBullet dir)
@@ -35,20 +39,28 @@ void GameBullet::MoveChar(EBullet dir)
 
 void GameBullet::MoveCharByCoord(float posX, float posY)
 {
-	Bullets->stopAllActions();
-	float diffX = posX - Bullets->getPosition().x;
-	float diffY = posY - Bullets->getPosition().y;
+	this->stopAllActions();
+	float diffX = posX - this->getPosition().x;
+	float diffY = posY - this->getPosition().y;
 	Vec2 vec = Vec2(diffX, diffY);
 	auto moveEvent = MoveBy::create(vec.length() * fSpeed, vec);
-	Bullets->runAction(moveEvent);
+	this->runAction(moveEvent);
 }
 
-void GameBullet::Update(float dt)
+void GameBullet::update(float dt)
 {
 	if (eDir != EBullet::eStopBullet)
 	{
 		auto moveEvent = MoveBy::create(0.0f, Vec2(eDir, 0.f));
-		Bullets->runAction(moveEvent);
+		this->runAction(moveEvent);
+	}
+
+	if (this->getPosition().x > Constant::GetInstance()->GetVisableSize().width || 
+		this->getPosition().x < 0 ||
+		this->getPosition().y > Constant::GetInstance()->GetVisableSize().height ||
+		this->getPosition().y < 0)
+	{
+		this->removeFromParentAndCleanup(true);
 	}
 }
 
@@ -61,16 +73,16 @@ void GameBullet::RotateChar(EBullet dir)
 void GameBullet::SetShoot(Vec2 mouseCursorPos)
 {
 	Vec2 dir;
-	dir = mouseCursorPos - Bullets->getPosition();
+	dir = mouseCursorPos - this->getPosition();
 	dir.normalize();
 	float angle = atan2(dir.y, dir.x);
 	angle = CC_RADIANS_TO_DEGREES(angle);
-	Bullets->setRotation(-angle);
+	this->setRotation(-angle);
 }
 
 void GameBullet::BulletMove()
 {
-	Bullets->stopAllActions();
+	this->stopAllActions();
 	//float diffX = posX - Bullets->getPosition().x;
 	//float diffY = posY - Bullets->getPosition().y;
 	float diffX = dirX;
@@ -79,6 +91,7 @@ void GameBullet::BulletMove()
 	// auto moveEvent = MoveBy::create(vec.length() * fSpeed, vec * 10);
 	auto moveEvent = MoveBy::create(5, vec.getNormalized() * 3000);
 
-	Bullets->runAction(moveEvent);
+	//Bullets->runAction(moveEvent);
+	this->runAction(moveEvent);
 }
 
