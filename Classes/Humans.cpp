@@ -1,6 +1,6 @@
 #include "Humans.h"
 
-void GameHumans::Init(const char * pngName, const char * name, float posX, float posY, float rotation, float scale,int fM)
+void GameHumans::Init(const char * pngName, const char * name, float posX, float posY, float rotation, float scale,int fM, int playingSize)
 {
 	// Load Main Sprite
 	humans = Sprite::create(pngName);
@@ -9,14 +9,15 @@ void GameHumans::Init(const char * pngName, const char * name, float posX, float
 	humans->setRotation(rotation);
 	humans->setName(name);
 	humans->setScale(scale);
+	eDir = eStopHuman;
 
 	stop();
 	//Vector<SpriteFrame*> animFrames;
 	
-
+	playingSizeWidth = playingSize;
 	fMale = fM;
 
-	auto moveEvent = MoveBy::create(5, Vec2(500, 0));
+	auto moveEvent = MoveBy::create(5, Vec2(playingSizeWidth, 0));
 	moveEvent->setTag(1);
 	humans->runAction(moveEvent);
 	
@@ -130,18 +131,23 @@ void GameHumans::Update(float dt)
 	}
 
 	
-	if(humans->getActionByTag(1)->isDone())
+	if(humans->getPosition().x <=playingSizeWidth && humans->getPosition().x > playingSizeWidth - 100)
 	{
-		a = !a;
+		a = false;
+	}
+	if (humans->getPosition().x >= 0 && humans->getPosition().x < 10)
+	{
+		a = true;
 	}
 
 	if (a == true)
 	{
-		MoveChar(EHumanSprite::eLeftHuman);
+		MoveChar(EHumanSprite::eRightHuman);
 	}
 	else
 	{
-		MoveChar(EHumanSprite::eRightHuman);
+		
+		MoveChar(EHumanSprite::eLeftHuman);
 	}
 }
 
