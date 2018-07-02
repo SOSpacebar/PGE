@@ -1,7 +1,7 @@
 #ifndef _BULLET_H__
 #define __BULLET_H__
 
-#include "cocos2d.h"
+#include "GameObject.h"
 
 using namespace cocos2d;
 
@@ -11,24 +11,21 @@ enum EBullet {
 	eRightBullet
 };
 
-class GameBullet
+class GameBullet : public GameObject
 {
 public:
 	void Init(const char * pngName, const char * name, float posX, float posY, float Rotation, float mouseX, float mouseY);
 	void MoveChar(EBullet dir);
 	void MoveCharByCoord(float posX, float posY);
-	void Update(float dt);
+	void update(float dt); 
 	
 	void RotateChar(EBullet dir);
 
 	void SetShoot(Vec2 mouseCursorPos);
 	void BulletMove();
 
-	Sprite* getSprite(void) { return Bullets; }
-
 private:
 	EBullet eDir;
-	Sprite* Bullets;
 	float fSpeed;
 	float dirX, dirY;
 };
