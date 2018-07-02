@@ -26,6 +26,8 @@ public:
 
 	Sprite* getSprite(void) { return Bullets; }
 
+	float timer = 0;
+
 private:
 	EBullet eDir;
 	Sprite* Bullets;

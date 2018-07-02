@@ -43,7 +43,7 @@ void GameBullet::MoveCharByCoord(float posX, float posY)
 	Bullets->runAction(moveEvent);
 }
 
-void GameBullet::Update(float)
+void GameBullet::Update(float dt)
 {
 	if (eDir != EBullet::eStopBullet)
 	{
@@ -78,6 +78,7 @@ void GameBullet::BulletMove()
 	Vec2 vec = Vec2(diffX, diffY);
 	// auto moveEvent = MoveBy::create(vec.length() * fSpeed, vec * 10);
 	auto moveEvent = MoveBy::create(5, vec.getNormalized() * 3000);
+
 	Bullets->runAction(moveEvent);
 }
 
