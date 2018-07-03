@@ -25,7 +25,7 @@ Scene* UpgradeMenu::createScene()
 static void problemLoading(const char* filename)
 {
     printf("Error while loading: %s\n", filename);
-    printf("Depending on how you compiled you might have to add 'Resources/' in front of filenames in HelloWorldScene.cpp\n");
+    printf("Depending on how you compiled you might have to add 'Resources/' in front of filenames in Upgrade.cpp\n");
 }
 
 // on "init" you need to initialize your instance
@@ -309,21 +309,24 @@ void UpgradeMenu::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 	case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
 		mainCharacter.MoveChar(EAction::eLeft);
 		break;*/
-	//case EventKeyboard::KeyCode::KEY_SPACE:
-	//	SceneManager::GetInstance()->RunSceneWithType(SceneType::LOADING, TransitionType::CROSSFADE);
-	//	break;
-	//case EventKeyboard::KeyCode::KEY_D:
-	//	SceneManager::GetInstance()->RunSceneWithType(SceneType::WINSCENE, TransitionType::CROSSFADE);
-	//	break;
-	//case EventKeyboard::KeyCode::KEY_A:
-	//	SceneManager::GetInstance()->RunSceneWithType(SceneType::LOSESCENE, TransitionType::CROSSFADE);
-	//	break;
-	//case EventKeyboard::KeyCode::KEY_S:
-	//	SceneManager::GetInstance()->RunSceneWithType(SceneType::UPGRADESCENE, TransitionType::CROSSFADE);
-	//	break;
-	//case EventKeyboard::KeyCode::KEY_W:
-	//	SceneManager::GetInstance()->RunSceneWithType(SceneType::SETTING, TransitionType::CROSSFADE);
-	//	break;
+	case EventKeyboard::KeyCode::KEY_SPACE:
+		SceneManager::GetInstance()->RunSceneWithType(SceneType::LOADING, TransitionType::CROSSFADE);
+		break;
+	case EventKeyboard::KeyCode::KEY_D:
+		SceneManager::GetInstance()->RunSceneWithType(SceneType::WINSCENE, TransitionType::CROSSFADE);
+		break;
+	case EventKeyboard::KeyCode::KEY_A:
+		SceneManager::GetInstance()->RunSceneWithType(SceneType::LOSESCENE, TransitionType::CROSSFADE);
+		break;
+	case EventKeyboard::KeyCode::KEY_S:
+		SceneManager::GetInstance()->RunSceneWithType(SceneType::UPGRADESCENE, TransitionType::CROSSFADE);
+		break;
+	case EventKeyboard::KeyCode::KEY_W:
+		SceneManager::GetInstance()->RunSceneWithType(SceneType::SETTING, TransitionType::CROSSFADE);
+		break;
+	case EventKeyboard::KeyCode::KEY_Q:
+		SceneManager::GetInstance()->RunSceneWithType(SceneType::MAINMENU, TransitionType::CROSSFADE);
+		break;
 	default:
 		break;
 	}

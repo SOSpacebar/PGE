@@ -71,7 +71,7 @@ bool Settings::init()
 
 	// Create a sprite object to load the image
 	//auto sprite = Sprite::create("ground.png");
-	auto background = Sprite::create("Settings.png");
+	auto background = Sprite::create("UpgradeMenu.png");
 
 
 
@@ -117,9 +117,9 @@ bool Settings::init()
 		groundItems->addChild(newNode, 1);
 	}*/
 
-	float bS = 1.9f;
-	int bX = (visibleSize.width - playingSize.width) - (background->getContentSize().width/5.2f);
-	int bY = (visibleSize.height - playingSize.height)- (background->getContentSize().height*0.2f);
+	float bS = 1.6f;
+	int bX = (visibleSize.width - playingSize.width) - (background->getContentSize().width / 360.0f);
+	int bY = (visibleSize.height - playingSize.height) - (background->getContentSize().height*0.2f);
 
 	auto newBackgroundNode = Sprite::createWithSpriteFrame(background->getSpriteFrame());
 	newBackgroundNode->setAnchorPoint(Vec2::ZERO);
@@ -314,7 +314,19 @@ void Settings::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 		SceneManager::GetInstance()->RunSceneWithType(SceneType::LOADING, TransitionType::CROSSFADE);
 		break;
 	case EventKeyboard::KeyCode::KEY_D:
-		//mainCharacter.RotateCharByDir(EAction::eLeft);
+		SceneManager::GetInstance()->RunSceneWithType(SceneType::WINSCENE, TransitionType::CROSSFADE);
+		break;
+	case EventKeyboard::KeyCode::KEY_A:
+		SceneManager::GetInstance()->RunSceneWithType(SceneType::LOSESCENE, TransitionType::CROSSFADE);
+		break;
+	case EventKeyboard::KeyCode::KEY_S:
+		SceneManager::GetInstance()->RunSceneWithType(SceneType::UPGRADESCENE, TransitionType::CROSSFADE);
+		break;
+	case EventKeyboard::KeyCode::KEY_W:
+		SceneManager::GetInstance()->RunSceneWithType(SceneType::SETTING, TransitionType::CROSSFADE);
+		break;
+	case EventKeyboard::KeyCode::KEY_Q:
+		SceneManager::GetInstance()->RunSceneWithType(SceneType::MAINMENU, TransitionType::CROSSFADE);
 		break;
 	default:
 		break;
