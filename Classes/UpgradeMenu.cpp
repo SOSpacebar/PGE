@@ -3,6 +3,7 @@
 #include "SceneManager.h"
 #include "Constants.h"
 #include "AudioManager.h"
+#include "ui/UIButton.h"
 
 USING_NS_CC;
 
@@ -212,36 +213,131 @@ bool UpgradeMenu::init()
 
     // add a label shows "Hello World"
     // create and initialize a label
+	auto label = Label::createWithTTF("Upgrade", "fonts/Marker Felt.ttf", 45);
+	if (label == nullptr)
+	{
+		problemLoading("'fonts/Marker Felt.ttf'");
+	}
+	else
+	{
+		// position the label on the center of the screen
+		label->setPosition(Vec2(origin.x + visibleSize.width / 2,
+			origin.y + visibleSize.height - label->getContentSize().height));
+		label->setColor(Color3B(0, 0, 0));
 
-    //auto label = Label::createWithTTF("Hello World", "fonts/Marker Felt.ttf", 24);
-    //if (label == nullptr)
-    //{
-    //    problemLoading("'fonts/Marker Felt.ttf'");
-    //}
-    //else
-    //{
-    //    // position the label on the center of the screen
-    //    label->setPosition(Vec2(origin.x + visibleSize.width/2,
-    //                            origin.y + visibleSize.height - label->getContentSize().height));
+		// add the label as a child to this layer
+		this->addChild(label, 1);
+	}
 
-    //    // add the label as a child to this layer
-    //    this->addChild(label, 1);
-    //}
+	auto upgradeBuilding_0 = Button::create("BuildingUpgrade.png", "BuildingUpgradeComplete.png", "BuildingUpgradeComplete.png");
+	upgradeBuilding_0->setPosition(Vec2(origin.x + 200, origin.y + 900));
+	upgradeBuilding_0->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type)
+	{
+		switch (type)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			break;
+		default:
+			break;
+		}
+	});
+	this->addChild(upgradeBuilding_0, 2);
 
-    //// add "HelloWorld" splash screen"
-    //auto sprite = Sprite::create("HelloWorld.png");
-    //if (sprite == nullptr)
-    //{
-    //    problemLoading("'HelloWorld.png'");
-    //}
-    //else
-    //{
-    //    // position the sprite on the center of the screen
-    //    sprite->setPosition(Vec2(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
+	auto upgradeBuilding_1 = Button::create("BuildingUpgrade2Locked.png", "BuildingUpgrade2.png", "BuildingUpgrade2Complete.png");
+	upgradeBuilding_1->setPosition(Vec2(origin.x + 300, origin.y + 950));
+	upgradeBuilding_1->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type)
+	{
+		switch (type)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			break;
+		default:
+			break;
+		}
+	});
+	this->addChild(upgradeBuilding_1, 2);
 
-    //    // add the sprite as a child to this layer
-    //    this->addChild(sprite, 0);
-    //}
+
+
+	/*************************************************
+
+	BULLET UPGRADE SECTIONS
+	
+	*************************************************/
+	auto upgradeWeapon_0 = Button::create("BulletUpgrade.png", "BulletUpgradeComplete.png", "BulletUpgradeLocked.png");
+	upgradeWeapon_0->setPosition(Vec2(origin.x + 200, origin.y + 700));
+	upgradeWeapon_0->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type)
+	{
+		switch (type)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			break;
+		default:
+			break;
+		}
+	});
+	this->addChild(upgradeWeapon_0, 2);
+	
+	auto upgradeWeapon_1 = Button::create("BulletUpgrade2.png", "BulletUpgrade2Complete.png", "BulletUpgrade2Locked.png");
+	upgradeWeapon_1->setPosition(Vec2(origin.x + 300, origin.y + 650));
+	upgradeWeapon_1->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type)
+	{
+		switch (type)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			break;
+		default:
+			break;
+		}
+	});
+	this->addChild(upgradeWeapon_1, 2);
+
+	auto upgradeWeapon_2 = Button::create("BulletUpgrade3.png", "BulletUpgrade3Complete.png", "BulletUpgrade3Locked.png");
+	upgradeWeapon_2->setPosition(Vec2(origin.x + 400, origin.y + 600));
+	upgradeWeapon_2->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type)
+	{
+		switch (type)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			break;
+		default:
+			break;
+		}
+	});
+	this->addChild(upgradeWeapon_2, 2);
+
+
+	/*************************************************
+
+	HEALTH UPGRADE SECTIONS
+
+	*************************************************/
+	auto upgradeHealth_0 = Button::create("BulletUpgrade.png", "BulletUpgradeComplete.png", "BulletUpgradeLocked.png");
+	upgradeHealth_0->setPosition(Vec2(origin.x + 200, origin.y + 700));
+	upgradeHealth_0->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type)
+	{
+		switch (type)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			break;
+		default:
+			break;
+		}
+	});
+	this->addChild(upgradeHealth_0, 2);
+
     return true;
 }
 
@@ -376,6 +472,10 @@ void UpgradeMenu::onMouseDown(Event * mouse)
 }
 
 void UpgradeMenu::onMouseScroll(Event * mouse)
+{
+}
+
+void UpgradeMenu::onButtonClick()
 {
 }
 

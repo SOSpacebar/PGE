@@ -7,7 +7,7 @@
 //#include "Asteroid.h"
 
 using namespace cocos2d;
-
+using namespace ui;
 class UpgradeMenu : public cocos2d::Scene
 {
 public:
@@ -28,6 +28,7 @@ public:
 	virtual void onMouseUp(Event* mouse);
 	virtual void onMouseDown(Event* mouse);
 	virtual void onMouseScroll(Event* mouse);
+	virtual void onButtonClick();
 
 	bool b_mouseclicked = false;
 	// implement the "static create()" method manually

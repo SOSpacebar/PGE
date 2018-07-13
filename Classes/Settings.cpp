@@ -5,6 +5,7 @@
 #include "Constants.h"
 #include "AudioManager.h"
 
+using namespace ui;
 USING_NS_CC;
 
 Scene* Settings::createScene()
@@ -213,6 +214,21 @@ bool Settings::init()
 
     // add a label shows "Hello World"
     // create and initialize a label
+	auto label = Label::createWithTTF("Settings" , "fonts/Marker Felt.ttf", 45);
+	if (label == nullptr)
+	{
+		problemLoading("'fonts/Marker Felt.ttf'");
+	}
+	else
+	{
+		// position the label on the center of the screen
+		label->setPosition(Vec2(origin.x + visibleSize.width / 2,
+			origin.y + visibleSize.height - label->getContentSize().height));
+		label->setColor(Color3B(0, 0, 0));
+
+		// add the label as a child to this layer
+		this->addChild(label, 1);
+	}
 
     //auto label = Label::createWithTTF("Hello World", "fonts/Marker Felt.ttf", 24);
     //if (label == nullptr)

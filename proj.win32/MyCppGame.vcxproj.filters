@@ -54,13 +54,13 @@
     <ClCompile Include="..\Classes\WinMenu.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Constants.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
     <ClCompile Include="..\Classes\Settings.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\UpgradeMenu.cpp">
-	<Filter>src</Filter>
-	</ClCompile>
-    <ClCompile Include="..\Classes\Constants.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
