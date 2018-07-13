@@ -230,7 +230,8 @@ bool UpgradeMenu::init()
 	}
 
 	auto upgradeBuilding_0 = Button::create("BuildingUpgrade.png", "BuildingUpgradeComplete.png", "BuildingUpgradeComplete.png");
-	upgradeBuilding_0->setPosition(Vec2(origin.x + 200, origin.y + 900));
+	upgradeBuilding_0->setScale(2,2);
+	upgradeBuilding_0->setPosition(Vec2(origin.x + 200, origin.y + 800));
 	upgradeBuilding_0->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type)
 	{
 		switch (type)
@@ -246,7 +247,8 @@ bool UpgradeMenu::init()
 	this->addChild(upgradeBuilding_0, 2);
 
 	auto upgradeBuilding_1 = Button::create("BuildingUpgrade2Locked.png", "BuildingUpgrade2.png", "BuildingUpgrade2Complete.png");
-	upgradeBuilding_1->setPosition(Vec2(origin.x + 300, origin.y + 950));
+	upgradeBuilding_1->setScale(2, 2);
+	upgradeBuilding_1->setPosition(Vec2(origin.x + 400, origin.y + 850));
 	upgradeBuilding_1->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type)
 	{
 		switch (type)
@@ -261,7 +263,22 @@ bool UpgradeMenu::init()
 	});
 	this->addChild(upgradeBuilding_1, 2);
 
-
+	auto upgradeBuilding_2 = Button::create("BuildingUpgrade2Locked.png", "BuildingUpgrade2.png", "BuildingUpgrade2Complete.png");
+	upgradeBuilding_2->setScale(2, 2);
+	upgradeBuilding_2->setPosition(Vec2(origin.x + 400, origin.y + 725));
+	upgradeBuilding_2->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type)
+	{
+		switch (type)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			break;
+		default:
+			break;
+		}
+	});
+	this->addChild(upgradeBuilding_2, 2);
 
 	/*************************************************
 
@@ -269,7 +286,8 @@ bool UpgradeMenu::init()
 	
 	*************************************************/
 	auto upgradeWeapon_0 = Button::create("BulletUpgrade.png", "BulletUpgradeComplete.png", "BulletUpgradeLocked.png");
-	upgradeWeapon_0->setPosition(Vec2(origin.x + 200, origin.y + 700));
+	upgradeWeapon_0->setScale(2, 2);
+	upgradeWeapon_0->setPosition(Vec2(origin.x + 200, origin.y + 500));
 	upgradeWeapon_0->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type)
 	{
 		switch (type)
@@ -284,8 +302,9 @@ bool UpgradeMenu::init()
 	});
 	this->addChild(upgradeWeapon_0, 2);
 	
-	auto upgradeWeapon_1 = Button::create("BulletUpgrade2.png", "BulletUpgrade2Complete.png", "BulletUpgrade2Locked.png");
-	upgradeWeapon_1->setPosition(Vec2(origin.x + 300, origin.y + 650));
+	auto upgradeWeapon_1 = Button::create("BulletUpgrade2Locked.png", "BulletUpgrade2.png", "BulletUpgrade2Complete.png");
+	upgradeWeapon_1->setScale(2, 2);
+	upgradeWeapon_1->setPosition(Vec2(origin.x + 400, origin.y + 500));
 	upgradeWeapon_1->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type)
 	{
 		switch (type)
@@ -300,8 +319,9 @@ bool UpgradeMenu::init()
 	});
 	this->addChild(upgradeWeapon_1, 2);
 
-	auto upgradeWeapon_2 = Button::create("BulletUpgrade3.png", "BulletUpgrade3Complete.png", "BulletUpgrade3Locked.png");
-	upgradeWeapon_2->setPosition(Vec2(origin.x + 400, origin.y + 600));
+	auto upgradeWeapon_2 = Button::create("BulletUpgrade3Locked.png", "BulletUpgrade3.png", "BulletUpgrade3Complete.png");
+	upgradeWeapon_2->setScale(2, 2);
+	upgradeWeapon_2->setPosition(Vec2(origin.x + 600, origin.y + 425));
 	upgradeWeapon_2->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type)
 	{
 		switch (type)
@@ -316,14 +336,30 @@ bool UpgradeMenu::init()
 	});
 	this->addChild(upgradeWeapon_2, 2);
 
-
+	auto upgradeWeapon_3 = Button::create("BulletUpgrade4Locked.png", "BulletUpgrade4.png", "BulletUpgrade4sComplete.png");
+	upgradeWeapon_3->setScale(2, 2);
+	upgradeWeapon_3->setPosition(Vec2(origin.x + 600, origin.y + 550));
+	upgradeWeapon_3->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type)
+	{
+		switch (type)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			break;
+		default:
+			break;
+		}
+	});
+	this->addChild(upgradeWeapon_3, 2);
 	/*************************************************
 
 	HEALTH UPGRADE SECTIONS
 
 	*************************************************/
-	auto upgradeHealth_0 = Button::create("BulletUpgrade.png", "BulletUpgradeComplete.png", "BulletUpgradeLocked.png");
-	upgradeHealth_0->setPosition(Vec2(origin.x + 200, origin.y + 700));
+	auto upgradeHealth_0 = Button::create("HealthIncrease.png", "HealthIncreaseComplete.png", "HealthIncreaseLocked.png");
+	upgradeHealth_0->setScale(2, 2);
+	upgradeHealth_0->setPosition(Vec2(origin.x + 200, origin.y + 200));
 	upgradeHealth_0->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type)
 	{
 		switch (type)
@@ -337,6 +373,57 @@ bool UpgradeMenu::init()
 		}
 	});
 	this->addChild(upgradeHealth_0, 2);
+
+	auto upgradeHealth_1 = Button::create("HealthIncrease2Locked.png", "HealthIncrease2.png","HealthIncrease2Complete.png");
+	upgradeHealth_1->setScale(2, 2);
+	upgradeHealth_1->setPosition(Vec2(origin.x + 400, origin.y + 200));
+	upgradeHealth_1->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type)
+	{
+		switch (type)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			break;
+		default:
+			break;
+		}
+	});
+	this->addChild(upgradeHealth_1, 2);
+
+	auto upgradeHealth_2 = Button::create("HealthIncrease2Locked.png", "HealthIncrease2.png", "HealthIncrease2Complete.png");
+	upgradeHealth_2->setScale(2 , 2);
+	upgradeHealth_2->setPosition(Vec2(origin.x + 600, origin.y + 250));
+	upgradeHealth_2->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type)
+	{
+		switch (type)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			break;
+		default:
+			break;
+		}
+	});
+	this->addChild(upgradeHealth_2, 2);
+
+	auto upgradeHealth_3 = Button::create("HealthIncrease2Locked.png", "HealthIncrease2.png", "HealthIncrease2Complete.png");
+	upgradeHealth_3->setScale(2, 2);
+	upgradeHealth_3->setPosition(Vec2(origin.x + 600, origin.y + 125));
+	upgradeHealth_3->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type)
+	{
+		switch (type)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			break;
+		default:
+			break;
+		}
+	});
+	this->addChild(upgradeHealth_3, 2);
 
     return true;
 }

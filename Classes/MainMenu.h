@@ -5,6 +5,7 @@
 #include "Humans.h"
 //#include "Bullet.h"
 //#include "Asteroid.h"
+using namespace ui;
 
 using namespace cocos2d;
 

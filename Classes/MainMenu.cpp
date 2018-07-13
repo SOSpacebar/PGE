@@ -3,6 +3,7 @@
 #include "SceneManager.h"
 #include "Constants.h"
 #include "AudioManager.h"
+#include "ui/UIButton.h"
 
 USING_NS_CC;
 
@@ -70,7 +71,7 @@ bool MainMenu::init()
 
 	// Create a sprite object to load the image
 	//auto sprite = Sprite::create("ground.png");
-	auto background = Sprite::create("MainMenu.png");
+	auto background = Sprite::create("MainMenu2.png");
 
 
 
@@ -179,6 +180,78 @@ bool MainMenu::init()
 		return true;
 	};
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
+
+	auto Start = Button::create("Start.png", "StartPress.png");
+	Start->setPosition(Vec2(origin.x + visibleSize.width / 2,
+		(origin.y + visibleSize.height - Start->getContentSize().height) / 2));
+	Start->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type)
+	{
+		switch (type)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			SceneManager::GetInstance()->RunSceneWithType(SceneType::LOADING, TransitionType::CROSSFADE);
+			break;
+		default:
+			break;
+		}
+	});
+	this->addChild(Start, 2);
+
+	auto Upgrade = Button::create("Upgrade.png", "UpgradePress.png");
+	Upgrade->setPosition(Vec2(origin.x + visibleSize.width / 2,
+		(origin.y + visibleSize.height - Upgrade->getContentSize().height) / 2.5));
+	Upgrade->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type)
+	{
+		switch (type)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			SceneManager::GetInstance()->RunSceneWithType(SceneType::UPGRADESCENE, TransitionType::CROSSFADE);
+			break;
+		default:
+			break;
+		}
+	});
+	this->addChild(Upgrade, 2);
+
+	auto Setting = Button::create("Settings.png", "SettingPress.png");
+	Setting->setPosition(Vec2(origin.x + visibleSize.width / 2,
+		(origin.y + visibleSize.height - Setting->getContentSize().height) / 3.5));
+	Setting->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type)
+	{
+		switch (type)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			SceneManager::GetInstance()->RunSceneWithType(SceneType::SETTING, TransitionType::CROSSFADE);
+			break;
+		default:
+			break;
+		}
+	});
+	this->addChild(Setting, 2);
+
+	auto Exit = Button::create("Exit.png", "ExitPress.png");
+	Exit->setPosition(Vec2(origin.x + visibleSize.width / 2,
+		(origin.y + visibleSize.height - Exit->getContentSize().height) / 5.5));
+	Exit->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type)
+	{
+		switch (type)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			SceneManager::GetInstance()->RunSceneWithType(SceneType::SETTING, TransitionType::CROSSFADE);
+			break;
+		default:
+			break;
+		}
+	});
+	this->addChild(Exit, 2);
     /////////////////////////////
     // 2. add a menu item with "X" image, which is clicked to quit the program
     //    you may modify it.
