@@ -4,6 +4,7 @@
 #include "SceneManager.h"
 #include "Constants.h"
 #include "AudioManager.h"
+#include "ui/CocosGUI.h"
 
 using namespace ui;
 USING_NS_CC;
@@ -214,21 +215,67 @@ bool Settings::init()
 
     // add a label shows "Hello World"
     // create and initialize a label
-	auto label = Label::createWithTTF("Settings" , "fonts/Marker Felt.ttf", 45);
-	if (label == nullptr)
-	{
-		problemLoading("'fonts/Marker Felt.ttf'");
-	}
-	else
-	{
-		// position the label on the center of the screen
-		label->setPosition(Vec2(origin.x + visibleSize.width / 2,
-			origin.y + visibleSize.height - label->getContentSize().height));
-		label->setColor(Color3B(0, 0, 0));
 
-		// add the label as a child to this layer
-		this->addChild(label, 1);
-	}
+	//Label Settings
+	auto label = Label::createWithTTF("Settings" , "fonts/Marker Felt.ttf", 45);
+	// position the label on the center of the screen
+	label->setPosition(Vec2(origin.x + visibleSize.width / 2,
+		origin.y + visibleSize.height - label->getContentSize().height));
+	label->setColor(Color3B(0, 0, 0));
+	// add the label as a child to this layer
+	this->addChild(label, 1);
+
+
+	//Master Sounds
+	ui::Slider *sliderMainSound = ui::Slider::create();
+	sliderMainSound->loadBarTexture("Slider_Back.png");
+	sliderMainSound->loadSlidBallTextureNormal("SliderNode_Normal.png");
+	sliderMainSound->loadProgressBarTexture("Slider_PressBar.png");
+	sliderMainSound->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type) {
+		switch (type) {
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			break;
+		default: break;
+		}});
+	sliderMainSound->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
+	sliderMainSound->setScale(2, 2);
+	this->addChild(sliderMainSound, 2);
+
+	//SFX Sounds
+	ui::Slider *sliderSoundEffects = ui::Slider::create();
+	sliderSoundEffects->loadBarTexture("Slider_Back.png");
+	sliderSoundEffects->loadSlidBallTextureNormal("SliderNode_Normal.png");
+	sliderSoundEffects->loadProgressBarTexture("Slider_PressBar.png");
+	sliderSoundEffects->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type) {
+		switch (type) {
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			break;
+		default: break;
+		}});
+	sliderSoundEffects->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 3 + origin.y));
+	sliderSoundEffects->setScale(2, 2);
+	this->addChild(sliderSoundEffects, 2);
+
+	//SFX Backgrounds
+	ui::Slider *sliderBackgrounds = ui::Slider::create();
+	sliderBackgrounds->loadBarTexture("Slider_Back.png");
+	sliderBackgrounds->loadSlidBallTextureNormal("SliderNode_Normal.png");
+	sliderBackgrounds->loadProgressBarTexture("Slider_PressBar.png");
+	sliderBackgrounds->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type) {
+		switch (type) {
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			break;
+		default: break;
+		}});
+	sliderBackgrounds->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 6 + origin.y));
+	sliderBackgrounds->setScale(2, 2);
+	this->addChild(sliderBackgrounds, 2);
 
     //auto label = Label::createWithTTF("Hello World", "fonts/Marker Felt.ttf", 24);
     //if (label == nullptr)

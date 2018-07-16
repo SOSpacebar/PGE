@@ -245,7 +245,7 @@ bool MainMenu::init()
 		case ui::Widget::TouchEventType::BEGAN:
 			break;
 		case ui::Widget::TouchEventType::ENDED:
-			SceneManager::GetInstance()->RunSceneWithType(SceneType::SETTING, TransitionType::CROSSFADE);
+			CCDirector::sharedDirector()->end();
 			break;
 		default:
 			break;
