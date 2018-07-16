@@ -37,6 +37,9 @@ public:
 private:
 	GameHumans males;
 	GameHumans females;
+
+	GameHumans smallMales;
+	GameHumans smallFemales;
 	//int asteroidsCount;
 	//float SpawnTimer;
 	Size visibleSize;

@@ -1,6 +1,7 @@
 #include "Humans.h"
+#include "Constants.h"
 
-void GameHumans::Init(const char * pngName, const char * name, float posX, float posY, float rotation, float scale,int fM, int playingSize)
+void GameHumans::Init(const char * pngName, const char * name, float posX, float posY, float rotation, float scale,bool fM)
 {
 	// Load Main Sprite
 	humans = Sprite::create(pngName);
@@ -14,18 +15,14 @@ void GameHumans::Init(const char * pngName, const char * name, float posX, float
 	stop();
 	//Vector<SpriteFrame*> animFrames;
 	
-	playingSizeWidth = playingSize;
+	//Constant::GetInstance()->GetVisableSize().width = playingSize;
 	fMale = fM;
 
-	auto moveEvent = MoveBy::create(5, Vec2(playingSizeWidth, 0));
-	moveEvent->setTag(1);
-	humans->runAction(moveEvent);
-	
-
-	//auto delay = DelayTime::create(5.0f);
-	//auto delaySequence = Sequence::create(delay, delay->clone(), nullptr);
-	auto sequence = Sequence::create(moveEvent, moveEvent->reverse(), nullptr);
-	humans->runAction(RepeatForever::create(sequence));
+	//auto moveEvent = MoveBy::create(5, Vec2(Constant::GetInstance()->GetVisableSize().width, 0));
+	//moveEvent->setTag(1);
+	//humans->runAction(moveEvent);
+	//auto sequence = Sequence::create(moveEvent, moveEvent->reverse(), nullptr);
+	//humans->runAction(RepeatForever::create(sequence));
 
 	/*auto physicsBody = PhysicsBody::createBox(Size(Humans->getContentSize().width, Humans->getContentSize().height),
 		PhysicsMaterial(1.0f, 0.0f, 0.0f));
@@ -45,7 +42,7 @@ void GameHumans::Init(const char * pngName, const char * name, float posX, float
 void GameHumans::MoveChar(EHumanSprite DirX)
 {
 	eDir = DirX;
-	//humans->stopAllActions();
+	humans->stopAllActions();
 
 	Vector<SpriteFrame*> MoveAnimFrames;
 	MoveAnimFrames.reserve(3);
@@ -88,7 +85,6 @@ void GameHumans::MoveChar(EHumanSprite DirX)
 		stop();
 	}
 
-
 	Animation* MoveAnimation = Animation::createWithSpriteFrames(MoveAnimFrames, 0.5f);
 	Animate* animateMove = Animate::create(MoveAnimation);
 
@@ -124,37 +120,36 @@ void GameHumans::stop(void)
 
 void GameHumans::Update(float dt)
 {
-	if (eDir != EHumanSprite::eStopHuman)
+	auto moveEvent = MoveBy::create(0.0f, Vec2(10.0f, 0.f)*eDir);
+	humans->runAction(moveEvent);
+
+	if (eDir == EHumanSprite::eStopHuman)
 	{
-		auto moveEvent = MoveBy::create(0.0f, Vec2(1.0f, 0.f)*eDir);
-		humans->runAction(moveEvent);
+		if (fMale)
+			MoveChar(EHumanSprite::eRightHuman);
+		else
+			MoveChar(EHumanSprite::eLeftHuman);
+		
 	}
+		
 
 	
-	if(humans->getPosition().x <=playingSizeWidth && humans->getPosition().x > playingSizeWidth - 100)
+	if(humans->getPosition().x > Constant::GetInstance()->GetVisableSize().width/* && humans->getPosition().x > Constant::GetInstance()->GetVisableSize().width - 100*/)
 	{
-		a = false;
+		if (eDir != EHumanSprite::eLeftHuman)
+			MoveChar(EHumanSprite::eLeftHuman);
 	}
-	if (humans->getPosition().x >= 0 && humans->getPosition().x < 10)
+	if (humans->getPosition().x < 0 /*&& humans->getPosition().x < 10*/)
 	{
-		a = true;
-	}
-
-	if (a == true)
-	{
-		MoveChar(EHumanSprite::eRightHuman);
-	}
-	else
-	{
-		
-		MoveChar(EHumanSprite::eLeftHuman);
+		if (eDir != EHumanSprite::eRightHuman)
+			MoveChar(EHumanSprite::eRightHuman);
 	}
 }
 
-void GameHumans::RotateChar(EHumanSprite dir)
-{
-	eDir = dir;
-}
+//void GameHumans::RotateChar(EHumanSprite dir)
+//{
+//	eDir = dir;
+//}
 
 void GameHumans::HumanMove(float posX, float posY)
 {

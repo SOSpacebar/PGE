@@ -14,7 +14,7 @@ enum EHumanSprite {
 class GameHumans
 {
 public:
-	void Init(const char * pngName, const char * name, float posX, float posY, float rotation,float scale,int fM, int playingSize);
+	void Init(const char * pngName, const char * name, float posX, float posY, float rotation,float scale, bool fM);
 	void MoveChar(EHumanSprite dir);
 	void Update(float dt);
 
@@ -30,8 +30,8 @@ private:
 	EHumanSprite eDir;
 	Sprite* humans;
 	float fSpeed;
-	int fMale;
-	int playingSizeWidth;
+	bool fMale;
+	//int playingSizeWidth;
 	bool left;
 	bool a = true;
 };
