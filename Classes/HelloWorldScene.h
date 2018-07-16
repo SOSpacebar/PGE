@@ -5,6 +5,7 @@
 #include "Character.h"
 #include "Bullet.h"
 #include "Asteroid.h"
+#include "Buildings.h"
 #include "Humans.h"
 
 using namespace cocos2d;
@@ -43,6 +44,8 @@ private:
 
 	GameHumans males;
 	GameHumans females;
+
+	GameBuilding buildings;
 
 	std::vector<GameBullet*> m_Bullets;
 

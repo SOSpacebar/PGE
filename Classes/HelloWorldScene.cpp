@@ -71,12 +71,10 @@ bool HelloWorld::init()
 	auto background = Sprite::create("background.png");
 
 
-
-
 	// Load Main Sprite
 	mainCharacter.Init("MainCannon.png", "mainSprite", visibleSize.width * 0.5f, (visibleSize.height - playingSize.height), 0);
-	males.Init("Humans/Man_Right_1.png", "maleSprite", (visibleSize.width * 0.5f) + 150, visibleSize.height * 0.5f, 0, 2, 0);
-	females.Init("Humans/Female_Right_1.png", "femaleSprite", (visibleSize.width * 0.5f) - 150, visibleSize.height * 0.5f, 0, 2, 1);
+	males.Init("Humans/Man_Right_1.png", "maleSprite", (visibleSize.width * 0.5f) + 150, visibleSize.height * 0.2f, 0, 2, 0);
+	females.Init("Humans/Female_Right_1.png", "femaleSprite", (visibleSize.width * 0.5f) - 150, visibleSize.height * 0.2f, 0, 2, 1);
 
 	nodeItems->addChild(males.getSprite(), 1);
 	nodeItems->addChild(females.getSprite(), 1);
