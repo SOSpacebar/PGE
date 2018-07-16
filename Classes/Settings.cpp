@@ -239,9 +239,14 @@ bool Settings::init()
 			break;
 		default: break;
 		}});
-	sliderMainSound->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2 + origin.y));
+	sliderMainSound->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 1.5 + origin.y));
 	sliderMainSound->setScale(2, 2);
 	this->addChild(sliderMainSound, 2);
+	
+	auto MainSoundtext = Label::createWithTTF("Main Volume", "fonts/Marker Felt.ttf", 45);
+	MainSoundtext->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 1.4 + origin.y));
+	MainSoundtext->setColor(Color3B(255, 255, 255));
+	this->addChild(MainSoundtext, 1);
 
 	//SFX Sounds
 	ui::Slider *sliderSoundEffects = ui::Slider::create();
@@ -256,9 +261,14 @@ bool Settings::init()
 			break;
 		default: break;
 		}});
-	sliderSoundEffects->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 3 + origin.y));
+	sliderSoundEffects->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 1.8 + origin.y));
 	sliderSoundEffects->setScale(2, 2);
 	this->addChild(sliderSoundEffects, 2);
+
+	auto SoundEffecttext = Label::createWithTTF("SFX", "fonts/Marker Felt.ttf", 45);
+	SoundEffecttext->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 1.7 + origin.y));
+	SoundEffecttext->setColor(Color3B(255, 255, 255));
+	this->addChild(SoundEffecttext, 1);
 
 	//SFX Backgrounds
 	ui::Slider *sliderBackgrounds = ui::Slider::create();
@@ -273,11 +283,27 @@ bool Settings::init()
 			break;
 		default: break;
 		}});
-	sliderBackgrounds->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 6 + origin.y));
+	sliderBackgrounds->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 2.4 + origin.y));
 	sliderBackgrounds->setScale(2, 2);
 	this->addChild(sliderBackgrounds, 2);
 
-    //auto label = Label::createWithTTF("Hello World", "fonts/Marker Felt.ttf", 24);
+	auto Backgroundtext = Label::createWithTTF("BGM", "fonts/Marker Felt.ttf", 45);
+	Backgroundtext->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2.2 + origin.y));
+	Backgroundtext->setColor(Color3B(255, 255, 255));
+	this->addChild(Backgroundtext, 1);
+
+	//Mute
+	auto muteText = Label::createWithTTF("Mute", "fonts/Marker Felt.ttf", 45);
+	muteText->setPosition(Vec2(origin.x + visibleSize.width / 1.5, origin.y + visibleSize.height / 4.5 + origin.y));
+	muteText->setColor(Color3B(255, 255, 255));
+	this->addChild(muteText, 1);
+    
+	//UnMute
+	auto unMuteText = Label::createWithTTF("UnMute", "fonts/Marker Felt.ttf", 45);
+	unMuteText->setPosition(Vec2(origin.x + visibleSize.width / 3, origin.y + visibleSize.height / 4.5 + origin.y));
+	unMuteText->setColor(Color3B(255, 255, 255));
+	this->addChild(unMuteText, 1);
+	//auto label = Label::createWithTTF("Hello World", "fonts/Marker Felt.ttf", 24);
     //if (label == nullptr)
     //{
     //    problemLoading("'fonts/Marker Felt.ttf'");

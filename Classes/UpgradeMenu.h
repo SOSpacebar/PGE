@@ -41,6 +41,8 @@ private:
 	//float SpawnTimer;
 	Size visibleSize;
 	Size playingSize;
+	Label* upgradeTitleText;
+	Label* upgradeText;
 };
 
 #endif // __UpgradeMenu_SCENE_H__

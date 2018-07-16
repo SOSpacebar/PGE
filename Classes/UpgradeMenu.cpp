@@ -214,6 +214,16 @@ bool UpgradeMenu::init()
 
     // add a label shows "Hello World"
     // create and initialize a label
+	upgradeTitleText = Label::createWithTTF("", "fonts/Marker Felt.ttf", 45);
+	upgradeTitleText->setPosition(Vec2(origin.x + visibleSize.width / 1.4, origin.y + visibleSize.height / 1.2 + origin.y));
+	upgradeTitleText->setColor(Color3B(255, 255, 255));
+	this->addChild(upgradeTitleText, 1);
+
+	upgradeText = Label::createWithTTF("", "fonts/Marker Felt.ttf", 45);
+	upgradeText->setPosition(Vec2(origin.x + visibleSize.width / 1.4, origin.y + visibleSize.height / 1.6 + origin.y));
+	upgradeText->setColor(Color3B(255, 255, 255));
+	this->addChild(upgradeText, 1);
+
 	auto label = Label::createWithTTF("Upgrade", "fonts/Marker Felt.ttf", 45);
 	if (label == nullptr)
 	{
@@ -240,6 +250,7 @@ bool UpgradeMenu::init()
 		case ui::Widget::TouchEventType::BEGAN:
 			break;
 		case ui::Widget::TouchEventType::ENDED:
+
 			break;
 		default:
 			break;
@@ -289,11 +300,14 @@ bool UpgradeMenu::init()
 	auto upgradeWeapon_0 = Button::create("BulletUpgrade.png", "BulletUpgradeComplete.png", "BulletUpgradeLocked.png");
 	upgradeWeapon_0->setScale(2, 2);
 	upgradeWeapon_0->setPosition(Vec2(origin.x + 200, origin.y + 500));
+
 	upgradeWeapon_0->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type)
 	{
 		switch (type)
 		{
 		case ui::Widget::TouchEventType::BEGAN:
+			upgradeTitleText->setString("Bullet Upgrade Level 1");
+			upgradeText->setString("First Upgrade stronger missle on the run");
 			break;
 		case ui::Widget::TouchEventType::ENDED:
 			break;
@@ -311,6 +325,8 @@ bool UpgradeMenu::init()
 		switch (type)
 		{
 		case ui::Widget::TouchEventType::BEGAN:
+			upgradeTitleText->setString("Bullet Upgrade Level 2");
+			upgradeText->setString("Double the missle!!!!! \n Double the fun!!!!");
 			break;
 		case ui::Widget::TouchEventType::ENDED:
 			break;
