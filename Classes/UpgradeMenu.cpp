@@ -248,6 +248,8 @@ bool UpgradeMenu::init()
 		switch (type)
 		{
 		case ui::Widget::TouchEventType::BEGAN:
+			upgradeTitleText->setString("Building Upgrade Level 1");
+			upgradeText->setString("More Income will get from the level fight");
 			break;
 		case ui::Widget::TouchEventType::ENDED:
 
@@ -266,6 +268,8 @@ bool UpgradeMenu::init()
 		switch (type)
 		{
 		case ui::Widget::TouchEventType::BEGAN:
+			upgradeTitleText->setString("Building Upgrade Level 2v1");
+			upgradeText->setString("More and More income will be able to get");
 			break;
 		case ui::Widget::TouchEventType::ENDED:
 			break;
@@ -283,6 +287,8 @@ bool UpgradeMenu::init()
 		switch (type)
 		{
 		case ui::Widget::TouchEventType::BEGAN:
+			upgradeTitleText->setString("Building Upgrade Level 2v2");
+			upgradeText->setString("More Income and Minimum health recovery increase");
 			break;
 		case ui::Widget::TouchEventType::ENDED:
 			break;
@@ -344,6 +350,8 @@ bool UpgradeMenu::init()
 		switch (type)
 		{
 		case ui::Widget::TouchEventType::BEGAN:
+			upgradeTitleText->setString("Bullet Upgrade Level 3v2");
+			upgradeText->setString("Triple the missle!!!!! \n More focus on one direction and \n damage on one enemy increase more stronger");
 			break;
 		case ui::Widget::TouchEventType::ENDED:
 			break;
@@ -361,6 +369,8 @@ bool UpgradeMenu::init()
 		switch (type)
 		{
 		case ui::Widget::TouchEventType::BEGAN:
+			upgradeTitleText->setString("Bullet Upgrade Level 3v1");
+			upgradeText->setString("Triple the missle!!!!! \n Hit Omnidirection to all enemy around it");
 			break;
 		case ui::Widget::TouchEventType::ENDED:
 			break;
@@ -382,6 +392,8 @@ bool UpgradeMenu::init()
 		switch (type)
 		{
 		case ui::Widget::TouchEventType::BEGAN:
+			upgradeTitleText->setString("Health Upgrade Level 1");
+			upgradeText->setString("More Health increase in the game");
 			break;
 		case ui::Widget::TouchEventType::ENDED:
 			break;
@@ -399,6 +411,8 @@ bool UpgradeMenu::init()
 		switch (type)
 		{
 		case ui::Widget::TouchEventType::BEGAN:
+			upgradeTitleText->setString("Health Upgrade Level 2");
+			upgradeText->setString("More and More Health increase in the game");
 			break;
 		case ui::Widget::TouchEventType::ENDED:
 			break;
@@ -416,6 +430,8 @@ bool UpgradeMenu::init()
 		switch (type)
 		{
 		case ui::Widget::TouchEventType::BEGAN:
+			upgradeTitleText->setString("Health Upgrade Level 3v1");
+			upgradeText->setString("Recovery Overtime");
 			break;
 		case ui::Widget::TouchEventType::ENDED:
 			break;
@@ -433,6 +449,8 @@ bool UpgradeMenu::init()
 		switch (type)
 		{
 		case ui::Widget::TouchEventType::BEGAN:
+			upgradeTitleText->setString("Health Upgrade Level 3v2");
+			upgradeText->setString("Health Increase x3");
 			break;
 		case ui::Widget::TouchEventType::ENDED:
 			break;
@@ -441,6 +459,24 @@ bool UpgradeMenu::init()
 		}
 	});
 	this->addChild(upgradeHealth_3, 2);
+
+	auto Back = Button::create("Back.png", "BackPress.png");
+	Back->setScale(1.5, 1.5);
+	Back->setPosition(Vec2(origin.x + visibleSize.width / 15, origin.y + visibleSize.height / 1.14 + origin.y));
+	Back->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type)
+	{
+		switch (type)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			SceneManager::GetInstance()->RunSceneWithType(SceneType::MAINMENU, TransitionType::CROSSFADE);
+			break;
+		default:
+			break;
+		}
+	});
+	this->addChild(Back, 2);
 
     return true;
 }
