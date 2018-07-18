@@ -84,6 +84,9 @@
     <ClCompile Include="..\Classes\GameStats.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\Classes\Buildings.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
@@ -144,6 +147,9 @@
       <Filter>src\Gameplay</Filter>
     </ClInclude>
     <ClInclude Include="..\Classes\GameStats.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Classes\Buildings.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

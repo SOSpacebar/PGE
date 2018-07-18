@@ -5,6 +5,7 @@
 #include "Character.h"
 #include "Bullet.h"
 #include "Asteroid.h"
+#include "Buildings.h"
 #include "Humans.h"
 #include "WaveSpawner.h"
 #include "GameStats.h"
@@ -46,6 +47,8 @@ private:
 
 	GameHumans males;
 	GameHumans females;
+
+	GameBuilding buildings;
 
 	std::vector<GameBullet*> m_Bullets;
 

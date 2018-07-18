@@ -294,15 +294,45 @@ bool Settings::init()
 
 	//Mute
 	auto muteText = Label::createWithTTF("Mute", "fonts/Marker Felt.ttf", 45);
-	muteText->setPosition(Vec2(origin.x + visibleSize.width / 1.5, origin.y + visibleSize.height / 4.5 + origin.y));
+	muteText->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 4 + origin.y));
 	muteText->setColor(Color3B(255, 255, 255));
 	this->addChild(muteText, 1);
     
-	//UnMute
-	auto unMuteText = Label::createWithTTF("UnMute", "fonts/Marker Felt.ttf", 45);
-	unMuteText->setPosition(Vec2(origin.x + visibleSize.width / 3, origin.y + visibleSize.height / 4.5 + origin.y));
-	unMuteText->setColor(Color3B(255, 255, 255));
-	this->addChild(unMuteText, 1);
+	auto mute = Button::create("UnMute.png", "UnMutePress.png");
+	mute->setScale(2, 2);
+	mute->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 6 + origin.y));
+	mute->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type)
+	{
+		switch (type)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			break;
+		default:
+			break;
+		}
+	});
+	this->addChild(mute, 2);
+
+	auto Back = Button::create("Back.png", "BackPress.png");
+	Back->setScale(1.5, 1.5);
+	Back->setPosition(Vec2(origin.x + visibleSize.width / 15, origin.y + visibleSize.height / 1.14 + origin.y));
+	Back->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type)
+	{
+		switch (type)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			SceneManager::GetInstance()->RunSceneWithType(SceneType::MAINMENU, TransitionType::CROSSFADE);
+			break;
+		default:
+			break;
+		}
+	});
+	this->addChild(Back, 2);
+
 	//auto label = Label::createWithTTF("Hello World", "fonts/Marker Felt.ttf", 24);
     //if (label == nullptr)
     //{
