@@ -105,6 +105,8 @@ bool LoadingScene::init()
 	// add the clipping node to the layer
 	addChild(clipper, 1000, "loadingimage");
 
+	loadScene = false;
+
 	// Node container for moveable sprites
 	//moveableItems = Node::create();
 	//moveableItems->setName("moveableItems");
@@ -248,8 +250,9 @@ void LoadingScene::update(float delta)
 	{
 		percent += delta * 15;
 	}
-	else if (percent > 100.f)
+	else if (percent > 100.f && !loadScene)
 	{
+		loadScene = true;
 		SceneManager::GetInstance()->RunSceneWithType(SceneType::GAMEPLAY, TransitionType::FADE);
 	}
 }

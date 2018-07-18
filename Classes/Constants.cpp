@@ -13,6 +13,16 @@ Size Constant::GetVisableSize()
 	return visableSize;
 }
 
+void Constant::SetHealth(float _health)
+{
+	m_stats.SetPlayerHealth(_health);
+}
+
+float Constant::GetHealth()
+{
+	return m_stats.GetPlayerHealth();
+}
+
 Constant * Constant::GetInstance()
 {
 	if (!_instance)

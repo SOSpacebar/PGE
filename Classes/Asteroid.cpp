@@ -48,7 +48,8 @@ void GameAsteroid::update(float dt)
 	if (this->getPosition().y < 0)
 	{
 		this->removeFromParentAndCleanup(true);
-		player->health -= 5;
+		float hp = Constant::GetInstance()->GetHealth();
+		Constant::GetInstance()->SetHealth((Constant::GetInstance()->GetHealth() - 5.f));
 	}
 }
 

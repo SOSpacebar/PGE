@@ -80,6 +80,15 @@ bool HelloWorld::init()
 
 	nodeItems->addChild(males.getSprite(), 1);
 	nodeItems->addChild(females.getSprite(), 1);
+
+	// Spawn Manager
+	spawner.Init(moveableItems);
+	spawner.AddWave(10, 0.5f);
+	//GameAsteroid* asteroids = new GameAsteroid();
+	//float asteroidRandX = random(0, (int)(visibleSize.width - 10));
+	//asteroids->Init("Asteroid.png", "Asteroids", asteroidRandX, (visibleSize.height - 10), 0, &mainCharacter);
+	//moveableItems->addChild(asteroids, 1);
+
 	//// Loading Bullet Sprites
 	//Bullet.Init("Bullet.png", "Bullets", 100, (visibleSize.height - playingSize.height), 0);
 	// Loading Asteroid Sprites
@@ -183,10 +192,10 @@ bool HelloWorld::init()
 	progressTimer->setBarChangeRate(Vec2(1.0f, 0.0f));
 
 	//Set Percent value
-	mainCharacter.health = 100;
+	gameStats.SetPlayerHealth(100);
 
 	// set the filling of the gauge in percent; from 0-100%
-	progressTimer->setPercentage(mainCharacter.health);
+	progressTimer->setPercentage(gameStats.GetPlayerHealth());
 
 	// add the progress timer as a child to the clipper, so the gauge will follow the
 	// image form
@@ -240,6 +249,7 @@ bool HelloWorld::init()
 
 	// Set into Constants
 	Constant::GetInstance()->SetVisableSize(visibleSize);
+	Constant::GetInstance()->SetHealth(gameStats.GetPlayerHealth());
 
     /////////////////////////////
     // 2. add a menu item with "X" image, which is clicked to quit the program
@@ -352,6 +362,7 @@ bool HelloWorld::OnContactBegin(cocos2d::PhysicsContact & contact)
 void HelloWorld::update(float delta)
 {
 	mainCharacter.Update(delta);
+	spawner.Update(delta);
 
 	//for (auto bullet : m_Bullets) {
 	//	if (bullet->getSprite()->getPosition().y > visibleSize.height)
@@ -371,20 +382,20 @@ void HelloWorld::update(float delta)
 	//}
 
 	
-	spawnTimer += delta;
-	
-	if (spawnTimer > 1.f)
-	{
-		GameAsteroid* asteroids = new GameAsteroid();
-		float asteroidRandX = random(0, (int)(visibleSize.width - 10));
-		asteroids->Init("Asteroid.png", "Asteroids", asteroidRandX, (visibleSize.height - 10), 0, &mainCharacter);
+	//spawnTimer += delta;
+	//
+	//if (spawnTimer > 1.f)
+	//{
+	//	GameAsteroid* asteroids = new GameAsteroid();
+	//	float asteroidRandX = random(0, (int)(visibleSize.width - 10));
+	//	asteroids->Init("Asteroid.png", "Asteroids", asteroidRandX, (visibleSize.height - 10), 0, &mainCharacter);
 
-		// Add Bullets to Movable
-		moveableItems->addChild(asteroids, 1);
-		spawnTimer = 0;
-	}
+	//	// Add Bullets to Movable
+	//	moveableItems->addChild(asteroids, 1);
+	//	spawnTimer = 0;
+	//}
 
-	progressTimer->setPercentage(mainCharacter.health);
+	progressTimer->setPercentage(Constant::GetInstance()->GetHealth());
 
 	//if (health > 0)
 	//{

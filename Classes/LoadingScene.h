@@ -38,6 +38,7 @@ private:
 	Size playingSize;
 
 	float percent;
+	bool loadScene;
 	ProgressTimer *progressTimer;
 };
 
