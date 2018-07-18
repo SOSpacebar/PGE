@@ -13,6 +13,16 @@ Size Constant::GetVisableSize()
 	return visableSize;
 }
 
+void Constant::SetGameObjectCount(int _num)
+{
+	m_stats.SetNumOfGameObjects(_num);
+}
+
+int Constant::GetGameObjectCount()
+{
+	return m_stats.GetNumOfGameObjects();
+}
+
 void Constant::SetHealth(float _health)
 {
 	m_stats.SetPlayerHealth(_health);

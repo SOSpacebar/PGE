@@ -19,6 +19,14 @@ void WaveSpawner::Update(float dt)
 			SpawnWave(waves[nextWave]);
 			waveCountDown = waves[nextWave].rate;
 		}
+		else if (state == SpawnState::WAITING)
+		{
+			if (Constant::GetInstance()->GetGameObjectCount() <= 0)
+			{
+				nextWave++;
+				//TODO: Change Scene to Upgrade.
+			}
+		}
 	}
 	else
 	{

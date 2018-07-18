@@ -50,6 +50,8 @@ void GameAsteroid::update(float dt)
 		this->removeFromParentAndCleanup(true);
 		float hp = Constant::GetInstance()->GetHealth();
 		Constant::GetInstance()->SetHealth((Constant::GetInstance()->GetHealth() - 5.f));
+		Constant::GetInstance()->SetGameObjectCount(Constant::GetInstance()->GetGameObjectCount() - 1);
+		log("Delete GameObject Count %d", Constant::GetInstance()->GetGameObjectCount());
 	}
 }
 

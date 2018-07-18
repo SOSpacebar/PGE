@@ -248,6 +248,7 @@ bool HelloWorld::init()
 	// Set into Constants
 	Constant::GetInstance()->SetVisableSize(visibleSize);
 	Constant::GetInstance()->SetHealth(gameStats.GetPlayerHealth());
+	Constant::GetInstance()->SetGameObjectCount(0);
 
     /////////////////////////////
     // 2. add a menu item with "X" image, which is clicked to quit the program
@@ -349,6 +350,9 @@ bool HelloWorld::OnContactBegin(cocos2d::PhysicsContact & contact)
 			nodeB->getNode()->removeFromParentAndCleanup(true);
 			scoreNum += 10;
 			label->setString("Score: " + std::to_string(scoreNum));
+
+			Constant::GetInstance()->SetGameObjectCount(Constant::GetInstance()->GetGameObjectCount() - 1);
+			log("Delete GameObject Count %d", Constant::GetInstance()->GetGameObjectCount());
 		}
 	}
 

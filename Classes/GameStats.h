@@ -6,9 +6,11 @@ class GameStats
 public:
 	void SetPlayerHealth(float _newHealth);
 	float GetPlayerHealth();
-	
+	void SetNumOfGameObjects(int _gameObject);
+	int GetNumOfGameObjects();
 private:
 	float playerHealth;
+	int gameObjectCounter;
 };
 
 

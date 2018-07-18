@@ -39,6 +39,8 @@ class Constant
 public:
 	void SetVisableSize(Size _newSize);
 	Size GetVisableSize();
+	void SetGameObjectCount(int _num);
+	int GetGameObjectCount();
 	void SetHealth(float _health);
 	float GetHealth();
 
