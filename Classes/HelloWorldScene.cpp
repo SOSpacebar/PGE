@@ -189,19 +189,6 @@ bool HelloWorld::init()
 	// the x axis stays at 100 % all the time
 	progressTimer->setBarChangeRate(Vec2(1.0f, 0.0f));
 
-	//Set Percent value
-	gameStats.SetPlayerHealth(100);
-
-	// set the filling of the gauge in percent; from 0-100%
-	progressTimer->setPercentage(gameStats.GetPlayerHealth());
-
-	// add the progress timer as a child to the clipper, so the gauge will follow the
-	// image form
-	clipper->addChild(progressTimer);
-
-	// add the clipping node to the layer
-	addChild(clipper, 1000, "loadingimage");
-
 	// Movement 
 	//auto moveEvent = MoveBy::create(5, Vec2(200, 0));
 	//mainSprite->runAction(moveEvent);
@@ -247,8 +234,21 @@ bool HelloWorld::init()
 
 	// Set into Constants
 	Constant::GetInstance()->SetVisableSize(visibleSize);
-	Constant::GetInstance()->SetHealth(gameStats.GetPlayerHealth());
+	Constant::GetInstance()->SetMaxHealth(100);
+	Constant::GetInstance()->SetHealth(Constant::GetInstance()->GetMaxHealth());
 	Constant::GetInstance()->SetGameObjectCount(0);
+	
+	// set the filling of the gauge in percent; from 0-100%
+	progressTimer->setPercentage(Constant::GetInstance()->GetHealth());
+
+	// add the progress timer as a child to the clipper, so the gauge will follow the
+	// image form
+	clipper->addChild(progressTimer);
+
+	// add the clipping node to the layer
+	addChild(clipper, 1000, "loadingimage");
+
+
 
     /////////////////////////////
     // 2. add a menu item with "X" image, which is clicked to quit the program
