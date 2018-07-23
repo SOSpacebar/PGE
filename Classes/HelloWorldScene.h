@@ -43,7 +43,6 @@ private:
 	Node* moveableItems2;
 
 	GameChar mainCharacter;
-	GameStats gameStats;
 
 	GameHumans males;
 	GameHumans females;

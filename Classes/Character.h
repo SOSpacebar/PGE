@@ -27,7 +27,7 @@ public:
 
 	Sprite* getSprite(void) { return mainSprite; }
 
-	float health;
+	//float health;
 
 private:
 	EAction eDir;
