@@ -434,6 +434,30 @@ void HelloWorld::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 	case EventKeyboard::KeyCode::KEY_D:
 		mainCharacter.RotateCharByDir(EAction::eLeft);
 		break;
+	case EventKeyboard::KeyCode::KEY_1:
+		firstBullet = true;
+		secondBullet = false;
+		thirdBullet = false;
+		fourthBullet = false;
+		break;
+	case EventKeyboard::KeyCode::KEY_2:
+		firstBullet = false;
+		secondBullet = true;
+		thirdBullet = false;
+		fourthBullet = false;
+		break;
+	case EventKeyboard::KeyCode::KEY_3:
+		firstBullet = false;
+		secondBullet = false;
+		thirdBullet = true;
+		fourthBullet = false;
+		break;
+	case EventKeyboard::KeyCode::KEY_4:
+		firstBullet = false;
+		secondBullet = false;
+		thirdBullet = false;
+		fourthBullet = true;
+		break;
 	default:
 		break;
 	}
@@ -465,7 +489,49 @@ void HelloWorld::onMouseUp(Event * mouse)
 	Vec2 dir = Vec2(e->getCursorX(), e->getCursorY()) - Vec2(visibleSize.width * 0.5f, (visibleSize.height - playingSize.height));
 
 	GameBullet* proBullet = new GameBullet();
-	proBullet->Init("Bullet.png", "Bullets", visibleSize.width * 0.5f, (visibleSize.height - playingSize.height), 0, dir.x, dir.y);
+	GameBullet* bullet = new GameBullet();
+	GameBullet* thiBullet = new GameBullet();
+
+	if(firstBullet)
+		proBullet->Init("Bullet.png", "Bullets", visibleSize.width * 0.5f, (visibleSize.height - playingSize.height), 0, dir.x, dir.y);
+	else if (secondBullet)
+	{
+		proBullet->Init("Bullet.png", "1Bullets", visibleSize.width * 0.5f-20, (visibleSize.height - playingSize.height), 0, dir.x, dir.y);
+		bullet->Init("Bullet.png", "2Bullets", visibleSize.width * 0.5f+20, (visibleSize.height - playingSize.height), 0, dir.x, dir.y);
+
+		bullet->SetShoot(e->getLocationInView());
+		bullet->BulletMove();
+
+		moveableItems->addChild(bullet, 1);
+	}
+	else if (thirdBullet)
+	{
+		proBullet->Init("Bullet.png", "1Bullets", visibleSize.width * 0.5f - 25, (visibleSize.height - playingSize.height), 0, dir.x, dir.y);
+		bullet->Init("Bullet.png", "2Bullets", visibleSize.width * 0.5f, (visibleSize.height - playingSize.height), 0, dir.x, dir.y);
+		thiBullet->Init("Bullet.png", "3Bullets", visibleSize.width * 0.5f + 25, (visibleSize.height - playingSize.height), 0, dir.x, dir.y);
+
+		bullet->SetShoot(e->getLocationInView());
+		bullet->BulletMove();
+		thiBullet->SetShoot(e->getLocationInView());
+		thiBullet->BulletMove();
+
+		moveableItems->addChild(bullet, 1);
+		moveableItems->addChild(thiBullet, 1);
+	}
+	else if (fourthBullet)
+	{
+		proBullet->Init("Bullet.png", "1Bullets", visibleSize.width * 0.5f - 25, (visibleSize.height - playingSize.height), 0, dir.x, dir.y);
+		bullet->Init("Bullet.png", "2Bullets", visibleSize.width * 0.5f, (visibleSize.height - playingSize.height), 0, dir.x, dir.y);
+		thiBullet->Init("Bullet.png", "3Bullets", visibleSize.width * 0.5f + 25, (visibleSize.height - playingSize.height), 0, dir.x, dir.y);
+		
+		bullet->SetShoot(e->getLocationInView());
+		bullet->BulletMove();
+		thiBullet->SetShoot(e->getLocationInView());
+		thiBullet->BulletMove();
+
+		moveableItems->addChild(bullet, 1);
+		moveableItems->addChild(thiBullet, 1);
+	}
 
 	proBullet->SetShoot(e->getLocationInView());
 	proBullet->BulletMove();
