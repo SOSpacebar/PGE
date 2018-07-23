@@ -32,6 +32,7 @@ public:
 private:
 	EBullet eDir;
 	float fSpeed;
+	float rotation;
 	float dirX, dirY;
 };
 

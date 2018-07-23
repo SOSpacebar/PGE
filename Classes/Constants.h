@@ -41,8 +41,14 @@ public:
 	Size GetVisableSize();
 	void SetGameObjectCount(int _num);
 	int GetGameObjectCount();
+	
+	// Player Stuff
 	void SetHealth(float _health);
 	float GetHealth();
+	void SetMaxHealth(float _mhealth);
+	float GetMaxHealth();
+	void SetAttackLevel(GameStats::PlayerAttackLevel _lvl);
+	GameStats::PlayerAttackLevel GetAttackLevel();
 
 	static Constant* GetInstance();
 	~Constant();

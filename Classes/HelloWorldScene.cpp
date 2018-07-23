@@ -189,19 +189,6 @@ bool HelloWorld::init()
 	// the x axis stays at 100 % all the time
 	progressTimer->setBarChangeRate(Vec2(1.0f, 0.0f));
 
-	//Set Percent value
-	gameStats.SetPlayerHealth(100);
-
-	// set the filling of the gauge in percent; from 0-100%
-	progressTimer->setPercentage(gameStats.GetPlayerHealth());
-
-	// add the progress timer as a child to the clipper, so the gauge will follow the
-	// image form
-	clipper->addChild(progressTimer);
-
-	// add the clipping node to the layer
-	addChild(clipper, 1000, "loadingimage");
-
 	// Movement 
 	//auto moveEvent = MoveBy::create(5, Vec2(200, 0));
 	//mainSprite->runAction(moveEvent);
@@ -248,8 +235,21 @@ bool HelloWorld::init()
 
 	// Set into Constants
 	Constant::GetInstance()->SetVisableSize(visibleSize);
-	Constant::GetInstance()->SetHealth(gameStats.GetPlayerHealth());
+	Constant::GetInstance()->SetMaxHealth(100);
+	Constant::GetInstance()->SetHealth(Constant::GetInstance()->GetMaxHealth());
 	Constant::GetInstance()->SetGameObjectCount(0);
+	
+	// set the filling of the gauge in percent; from 0-100%
+	progressTimer->setPercentage(Constant::GetInstance()->GetHealth());
+
+	// add the progress timer as a child to the clipper, so the gauge will follow the
+	// image form
+	clipper->addChild(progressTimer);
+
+	// add the clipping node to the layer
+	addChild(clipper, 1000, "loadingimage");
+
+
 
     /////////////////////////////
     // 2. add a menu item with "X" image, which is clicked to quit the program
@@ -478,6 +478,18 @@ void HelloWorld::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 	case EventKeyboard::KeyCode::KEY_D:
 		mainCharacter.RotateCharByDirRight();
 		break;
+	case EventKeyboard::KeyCode::KEY_1:
+		Constant::GetInstance()->SetAttackLevel(GameStats::SINGLEROUND);
+		break;
+	case EventKeyboard::KeyCode::KEY_2:
+		Constant::GetInstance()->SetAttackLevel(GameStats::DOUBLEROUND);
+		break;
+	case EventKeyboard::KeyCode::KEY_3:
+		Constant::GetInstance()->SetAttackLevel(GameStats::TRIPLEROUND);
+		break;
+	case EventKeyboard::KeyCode::KEY_4:
+		Constant::GetInstance()->SetAttackLevel(GameStats::SPLITROUND);
+		break;
 	default:
 		break;
 	}
@@ -503,7 +515,49 @@ void HelloWorld::onMouseUp(Event * mouse)
 	Vec2 dir = Vec2(e->getCursorX(), e->getCursorY()) - Vec2(visibleSize.width * 0.5f, (visibleSize.height - playingSize.height));
 
 	GameBullet* proBullet = new GameBullet();
-	proBullet->Init("Bullet.png", "Bullets", visibleSize.width * 0.5f, (visibleSize.height - playingSize.height), 0, dir.x, dir.y);
+	GameBullet* bullet = new GameBullet();
+	GameBullet* thiBullet = new GameBullet();
+
+	if(Constant::GetInstance()->GetAttackLevel() == GameStats::SINGLEROUND)
+		proBullet->Init("Bullet.png", "Bullets", visibleSize.width * 0.5f, (visibleSize.height - playingSize.height), 0, dir.x, dir.y);
+	else if (Constant::GetInstance()->GetAttackLevel() == GameStats::DOUBLEROUND)
+	{
+		proBullet->Init("Bullet.png", "1Bullets", visibleSize.width * 0.5f-20, (visibleSize.height - playingSize.height), 0, dir.x, dir.y);
+		bullet->Init("Bullet.png", "2Bullets", visibleSize.width * 0.5f+20, (visibleSize.height - playingSize.height), 0, dir.x, dir.y);
+
+		bullet->SetShoot(e->getLocationInView());
+		bullet->BulletMove();
+
+		moveableItems->addChild(bullet, 1);
+	}
+	else if (Constant::GetInstance()->GetAttackLevel() == GameStats::TRIPLEROUND)
+	{
+		proBullet->Init("Bullet.png", "1Bullets", visibleSize.width * 0.5f - 25, (visibleSize.height - playingSize.height), 0, dir.x, dir.y);
+		bullet->Init("Bullet.png", "2Bullets", visibleSize.width * 0.5f, (visibleSize.height - playingSize.height), 0, dir.x, dir.y);
+		thiBullet->Init("Bullet.png", "3Bullets", visibleSize.width * 0.5f + 25, (visibleSize.height - playingSize.height), 0, dir.x, dir.y);
+
+		bullet->SetShoot(e->getLocationInView());
+		bullet->BulletMove();
+		thiBullet->SetShoot(e->getLocationInView());
+		thiBullet->BulletMove();
+
+		moveableItems->addChild(bullet, 1);
+		moveableItems->addChild(thiBullet, 1);
+	}
+	else if (Constant::GetInstance()->GetAttackLevel() == GameStats::SPLITROUND)
+	{
+		proBullet->Init("Bullet.png", "1Bullets", visibleSize.width * 0.5f - 25, (visibleSize.height - playingSize.height), -45, dir.x, dir.y);
+		bullet->Init("Bullet.png", "2Bullets", visibleSize.width * 0.5f, (visibleSize.height - playingSize.height), 90, dir.x, dir.y);
+		thiBullet->Init("Bullet.png", "3Bullets", visibleSize.width * 0.5f + 25, (visibleSize.height - playingSize.height), 45, dir.x, dir.y);
+		
+		bullet->SetShoot(e->getLocationInView());
+		bullet->BulletMove();
+		thiBullet->SetShoot(e->getLocationInView());
+		thiBullet->BulletMove();
+
+		moveableItems->addChild(bullet, 1);
+		moveableItems->addChild(thiBullet, 1);
+	}
 
 	proBullet->SetShoot(e->getLocationInView());
 	proBullet->BulletMove();

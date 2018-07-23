@@ -33,6 +33,26 @@ float Constant::GetHealth()
 	return m_stats.GetPlayerHealth();
 }
 
+void Constant::SetMaxHealth(float _mhealth)
+{
+	m_stats.SetPlayerMaxHealth(_mhealth);
+}
+
+float Constant::GetMaxHealth()
+{
+	return m_stats.GetPlayerMaxHealth();
+}
+
+void Constant::SetAttackLevel(GameStats::PlayerAttackLevel _lvl)
+{
+	m_stats.SetPlayerAttackLevel(_lvl);
+}
+
+GameStats::PlayerAttackLevel Constant::GetAttackLevel()
+{
+	return m_stats.GetPlayerAttackLevel();
+}
+
 Constant * Constant::GetInstance()
 {
 	if (!_instance)
