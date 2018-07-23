@@ -15,14 +15,14 @@ void GameChar::Init(const char * pngName, const char * name, float posX, float p
 	physicsBody->setDynamic(false);
 
 	mainSprite->addComponent(physicsBody);
-	eDir = eStop;
 	fSpeed = 0.01f;
+	rotateDir = Vec3::ZERO;
 }
 
-void GameChar::MoveChar(EAction dir)
-{
-	eDir = dir;
-}
+//void GameChar::MoveChar(EAction dir)
+//{
+//	eDir = dir;
+//}
 
 void GameChar::MoveCharByCoord(float posX, float posY)
 {
@@ -34,27 +34,35 @@ void GameChar::MoveCharByCoord(float posX, float posY)
 	mainSprite->runAction(moveEvent);
 }
 
-void GameChar::Update(float)
+void GameChar::Update(float dt)
 {
-	if (eDir != EAction::eStop)
-	{
-		auto moveEvent = MoveBy::create(0.0f, Vec2(eDir, 0.f));
-		mainSprite->runAction(moveEvent);
-	}
+	Vec3 rot = mainSprite->getRotation3D() + rotateDir * dt;
+	rot.clamp(Vec3(0, 0, -90), Vec3(0, 0, 90));
+	mainSprite->setRotation3D(rot);
 }
 
 void GameChar::RotateCharByDir(float Rotation)
 {
-	/*mainSprite->stopAllActions();
+	mainSprite->stopAllActions();
 	float rotate = mainSprite->getRotation();
-	auto rotateEvent = RotateBy::create(2, Vec3(0,0,90));
-	mainSprite->runAction(rotateEvent);*/
+	auto rotateEvent = RotateBy::create(0.5, Vec3(0,0,20));
+	mainSprite->runAction(rotateEvent);
 }
 
-void GameChar::RotateChar(EAction dir)
+void GameChar::RotateCharByDirRight()
 {
-	eDir = dir;
+	rotateDir.z = 100;
 }
+
+void GameChar::RotateCharByDirLeft()
+{
+	rotateDir.z = -100;
+}
+
+//void GameChar::RotateChar(EAction dir)
+//{
+//	eDir = dir;
+//}
 
 void GameChar::SetCharAim(Vec2 mouseCursorPos)
 {
@@ -64,6 +72,11 @@ void GameChar::SetCharAim(Vec2 mouseCursorPos)
 	float angle = atan2(dir.y, dir.x);
 	angle = CC_RADIANS_TO_DEGREES(angle) - 90;
 	mainSprite->setRotation(-angle);
+}
+
+void GameChar::StopRotation()
+{
+	rotateDir = Vec3::ZERO;
 }
 
 

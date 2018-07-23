@@ -215,21 +215,22 @@ bool HelloWorld::init()
 	// Keyboard Event
 	auto keyboardListener = EventListenerKeyboard::create();
 	keyboardListener->onKeyPressed = CC_CALLBACK_2(HelloWorld::onKeyPressed, this);
-	keyboardListener->onKeyReleased = CC_CALLBACK_2(HelloWorld::onKeyReleased, this);
+	//keyboardListener->onKeyReleased = CC_CALLBACK_2(HelloWorld::onKeyReleased, this);
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(keyboardListener, this);
 
 	// Mouse Event
-	auto mouseListener = EventListenerMouse::create();
-	mouseListener->onMouseMove = CC_CALLBACK_1(HelloWorld::onMouseMove, this);
-	mouseListener->onMouseUp = CC_CALLBACK_1(HelloWorld::onMouseUp, this);
-	mouseListener->onMouseDown = CC_CALLBACK_1(HelloWorld::onMouseDown, this);
-	mouseListener->onMouseScroll = CC_CALLBACK_1(HelloWorld::onMouseScroll, this);
-	_eventDispatcher->addEventListenerWithSceneGraphPriority(mouseListener, this);
+	//auto mouseListener = EventListenerMouse::create();
+	//mouseListener->onMouseMove = CC_CALLBACK_1(HelloWorld::onMouseMove, this);
+	//mouseListener->onMouseUp = CC_CALLBACK_1(HelloWorld::onMouseUp, this);
+	//mouseListener->onMouseDown = CC_CALLBACK_1(HelloWorld::onMouseDown, this);
+	//mouseListener->onMouseScroll = CC_CALLBACK_1(HelloWorld::onMouseScroll, this);
+	//_eventDispatcher->addEventListenerWithSceneGraphPriority(mouseListener, this);
 
 	// Touch Event
 	auto touchListener = EventListenerTouchOneByOne::create();
 	touchListener->onTouchBegan = [](Touch* touch, Event* event) {
 		return true;
+
 	};
 	touchListener->onTouchMoved = [](Touch* touch, Event* event) {
 		return true;
@@ -302,20 +303,64 @@ bool HelloWorld::init()
         this->addChild(label, 1);
     }
 
-    //// add "HelloWorld" splash screen"
-    //auto sprite = Sprite::create("HelloWorld.png");
-    //if (sprite == nullptr)
-    //{
-    //    problemLoading("'HelloWorld.png'");
-    //}
-    //else
-    //{
-    //    // position the sprite on the center of the screen
-    //    sprite->setPosition(Vec2(visibleSize.width/2 + origin.x, visibleSize.height/2 + origin.y));
+	auto LeftButton = Button::create("Left_Buttons.png", "Left_Buttons.png");
+	LeftButton->setScale(1, 1);
+	LeftButton->setPosition(Vec2(origin.x + visibleSize.width / 15, origin.y + visibleSize.height / 13 + origin.y));
+	LeftButton->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type)
+	{
+		switch (type)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			mainCharacter.RotateCharByDirLeft();
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			mainCharacter.StopRotation();
+			break;
+		default:
+			break;
+		}
+	});
+	this->addChild(LeftButton, 2);
 
-    //    // add the sprite as a child to this layer
-    //    this->addChild(sprite, 0);
-    //}
+	
+	auto RightButton = Button::create("Right_Buttons.png", "Right_Buttons.png");
+	RightButton->setScale(1, 1);
+	RightButton->setPosition(Vec2(origin.x + visibleSize.width / 1.1, origin.y + visibleSize.height / 13 + origin.y));
+	RightButton->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type)
+	{
+		switch (type)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			mainCharacter.RotateCharByDirRight();
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+			mainCharacter.StopRotation();
+			break;
+		default:
+			break;
+		}
+	});
+	this->addChild(RightButton, 2);
+
+	auto ShootButton = Button::create("Fire_Buttons.png", "Fire_Buttons.png");
+	ShootButton->setScale(1, 1);
+	ShootButton->setPosition(Vec2(origin.x + visibleSize.width / 1.3, origin.y + visibleSize.height / 13 + origin.y));
+	ShootButton->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type)
+	{
+		switch (type)
+		{
+		case ui::Widget::TouchEventType::BEGAN:
+			break;
+		case ui::Widget::TouchEventType::ENDED:
+		{
+			JustShoot();
+			break;
+		}
+		default:
+			break;
+		}
+	});
+	this->addChild(ShootButton, 2);
     return true;
 }
 
@@ -365,7 +410,6 @@ void HelloWorld::update(float delta)
 {
 	mainCharacter.Update(delta);
 	spawner.Update(delta);
-
 	//for (auto bullet : m_Bullets) {
 	//	if (bullet->getSprite()->getPosition().y > visibleSize.height)
 	//	{
@@ -429,22 +473,16 @@ void HelloWorld::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 		mainCharacter.MoveChar(EAction::eLeft);
 		break;*/
 	case EventKeyboard::KeyCode::KEY_A:
-		mainCharacter.RotateCharByDir(EAction::eRight);
+		mainCharacter.RotateCharByDirLeft();
 		break;
 	case EventKeyboard::KeyCode::KEY_D:
-		mainCharacter.RotateCharByDir(EAction::eLeft);
+		mainCharacter.RotateCharByDirRight();
 		break;
 	default:
 		break;
 	}
 
 	log("Key with keycode %d pressed", keyCode);
-}
-
-void HelloWorld::onKeyReleased(EventKeyboard::KeyCode keyCode, Event* event)
-{
-	mainCharacter.MoveChar(EAction::eStop);
-	log("Key with keycode %d released", keyCode);
 }
 
 void HelloWorld::onMouseMove(Event * mouse)
@@ -485,4 +523,26 @@ void HelloWorld::onMouseDown(Event * mouse)
 void HelloWorld::onMouseScroll(Event * mouse)
 {
 }
+
+void HelloWorld::onTouchMove(Event * Touch)
+{
+	/*EventTouch* eventTouch = static_cast<EventTouch*>(Touch);
+	EventTouch *e = (EventTouch*)Touch;
+
+	mainCharacter.SetCharAim(e->getCurrentTarget()->getPosition());*/
+}
+
+void HelloWorld::JustShoot()
+{
+	float rot = mainCharacter.getSprite()->getRotation();
+
+	GameBullet* proBullet = new GameBullet();
+	proBullet->Init("Bullet.png", "Bullets", visibleSize.width * 0.5f, (visibleSize.height - playingSize.height), rot -90);
+	proBullet->BulletMove();
+	this->addChild(proBullet, 3);
+
+
+}
+
+
 

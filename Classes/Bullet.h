@@ -15,6 +15,7 @@ class GameBullet : public GameObject
 {
 public:
 	void Init(const char * pngName, const char * name, float posX, float posY, float Rotation, float mouseX, float mouseY);
+	void Init(const char * pngName, const char * name, float posX, float posY, float Rotation);
 	void MoveChar(EBullet dir);
 	void MoveCharByCoord(float posX, float posY);
 	void update(float dt); 

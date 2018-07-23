@@ -9,6 +9,8 @@
 #include "Humans.h"
 #include "WaveSpawner.h"
 #include "GameStats.h"
+#include "ui/CocosGUI.h"
+using namespace ui;
 
 using namespace cocos2d;
 
@@ -27,17 +29,20 @@ public:
 
 
 	virtual void onKeyPressed(EventKeyboard::KeyCode, Event*);
-	virtual void onKeyReleased(EventKeyboard::KeyCode, Event*);
+	//virtual void onKeyReleased(EventKeyboard::KeyCode, Event*);
 
 	virtual void onMouseMove(Event* mouse);
 	virtual void onMouseUp(Event* mouse);
 	virtual void onMouseDown(Event* mouse);
 	virtual void onMouseScroll(Event* mouse);
 
+	virtual void onTouchMove(Event* Touch);
+	void JustShoot();
 	bool b_mouseclicked = false;
 	// implement the "static create()" method manually
     CREATE_FUNC(HelloWorld);
 
+	float elapseTime;
 private:
 	Node* moveableItems;
 	Node* moveableItems2;
