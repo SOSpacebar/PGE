@@ -55,10 +55,6 @@ private:
 
 	int asteroidsCount;
 	float spawnTimer;
-	bool firstBullet;
-	bool secondBullet;
-	bool thirdBullet;
-	bool fourthBullet;
 	Size visibleSize;
 	Size playingSize;
 

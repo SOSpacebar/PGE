@@ -78,10 +78,10 @@ void GameBullet::SetShoot(Vec2 mouseCursorPos)
 	dir.normalize();
 	float angle = atan2(dir.y, dir.x);
 	angle = CC_RADIANS_TO_DEGREES(angle);
-	/*if()
-	this->setRotation(-angle);
+	if(Constant::GetInstance()->GetAttackLevel() != GameStats::SPLITROUND)
+		this->setRotation(-angle);
 	else
-		this->setRotation(-angle*rotation);*/
+		this->setRotation(-angle+rotation);
 }
 
 void GameBullet::BulletMove()
