@@ -518,6 +518,50 @@ void HelloWorld::onMouseUp(Event * mouse)
 	GameBullet* bullet = new GameBullet();
 	GameBullet* thiBullet = new GameBullet();
 
+	/*switch (Constant::GetInstance()->GetAttackLevel())
+	{
+	case GameStats::SINGLEROUND:
+		proBullet->Init("Bullet.png", "Bullets", visibleSize.width * 0.5f, (visibleSize.height - playingSize.height), 0, dir.x, dir.y);
+		break;
+	case GameStats::DOUBLEROUND:
+		proBullet->Init("Bullet.png", "1Bullets", visibleSize.width * 0.5f - 20, (visibleSize.height - playingSize.height), 0, dir.x, dir.y);
+		bullet->Init("Bullet.png", "2Bullets", visibleSize.width * 0.5f + 20, (visibleSize.height - playingSize.height), 0, dir.x, dir.y);
+
+		bullet->SetShoot(e->getLocationInView());
+		bullet->BulletMove();
+
+		moveableItems->addChild(bullet, 1);
+		break;
+	case GameStats::TRIPLEROUND:
+		proBullet->Init("Bullet.png", "1Bullets", visibleSize.width * 0.5f - 25, (visibleSize.height - playingSize.height), 0, dir.x, dir.y);
+		bullet->Init("Bullet.png", "2Bullets", visibleSize.width * 0.5f, (visibleSize.height - playingSize.height), 0, dir.x, dir.y);
+		thiBullet->Init("Bullet.png", "3Bullets", visibleSize.width * 0.5f + 25, (visibleSize.height - playingSize.height), 0, dir.x, dir.y);
+
+		bullet->SetShoot(e->getLocationInView());
+		bullet->BulletMove();
+		thiBullet->SetShoot(e->getLocationInView());
+		thiBullet->BulletMove();
+
+		moveableItems->addChild(bullet, 1);
+		moveableItems->addChild(thiBullet, 1);
+		break;
+	case GameStats::SPLITROUND:
+		proBullet->Init("Bullet.png", "1Bullets", visibleSize.width * 0.5f - 25, (visibleSize.height - playingSize.height), -45, dir.x, dir.y);
+		bullet->Init("Bullet.png", "2Bullets", visibleSize.width * 0.5f, (visibleSize.height - playingSize.height), 90, dir.x, dir.y);
+		thiBullet->Init("Bullet.png", "3Bullets", visibleSize.width * 0.5f + 25, (visibleSize.height - playingSize.height), 45, dir.x, dir.y);
+
+		bullet->SetShoot(e->getLocationInView());
+		bullet->BulletMove();
+		thiBullet->SetShoot(e->getLocationInView());
+		thiBullet->BulletMove();
+
+		moveableItems->addChild(bullet, 1);
+		moveableItems->addChild(thiBullet, 1);
+		break;
+	default:
+		break;
+	}*/
+
 	if(Constant::GetInstance()->GetAttackLevel() == GameStats::SINGLEROUND)
 		proBullet->Init("Bullet.png", "Bullets", visibleSize.width * 0.5f, (visibleSize.height - playingSize.height), 0, dir.x, dir.y);
 	else if (Constant::GetInstance()->GetAttackLevel() == GameStats::DOUBLEROUND)
@@ -591,9 +635,46 @@ void HelloWorld::JustShoot()
 	float rot = mainCharacter.getSprite()->getRotation();
 
 	GameBullet* proBullet = new GameBullet();
-	proBullet->Init("Bullet.png", "Bullets", visibleSize.width * 0.5f, (visibleSize.height - playingSize.height), rot -90);
+	GameBullet* bullet = new GameBullet();
+	GameBullet* thiBullet = new GameBullet();
+
+	if (Constant::GetInstance()->GetAttackLevel() == GameStats::SINGLEROUND)
+		proBullet->Init("Bullet.png", "Bullets", visibleSize.width * 0.5f, (visibleSize.height - playingSize.height), rot-90);
+	else if (Constant::GetInstance()->GetAttackLevel() == GameStats::DOUBLEROUND)
+	{
+		proBullet->Init("Bullet.png", "1Bullets", visibleSize.width * 0.5f - 20, (visibleSize.height - playingSize.height), rot - 90);
+		bullet->Init("Bullet.png", "2Bullets", visibleSize.width * 0.5f + 20, (visibleSize.height - playingSize.height), rot - 90);
+
+		bullet->BulletMove();
+
+		moveableItems->addChild(bullet, 1);
+	}
+	else if (Constant::GetInstance()->GetAttackLevel() == GameStats::TRIPLEROUND)
+	{
+		proBullet->Init("Bullet.png", "1Bullets", visibleSize.width * 0.5f - 25, (visibleSize.height - playingSize.height), rot - 90);
+		bullet->Init("Bullet.png", "2Bullets", visibleSize.width * 0.5f, (visibleSize.height - playingSize.height), rot - 90);
+		thiBullet->Init("Bullet.png", "3Bullets", visibleSize.width * 0.5f + 25, (visibleSize.height - playingSize.height), rot - 90);
+
+		bullet->BulletMove();
+		thiBullet->BulletMove();
+
+		moveableItems->addChild(bullet, 1);
+		moveableItems->addChild(thiBullet, 1);
+	}
+	else if (Constant::GetInstance()->GetAttackLevel() == GameStats::SPLITROUND)
+	{
+		proBullet->Init("Bullet.png", "1Bullets", visibleSize.width * 0.5f - 25, (visibleSize.height - playingSize.height), rot-45);
+		bullet->Init("Bullet.png", "2Bullets", visibleSize.width * 0.5f, (visibleSize.height - playingSize.height), rot - 90);
+		thiBullet->Init("Bullet.png", "3Bullets", visibleSize.width * 0.5f + 25, (visibleSize.height - playingSize.height), rot-135);
+
+		bullet->BulletMove();
+		thiBullet->BulletMove();
+
+		moveableItems->addChild(thiBullet, 1);
+		moveableItems->addChild(bullet, 1);
+	}
 	proBullet->BulletMove();
-	this->addChild(proBullet, 3);
+	moveableItems->addChild(proBullet, 1);
 
 
 }
