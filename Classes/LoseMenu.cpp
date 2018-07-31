@@ -1,10 +1,11 @@
 #include "LoseMenu.h"
-#include "ui\CocosGUI.h"
 #include "SimpleAudioEngine.h"
 #include "SceneManager.h"
 #include "Constants.h"
 #include "AudioManager.h"
+#include "../cocos2d/cocos/ui/CocosGUI.h"
 
+using namespace cocos2d::ui;
 USING_NS_CC;
 
 Scene* LoseMenu::createScene()

@@ -325,7 +325,7 @@ bool HelloWorld::init()
 	
 	auto RightButton = Button::create("Right_Buttons.png", "Right_Buttons.png");
 	RightButton->setScale(1, 1);
-	RightButton->setPosition(Vec2(origin.x + visibleSize.width / 1.1, origin.y + visibleSize.height / 13 + origin.y));
+	RightButton->setPosition(Vec2(origin.x + visibleSize.width / 5, origin.y + visibleSize.height / 13 + origin.y));
 	RightButton->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type)
 	{
 		switch (type)
@@ -344,7 +344,7 @@ bool HelloWorld::init()
 
 	auto ShootButton = Button::create("Fire_Buttons.png", "Fire_Buttons.png");
 	ShootButton->setScale(1, 1);
-	ShootButton->setPosition(Vec2(origin.x + visibleSize.width / 1.3, origin.y + visibleSize.height / 13 + origin.y));
+	ShootButton->setPosition(Vec2(origin.x + visibleSize.width / 1.1, origin.y + visibleSize.height / 13 + origin.y));
 	ShootButton->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type)
 	{
 		switch (type)

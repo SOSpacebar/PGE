@@ -39,6 +39,7 @@ private:
 	//GameHumans females;
 	//int asteroidsCount;
 	//float SpawnTimer;
+	Size gameSize; 
 	Size visibleSize;
 	Size playingSize;
 	Label* upgradeTitleText;

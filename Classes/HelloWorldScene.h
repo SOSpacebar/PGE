@@ -9,10 +9,9 @@
 #include "Humans.h"
 #include "WaveSpawner.h"
 #include "GameStats.h"
-#include "ui/CocosGUI.h"
-using namespace ui;
+#include "../cocos2d/cocos/ui/CocosGUI.h"
 
-using namespace cocos2d;
+using namespace cocos2d::ui;
 
 class HelloWorld : public cocos2d::Scene
 {

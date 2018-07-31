@@ -3,7 +3,9 @@
 #include "SceneManager.h"
 #include "Constants.h"
 #include "AudioManager.h"
-#include "ui/UIButton.h"
+#include "../cocos2d/cocos/ui/CocosGUI.h"
+
+using namespace cocos2d::ui;
 
 USING_NS_CC;
 
@@ -122,9 +124,9 @@ bool MainMenu::init()
 		groundItems->addChild(newNode, 1);
 	}*/
 
-	float bS = 1.9f;
-	int bX = (visibleSize.width - playingSize.width) - (background->getContentSize().width/5.2f);
-	int bY = (visibleSize.height - playingSize.height)- (background->getContentSize().height*0.2f);
+	float bS = 1.2f;
+	int bX = (visibleSize.width - playingSize.width) - (background->getContentSize().width/5.f);
+	int bY = (visibleSize.height - playingSize.height)- (background->getContentSize().height*0.15);
 
 	auto newBackgroundNode = Sprite::createWithSpriteFrame(background->getSpriteFrame());
 	newBackgroundNode->setAnchorPoint(Vec2::ZERO);
@@ -196,9 +198,9 @@ bool MainMenu::init()
 	{
 		switch (type)
 		{
-		case ui::Widget::TouchEventType::BEGAN:
+		case Widget::TouchEventType::BEGAN:
 			break;
-		case ui::Widget::TouchEventType::ENDED:
+		case Widget::TouchEventType::ENDED:
 			SceneManager::GetInstance()->RunSceneWithType(SceneType::GAMEPLAY, TransitionType::CROSSFADE);
 			break;
 		default:
@@ -214,9 +216,9 @@ bool MainMenu::init()
 	{
 		switch (type)
 		{
-		case ui::Widget::TouchEventType::BEGAN:
+		case Widget::TouchEventType::BEGAN:
 			break;
-		case ui::Widget::TouchEventType::ENDED:
+		case Widget::TouchEventType::ENDED:
 			SceneManager::GetInstance()->RunSceneWithType(SceneType::UPGRADESCENE, TransitionType::CROSSFADE);
 			break;
 		default:
@@ -232,9 +234,9 @@ bool MainMenu::init()
 	{
 		switch (type)
 		{
-		case ui::Widget::TouchEventType::BEGAN:
+		case Widget::TouchEventType::BEGAN:
 			break;
-		case ui::Widget::TouchEventType::ENDED:
+		case Widget::TouchEventType::ENDED:
 			SceneManager::GetInstance()->RunSceneWithType(SceneType::SETTING, TransitionType::CROSSFADE);
 			break;
 		default:
@@ -250,9 +252,9 @@ bool MainMenu::init()
 	{
 		switch (type)
 		{
-		case ui::Widget::TouchEventType::BEGAN:
+		case Widget::TouchEventType::BEGAN:
 			break;
-		case ui::Widget::TouchEventType::ENDED:
+		case Widget::TouchEventType::ENDED:
 			CCDirector::sharedDirector()->end();
 			break;
 		default:

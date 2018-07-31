@@ -1,12 +1,12 @@
 #include "Settings.h"
-#include "ui\CocosGUI.h"
 #include "SimpleAudioEngine.h"
 #include "SceneManager.h"
 #include "Constants.h"
 #include "AudioManager.h"
-#include "ui/CocosGUI.h"
+#include "../cocos2d/cocos/ui/CocosGUI.h"
 
-using namespace ui;
+using namespace cocos2d::ui;
+
 USING_NS_CC;
 
 Scene* Settings::createScene()
@@ -119,9 +119,9 @@ bool Settings::init()
 		groundItems->addChild(newNode, 1);
 	}*/
 
-	float bS = 1.6f;
+	float bS = 1.f;
 	int bX = (visibleSize.width - playingSize.width) - (background->getContentSize().width / 360.0f);
-	int bY = (visibleSize.height - playingSize.height) - (background->getContentSize().height*0.2f);
+	int bY = (visibleSize.height - playingSize.height) - (background->getContentSize().height*0.125f);
 
 	auto newBackgroundNode = Sprite::createWithSpriteFrame(background->getSpriteFrame());
 	newBackgroundNode->setAnchorPoint(Vec2::ZERO);
@@ -217,10 +217,10 @@ bool Settings::init()
     // create and initialize a label
 
 	//Label Settings
-	auto label = Label::createWithTTF("Settings" , "fonts/Marker Felt.ttf", 45);
+	auto label = Label::createWithTTF("Settings" , "fonts/Marker Felt.ttf", 30);
 	// position the label on the center of the screen
 	label->setPosition(Vec2(origin.x + visibleSize.width / 2,
-		origin.y + visibleSize.height - label->getContentSize().height));
+		origin.y + visibleSize.height - label->getContentSize().height * 0.85));
 	label->setColor(Color3B(0, 0, 0));
 	// add the label as a child to this layer
 	this->addChild(label, 1);
@@ -239,12 +239,12 @@ bool Settings::init()
 			break;
 		default: break;
 		}});
-	sliderMainSound->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 1.5 + origin.y));
+	sliderMainSound->setPosition(Vec2(visibleSize.width / 2 + origin.x, visibleSize.height / 1.45 + origin.y));
 	sliderMainSound->setScale(2, 2);
 	this->addChild(sliderMainSound, 2);
 	
-	auto MainSoundtext = Label::createWithTTF("Main Volume", "fonts/Marker Felt.ttf", 45);
-	MainSoundtext->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 1.4 + origin.y));
+	auto MainSoundtext = Label::createWithTTF("Main Volume", "fonts/Marker Felt.ttf", 40);
+	MainSoundtext->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 1.325 + origin.y));
 	MainSoundtext->setColor(Color3B(255, 255, 255));
 	this->addChild(MainSoundtext, 1);
 
@@ -265,8 +265,8 @@ bool Settings::init()
 	sliderSoundEffects->setScale(2, 2);
 	this->addChild(sliderSoundEffects, 2);
 
-	auto SoundEffecttext = Label::createWithTTF("SFX", "fonts/Marker Felt.ttf", 45);
-	SoundEffecttext->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 1.7 + origin.y));
+	auto SoundEffecttext = Label::createWithTTF("SFX", "fonts/Marker Felt.ttf", 40);
+	SoundEffecttext->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 1.625 + origin.y));
 	SoundEffecttext->setColor(Color3B(255, 255, 255));
 	this->addChild(SoundEffecttext, 1);
 
@@ -287,19 +287,19 @@ bool Settings::init()
 	sliderBackgrounds->setScale(2, 2);
 	this->addChild(sliderBackgrounds, 2);
 
-	auto Backgroundtext = Label::createWithTTF("BGM", "fonts/Marker Felt.ttf", 45);
-	Backgroundtext->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2.2 + origin.y));
+	auto Backgroundtext = Label::createWithTTF("BGM", "fonts/Marker Felt.ttf", 40);
+	Backgroundtext->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2.1 + origin.y));
 	Backgroundtext->setColor(Color3B(255, 255, 255));
 	this->addChild(Backgroundtext, 1);
 
 	//Mute
-	auto muteText = Label::createWithTTF("Mute", "fonts/Marker Felt.ttf", 45);
-	muteText->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 4 + origin.y));
+	auto muteText = Label::createWithTTF("Mute", "fonts/Marker Felt.ttf", 40);
+	muteText->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 3.5 + origin.y));
 	muteText->setColor(Color3B(255, 255, 255));
 	this->addChild(muteText, 1);
     
 	auto mute = Button::create("UnMute.png", "UnMutePress.png");
-	mute->setScale(2, 2);
+	mute->setScale(1.5, 1.5);
 	mute->setPosition(Vec2(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 6 + origin.y));
 	mute->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type)
 	{
@@ -316,8 +316,8 @@ bool Settings::init()
 	this->addChild(mute, 2);
 
 	auto Back = Button::create("Back.png", "BackPress.png");
-	Back->setScale(1.5, 1.5);
-	Back->setPosition(Vec2(origin.x + visibleSize.width / 15, origin.y + visibleSize.height / 1.14 + origin.y));
+	Back->setScale(1, 1);
+	Back->setPosition(Vec2(origin.x + visibleSize.width / 14.5, origin.y + visibleSize.height / 1.13 + origin.y));
 	Back->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type)
 	{
 		switch (type)
