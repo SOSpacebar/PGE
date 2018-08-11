@@ -49,6 +49,8 @@ public:
 	float GetMaxHealth();
 	void SetAttackLevel(GameStats::PlayerAttackLevel _lvl);
 	GameStats::PlayerAttackLevel GetAttackLevel();
+	void SetScore(int _score);
+	int GetScore();
 
 	static Constant* GetInstance();
 	~Constant();

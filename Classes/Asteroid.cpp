@@ -29,7 +29,7 @@ void GameAsteroid::Init(const char * pngName, const char * name, float posX, flo
 
 	this->player = player;
 
-	this->scheduleUpdate();
+	//this->scheduleUpdate();
 }
 
 void GameAsteroid::MoveChar(EAsteroid dir)

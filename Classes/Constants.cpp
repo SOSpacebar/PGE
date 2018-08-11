@@ -53,6 +53,16 @@ GameStats::PlayerAttackLevel Constant::GetAttackLevel()
 	return m_stats.GetPlayerAttackLevel();
 }
 
+void Constant::SetScore(int _score)
+{
+	m_stats.SetScore(_score);
+}
+
+int Constant::GetScore()
+{
+	return m_stats.GetScore();
+}
+
 Constant * Constant::GetInstance()
 {
 	if (!_instance)

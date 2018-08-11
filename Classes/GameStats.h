@@ -21,6 +21,13 @@ public:
 	PlayerAttackLevel GetPlayerAttackLevel();
 	void SetNumOfGameObjects(int _gameObject);
 	int GetNumOfGameObjects();
+	void SetScore(int _score);
+	int GetScore();
+
+	GameStats()
+	{
+		m_score = 0;
+	}
 
 private:
 	struct CharaStats
@@ -28,10 +35,11 @@ private:
 		float m_health;
 		float m_maxHealth;
 		GameStats::PlayerAttackLevel m_attack = SINGLEROUND;
-	} player;
+	} m_player;
 
 	//CharaStats player;
-	int gameObjectCounter;
+	int m_gameObjectCounter;
+	int m_score;
 };
 
 
