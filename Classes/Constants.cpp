@@ -43,6 +43,26 @@ float Constant::GetMaxHealth()
 	return m_stats.GetPlayerMaxHealth();
 }
 
+void Constant::SetRegRate(float _rate)
+{
+	m_stats.SetPlayerRegRate(_rate);
+}
+
+float Constant::GetRegRate()
+{
+	return m_stats.GetPlayerRegRate();
+}
+
+void Constant::SetHealthLevel(GameStats::PlayerHealthLevel _lvl)
+{
+	m_stats.SetPlayerHealthLevel(_lvl);
+}
+
+GameStats::PlayerHealthLevel Constant::GetHealthLevel()
+{
+	return m_stats.GetPlayerHealthLevel();
+}
+
 void Constant::SetAttackLevel(GameStats::PlayerAttackLevel _lvl)
 {
 	m_stats.SetPlayerAttackLevel(_lvl);
@@ -61,6 +81,15 @@ void Constant::SetScore(int _score)
 int Constant::GetScore()
 {
 	return m_stats.GetScore();
+}
+
+void Constant::SetLevel(int _level)
+{
+	m_stats.SetLevel(_level);
+}
+int Constant::GetLevel()
+{
+	return m_stats.GetLevel();
 }
 
 Constant * Constant::GetInstance()

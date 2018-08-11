@@ -20,6 +20,16 @@ float GameStats::GetPlayerMaxHealth()
 	return m_player.m_maxHealth;
 }
 
+void GameStats::SetPlayerRegRate(float _rate)
+{
+	m_player.m_regRate = _rate;
+}
+
+float GameStats::GetPlayerRegRate()
+{
+	return m_player.m_regRate;
+}
+
 void GameStats::SetPlayerAttackLevel(PlayerAttackLevel _att)
 {
 	m_player.m_attack = _att;
@@ -28,6 +38,16 @@ void GameStats::SetPlayerAttackLevel(PlayerAttackLevel _att)
 GameStats::PlayerAttackLevel GameStats::GetPlayerAttackLevel()
 {
 	return m_player.m_attack;
+}
+
+void GameStats::SetPlayerHealthLevel(PlayerHealthLevel _hp)
+{
+	m_player.m_healthType = _hp;
+}
+
+GameStats::PlayerHealthLevel GameStats::GetPlayerHealthLevel()
+{
+	return m_player.m_healthType;
 }
 
 void GameStats::SetNumOfGameObjects(int _gameObject)
@@ -48,4 +68,14 @@ void GameStats::SetScore(int _score)
 int GameStats::GetScore()
 {
 	return m_score;
+}
+
+void GameStats::SetLevel(int _level)
+{
+	m_level = _level;
+}
+
+int GameStats::GetLevel()
+{
+	return m_level;
 }

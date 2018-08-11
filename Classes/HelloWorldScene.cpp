@@ -81,21 +81,6 @@ bool HelloWorld::init()
 
 	// Spawn Manager
 	spawner.Init(moveableItems);
-	spawner.AddWave(10, 0.5f);
-	//GameAsteroid* asteroids = new GameAsteroid();
-	//float asteroidRandX = random(0, (int)(visibleSize.width - 10));
-	//asteroids->Init("Asteroid.png", "Asteroids", asteroidRandX, (visibleSize.height - 10), 0, &mainCharacter);
-	//moveableItems->addChild(asteroids, 1);
-
-	//// Loading Bullet Sprites
-	//Bullet.Init("Bullet.png", "Bullets", 100, (visibleSize.height - playingSize.height), 0);
-	// Loading Asteroid Sprites
-	//Asteroid.Init("Asteroid.png", "Asteroids", 500, (visibleSize.height - 10), 0);
-
-	//auto mainSprite = Sprite::create("Blue_Front1.png");
-	//mainSprite->setAnchorPoint(Vec2(0, 0));
-	//mainSprite->setPosition(100, (visibleSize.height - playingSize.height));
-	//mainSprite->setName("mainSprite");
 
 	// Set anchor point and position of object
 	sprite->setAnchorPoint(Vec2::ZERO);
@@ -234,8 +219,15 @@ bool HelloWorld::init()
     _eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
 
 	// Set into Constants
+	int healthLvl = (int)Constant::GetInstance()->GetHealthLevel();
 	Constant::GetInstance()->SetVisableSize(visibleSize);
-	Constant::GetInstance()->SetMaxHealth(100);
+	if (healthLvl != (int)GameStats::HEALTHLEVEL3_1)
+		Constant::GetInstance()->SetMaxHealth(100 * healthLvl);
+	else
+	{
+		Constant::GetInstance()->SetMaxHealth(100 * 2);
+		Constant::GetInstance()->SetRegRate(0.1f);
+	}
 	Constant::GetInstance()->SetHealth(Constant::GetInstance()->GetMaxHealth());
 	Constant::GetInstance()->SetGameObjectCount(0);
 	Constant::GetInstance()->SetScore(Constant::GetInstance()->GetScore());
@@ -409,22 +401,6 @@ void HelloWorld::update(float delta)
 {
 	mainCharacter.Update(delta);
 	spawner.Update(delta);
-	//for (auto bullet : m_Bullets) {
-	//	if (bullet->getSprite()->getPosition().y > visibleSize.height)
-	//	{
-	//		bullet->getSprite()->removeFromParentAndCleanup(true);
-	//	}
-	//}
-
-	//Asteroid.Update(delta);
-
-	//for (auto asteroid : asteroid) {
-	//	//if (asteroid->getSprite()->getPosition().y < playingSize.height)
-	//	//{
-	//	//	asteroid->getSprite()->removeFromParentAndCleanup(true);
-	//	//	health -= 5;
-	//	//}
-	//}
 
 	
 	//spawnTimer += delta;
@@ -439,6 +415,14 @@ void HelloWorld::update(float delta)
 	//	moveableItems->addChild(asteroids, 1);
 	//	spawnTimer = 0;
 	//}
+
+	if (Constant::GetInstance()->GetRegRate() > 0)
+	{
+		if (Constant::GetInstance()->GetHealth() < Constant::GetInstance()->GetMaxHealth())
+		{
+			Constant::GetInstance()->SetHealth(Constant::GetInstance()->GetHealth() + Constant::GetInstance()->GetRegRate());
+		}
+	}
 
 	progressTimer->setPercentage(Constant::GetInstance()->GetHealth());
 

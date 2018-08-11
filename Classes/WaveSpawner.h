@@ -10,13 +10,14 @@ class WaveSpawner
 {
 public:
 	enum SpawnState {
+		SETUP,
 		SPAWNING,
 		WAITING,
-		COUNTING
 	};
 
 	void Init(Node * _spriteNode);
 	void Update(float dt);
+	void Setup();
 	void SpawnWave(Wave &_wave);
 	void SpawnAsteroid();
 
