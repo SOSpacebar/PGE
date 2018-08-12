@@ -55,6 +55,12 @@ void GameBullet::Init(const char * pngName, const char * name, float posX, float
 
 	AudioManager::GetInstance()->SFXPlay("SFX_Rocket");
 
+	emitter = ParticleFire::create();
+	emitter->retain();
+	emitter->setPosition(this->getPosition());
+	emitter->setPositionType(kCCPositionTypeRelative);
+	this->addChild(emitter, 10);
+
 	//this->scheduleUpdate();
 }
 

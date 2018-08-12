@@ -29,6 +29,7 @@ private:
 	EAsteroid eDir;
 	float fSpeed;
 	GameChar* player;
+	ParticleSystem* emitter;
 };
 
 #endif
