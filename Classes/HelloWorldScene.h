@@ -53,10 +53,6 @@ private:
 
 	GameBuilding buildings;
 
-	std::vector<GameBullet*> m_Bullets;
-
-	std::vector<GameAsteroid*> asteroid;
-
 	int asteroidsCount;
 	float spawnTimer;
 	Size visibleSize;

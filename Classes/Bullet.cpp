@@ -30,7 +30,7 @@ void GameBullet::Init(const char * pngName, const char * name, float posX, float
 
 	AudioManager::GetInstance()->SFXPlay("SFX_Rocket");
 
-	this->scheduleUpdate();
+	//this->scheduleUpdate();
 }
 
 void GameBullet::Init(const char * pngName, const char * name, float posX, float posY, float Rotation)
@@ -55,7 +55,7 @@ void GameBullet::Init(const char * pngName, const char * name, float posX, float
 
 	AudioManager::GetInstance()->SFXPlay("SFX_Rocket");
 
-	this->scheduleUpdate();
+	//this->scheduleUpdate();
 }
 
 void GameBullet::MoveChar(EBullet dir)
@@ -87,6 +87,8 @@ void GameBullet::update(float dt)
 		this->getPosition().y < 0)
 	{
 		this->removeFromParentAndCleanup(true);
+		Constant::GetInstance()->SetGameObjectCount(Constant::GetInstance()->GetGameObjectCount() - 1);
+		log("Delete GameObject Count %d", Constant::GetInstance()->GetGameObjectCount());
 	}
 }
 

@@ -81,21 +81,6 @@ bool HelloWorld::init()
 
 	// Spawn Manager
 	spawner.Init(moveableItems);
-	spawner.AddWave(10, 0.5f);
-	//GameAsteroid* asteroids = new GameAsteroid();
-	//float asteroidRandX = random(0, (int)(visibleSize.width - 10));
-	//asteroids->Init("Asteroid.png", "Asteroids", asteroidRandX, (visibleSize.height - 10), 0, &mainCharacter);
-	//moveableItems->addChild(asteroids, 1);
-
-	//// Loading Bullet Sprites
-	//Bullet.Init("Bullet.png", "Bullets", 100, (visibleSize.height - playingSize.height), 0);
-	// Loading Asteroid Sprites
-	//Asteroid.Init("Asteroid.png", "Asteroids", 500, (visibleSize.height - 10), 0);
-
-	//auto mainSprite = Sprite::create("Blue_Front1.png");
-	//mainSprite->setAnchorPoint(Vec2(0, 0));
-	//mainSprite->setPosition(100, (visibleSize.height - playingSize.height));
-	//mainSprite->setName("mainSprite");
 
 	// Set anchor point and position of object
 	sprite->setAnchorPoint(Vec2::ZERO);
@@ -234,10 +219,18 @@ bool HelloWorld::init()
     _eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
 
 	// Set into Constants
+	int healthLvl = (int)Constant::GetInstance()->GetHealthLevel();
 	Constant::GetInstance()->SetVisableSize(visibleSize);
-	Constant::GetInstance()->SetMaxHealth(100);
+	if (healthLvl != (int)GameStats::HEALTHLEVEL3_1)
+		Constant::GetInstance()->SetMaxHealth(100 * healthLvl);
+	else
+	{
+		Constant::GetInstance()->SetMaxHealth(100 * 2);
+		Constant::GetInstance()->SetRegRate(0.1f);
+	}
 	Constant::GetInstance()->SetHealth(Constant::GetInstance()->GetMaxHealth());
 	Constant::GetInstance()->SetGameObjectCount(0);
+	Constant::GetInstance()->SetScore(Constant::GetInstance()->GetScore());
 	
 	// set the filling of the gauge in percent; from 0-100%
 	progressTimer->setPercentage(Constant::GetInstance()->GetHealth());
@@ -284,10 +277,7 @@ bool HelloWorld::init()
 
     // add a label shows "Hello World"
     // create and initialize a label
-
-	scoreNum = 0;
-
-    label = Label::createWithTTF("Score: "+ std::to_string(scoreNum), "fonts/Marker Felt.ttf", 45);
+    label = Label::createWithTTF("Score: "+ std::to_string(Constant::GetInstance()->GetScore()), "fonts/Marker Felt.ttf", 45);
     if (label == nullptr)
     {
         problemLoading("'fonts/Marker Felt.ttf'");
@@ -393,10 +383,11 @@ bool HelloWorld::OnContactBegin(cocos2d::PhysicsContact & contact)
 		{
 			nodeA->getNode()->removeFromParentAndCleanup(true);
 			nodeB->getNode()->removeFromParentAndCleanup(true);
-			scoreNum += 10;
-			label->setString("Score: " + std::to_string(scoreNum));
+			int score = Constant::GetInstance()->GetScore();
+			Constant::GetInstance()->SetScore((score += 10));
+			label->setString("Score: " + std::to_string(Constant::GetInstance()->GetScore()));
 
-			Constant::GetInstance()->SetGameObjectCount(Constant::GetInstance()->GetGameObjectCount() - 1);
+			Constant::GetInstance()->SetGameObjectCount(Constant::GetInstance()->GetGameObjectCount() - 2);
 			log("Delete GameObject Count %d", Constant::GetInstance()->GetGameObjectCount());
 		}
 	}
@@ -410,22 +401,6 @@ void HelloWorld::update(float delta)
 {
 	mainCharacter.Update(delta);
 	spawner.Update(delta);
-	//for (auto bullet : m_Bullets) {
-	//	if (bullet->getSprite()->getPosition().y > visibleSize.height)
-	//	{
-	//		bullet->getSprite()->removeFromParentAndCleanup(true);
-	//	}
-	//}
-
-	//Asteroid.Update(delta);
-
-	//for (auto asteroid : asteroid) {
-	//	//if (asteroid->getSprite()->getPosition().y < playingSize.height)
-	//	//{
-	//	//	asteroid->getSprite()->removeFromParentAndCleanup(true);
-	//	//	health -= 5;
-	//	//}
-	//}
 
 	
 	//spawnTimer += delta;
@@ -440,6 +415,14 @@ void HelloWorld::update(float delta)
 	//	moveableItems->addChild(asteroids, 1);
 	//	spawnTimer = 0;
 	//}
+
+	if (Constant::GetInstance()->GetRegRate() > 0)
+	{
+		if (Constant::GetInstance()->GetHealth() < Constant::GetInstance()->GetMaxHealth())
+		{
+			Constant::GetInstance()->SetHealth(Constant::GetInstance()->GetHealth() + Constant::GetInstance()->GetRegRate());
+		}
+	}
 
 	progressTimer->setPercentage(Constant::GetInstance()->GetHealth());
 
@@ -514,102 +497,61 @@ void HelloWorld::onMouseUp(Event * mouse)
 
 	Vec2 dir = Vec2(e->getCursorX(), e->getCursorY()) - Vec2(visibleSize.width * 0.5f, (visibleSize.height - playingSize.height));
 
-	GameBullet* proBullet = new GameBullet();
-	GameBullet* bullet = new GameBullet();
-	GameBullet* thiBullet = new GameBullet();
+	int bulletSize = (int)Constant::GetInstance()->GetAttackLevel() + 1;
+	std::vector<GameBullet*> bulletBox;
 
-	/*switch (Constant::GetInstance()->GetAttackLevel())
-	{
-	case GameStats::SINGLEROUND:
-		proBullet->Init("Bullet.png", "Bullets", visibleSize.width * 0.5f, (visibleSize.height - playingSize.height), 0, dir.x, dir.y);
-		break;
-	case GameStats::DOUBLEROUND:
-		proBullet->Init("Bullet.png", "1Bullets", visibleSize.width * 0.5f - 20, (visibleSize.height - playingSize.height), 0, dir.x, dir.y);
-		bullet->Init("Bullet.png", "2Bullets", visibleSize.width * 0.5f + 20, (visibleSize.height - playingSize.height), 0, dir.x, dir.y);
-
-		bullet->SetShoot(e->getLocationInView());
-		bullet->BulletMove();
-
-		moveableItems->addChild(bullet, 1);
-		break;
-	case GameStats::TRIPLEROUND:
-		proBullet->Init("Bullet.png", "1Bullets", visibleSize.width * 0.5f - 25, (visibleSize.height - playingSize.height), 0, dir.x, dir.y);
-		bullet->Init("Bullet.png", "2Bullets", visibleSize.width * 0.5f, (visibleSize.height - playingSize.height), 0, dir.x, dir.y);
-		thiBullet->Init("Bullet.png", "3Bullets", visibleSize.width * 0.5f + 25, (visibleSize.height - playingSize.height), 0, dir.x, dir.y);
-
-		bullet->SetShoot(e->getLocationInView());
-		bullet->BulletMove();
-		thiBullet->SetShoot(e->getLocationInView());
-		thiBullet->BulletMove();
-
-		moveableItems->addChild(bullet, 1);
-		moveableItems->addChild(thiBullet, 1);
-		break;
-	case GameStats::SPLITROUND:
-		proBullet->Init("Bullet.png", "1Bullets", visibleSize.width * 0.5f - 25, (visibleSize.height - playingSize.height), -45, dir.x, dir.y);
-		bullet->Init("Bullet.png", "2Bullets", visibleSize.width * 0.5f, (visibleSize.height - playingSize.height), 90, dir.x, dir.y);
-		thiBullet->Init("Bullet.png", "3Bullets", visibleSize.width * 0.5f + 25, (visibleSize.height - playingSize.height), 45, dir.x, dir.y);
-
-		bullet->SetShoot(e->getLocationInView());
-		bullet->BulletMove();
-		thiBullet->SetShoot(e->getLocationInView());
-		thiBullet->BulletMove();
-
-		moveableItems->addChild(bullet, 1);
-		moveableItems->addChild(thiBullet, 1);
-		break;
-	default:
-		break;
-	}*/
+	while (bulletBox.size() < bulletSize) {
+		bulletBox.push_back(new GameBullet());
+	}
 
 	if(Constant::GetInstance()->GetAttackLevel() == GameStats::SINGLEROUND)
-		proBullet->Init("Bullet.png", "Bullets", visibleSize.width * 0.5f, (visibleSize.height - playingSize.height), 0, dir.x, dir.y);
+		bulletBox[0]->Init("Bullet.png", "Bullets", visibleSize.width * 0.5f, (visibleSize.height - playingSize.height), 0, dir.x, dir.y);
 	else if (Constant::GetInstance()->GetAttackLevel() == GameStats::DOUBLEROUND)
 	{
-		proBullet->Init("Bullet.png", "1Bullets", visibleSize.width * 0.5f-20, (visibleSize.height - playingSize.height), 0, dir.x, dir.y);
-		bullet->Init("Bullet.png", "2Bullets", visibleSize.width * 0.5f+20, (visibleSize.height - playingSize.height), 0, dir.x, dir.y);
+		bulletBox[0]->Init("Bullet.png", "1Bullets", visibleSize.width * 0.5f-20, (visibleSize.height - playingSize.height), 0, dir.x, dir.y);
+		bulletBox[1]->Init("Bullet.png", "2Bullets", visibleSize.width * 0.5f+20, (visibleSize.height - playingSize.height), 0, dir.x, dir.y);
 
-		bullet->SetShoot(e->getLocationInView());
-		bullet->BulletMove();
+		bulletBox[1]->SetShoot(e->getLocationInView());
+		bulletBox[1]->BulletMove();
 
-		moveableItems->addChild(bullet, 1);
+		moveableItems->addChild(bulletBox[1], 1);
 	}
 	else if (Constant::GetInstance()->GetAttackLevel() == GameStats::TRIPLEROUND)
 	{
-		proBullet->Init("Bullet.png", "1Bullets", visibleSize.width * 0.5f - 25, (visibleSize.height - playingSize.height), 0, dir.x, dir.y);
-		bullet->Init("Bullet.png", "2Bullets", visibleSize.width * 0.5f, (visibleSize.height - playingSize.height), 0, dir.x, dir.y);
-		thiBullet->Init("Bullet.png", "3Bullets", visibleSize.width * 0.5f + 25, (visibleSize.height - playingSize.height), 0, dir.x, dir.y);
+		bulletBox[0]->Init("Bullet.png", "1Bullets", visibleSize.width * 0.5f - 25, (visibleSize.height - playingSize.height), 0, dir.x, dir.y);
+		bulletBox[1]->Init("Bullet.png", "2Bullets", visibleSize.width * 0.5f, (visibleSize.height - playingSize.height), 0, dir.x, dir.y);
+		bulletBox[2]->Init("Bullet.png", "3Bullets", visibleSize.width * 0.5f + 25, (visibleSize.height - playingSize.height), 0, dir.x, dir.y);
 
-		bullet->SetShoot(e->getLocationInView());
-		bullet->BulletMove();
-		thiBullet->SetShoot(e->getLocationInView());
-		thiBullet->BulletMove();
+		bulletBox[1]->SetShoot(e->getLocationInView());
+		bulletBox[1]->BulletMove();
+		bulletBox[2]->SetShoot(e->getLocationInView());
+		bulletBox[2]->BulletMove();
 
-		moveableItems->addChild(bullet, 1);
-		moveableItems->addChild(thiBullet, 1);
+		moveableItems->addChild(bulletBox[1], 1);
+		moveableItems->addChild(bulletBox[2], 1);
 	}
 	else if (Constant::GetInstance()->GetAttackLevel() == GameStats::SPLITROUND)
 	{
-		proBullet->Init("Bullet.png", "1Bullets", visibleSize.width * 0.5f - 25, (visibleSize.height - playingSize.height), -45, dir.x, dir.y);
-		bullet->Init("Bullet.png", "2Bullets", visibleSize.width * 0.5f, (visibleSize.height - playingSize.height), 90, dir.x, dir.y);
-		thiBullet->Init("Bullet.png", "3Bullets", visibleSize.width * 0.5f + 25, (visibleSize.height - playingSize.height), 45, dir.x, dir.y);
+		bulletBox[0]->Init("Bullet.png", "1Bullets", visibleSize.width * 0.5f - 25, (visibleSize.height - playingSize.height), -45, dir.x, dir.y);
+		bulletBox[1]->Init("Bullet.png", "2Bullets", visibleSize.width * 0.5f, (visibleSize.height - playingSize.height), 90, dir.x, dir.y);
+		bulletBox[2]->Init("Bullet.png", "3Bullets", visibleSize.width * 0.5f + 25, (visibleSize.height - playingSize.height), 45, dir.x, dir.y);
 		
-		bullet->SetShoot(e->getLocationInView());
-		bullet->BulletMove();
-		thiBullet->SetShoot(e->getLocationInView());
-		thiBullet->BulletMove();
+		bulletBox[1]->SetShoot(e->getLocationInView());
+		bulletBox[1]->BulletMove();
+		bulletBox[2]->SetShoot(e->getLocationInView());
+		bulletBox[2]->BulletMove();
 
-		moveableItems->addChild(bullet, 1);
-		moveableItems->addChild(thiBullet, 1);
+		moveableItems->addChild(bulletBox[1], 1);
+		moveableItems->addChild(bulletBox[2], 1);
 	}
 
-	proBullet->SetShoot(e->getLocationInView());
-	proBullet->BulletMove();
+	bulletBox[0]->SetShoot(e->getLocationInView());
+	bulletBox[0]->BulletMove();
 
 	//m_Bullets.push_back(proBullet);
 
 	// Add Bullets to Movable
-	moveableItems->addChild(proBullet, 1);
+	moveableItems->addChild(bulletBox[0], 1);
 	b_mouseclicked = true;
 }
 
@@ -634,49 +576,105 @@ void HelloWorld::JustShoot()
 {
 	float rot = mainCharacter.getSprite()->getRotation();
 
-	GameBullet* proBullet = new GameBullet();
-	GameBullet* bullet = new GameBullet();
-	GameBullet* thiBullet = new GameBullet();
+	//GameBullet* proBullet = new GameBullet();
+	//GameBullet* bullet = new GameBullet();
+	//GameBullet* thiBullet = new GameBullet();
+
+	//if (Constant::GetInstance()->GetAttackLevel() == GameStats::SINGLEROUND)
+	//	proBullet->Init("Bullet.png", "Bullets", visibleSize.width * 0.5f, (visibleSize.height - playingSize.height), rot-90);
+	//else if (Constant::GetInstance()->GetAttackLevel() == GameStats::DOUBLEROUND)
+	//{
+	//	proBullet->Init("Bullet.png", "1Bullets", visibleSize.width * 0.5f - 20, (visibleSize.height - playingSize.height), rot - 90);
+	//	bullet->Init("Bullet.png", "2Bullets", visibleSize.width * 0.5f + 20, (visibleSize.height - playingSize.height), rot - 90);
+
+	//	bullet->BulletMove();
+
+	//	moveableItems->addChild(bullet, 1);
+	//}
+	//else if (Constant::GetInstance()->GetAttackLevel() == GameStats::TRIPLEROUND)
+	//{
+	//	proBullet->Init("Bullet.png", "1Bullets", visibleSize.width * 0.5f - 25, (visibleSize.height - playingSize.height), rot - 90);
+	//	bullet->Init("Bullet.png", "2Bullets", visibleSize.width * 0.5f, (visibleSize.height - playingSize.height), rot - 90);
+	//	thiBullet->Init("Bullet.png", "3Bullets", visibleSize.width * 0.5f + 25, (visibleSize.height - playingSize.height), rot - 90);
+
+	//	bullet->BulletMove();
+	//	thiBullet->BulletMove();
+
+	//	moveableItems->addChild(bullet, 1);
+	//	moveableItems->addChild(thiBullet, 1);
+	//}
+	//else if (Constant::GetInstance()->GetAttackLevel() == GameStats::SPLITROUND)
+	//{
+	//	proBullet->Init("Bullet.png", "1Bullets", visibleSize.width * 0.5f - 25, (visibleSize.height - playingSize.height), rot-45);
+	//	bullet->Init("Bullet.png", "2Bullets", visibleSize.width * 0.5f, (visibleSize.height - playingSize.height), rot - 90);
+	//	thiBullet->Init("Bullet.png", "3Bullets", visibleSize.width * 0.5f + 25, (visibleSize.height - playingSize.height), rot-135);
+
+	//	bullet->BulletMove();
+	//	thiBullet->BulletMove();
+
+	//	moveableItems->addChild(thiBullet, 1);
+	//	moveableItems->addChild(bullet, 1);
+	//}
+	//proBullet->BulletMove();
+	//moveableItems->addChild(proBullet, 1);
+
+
+	int bulletSize = (int)Constant::GetInstance()->GetAttackLevel() + 1;
+	std::vector<GameBullet*> bulletBox;
+
+	while (bulletBox.size() < bulletSize) {
+		bulletBox.push_back(new GameBullet());
+	}
 
 	if (Constant::GetInstance()->GetAttackLevel() == GameStats::SINGLEROUND)
-		proBullet->Init("Bullet.png", "Bullets", visibleSize.width * 0.5f, (visibleSize.height - playingSize.height), rot-90);
+		bulletBox[0]->Init("Bullet.png", "Bullets", visibleSize.width * 0.5f, (visibleSize.height - playingSize.height), rot - 90);
 	else if (Constant::GetInstance()->GetAttackLevel() == GameStats::DOUBLEROUND)
 	{
-		proBullet->Init("Bullet.png", "1Bullets", visibleSize.width * 0.5f - 20, (visibleSize.height - playingSize.height), rot - 90);
-		bullet->Init("Bullet.png", "2Bullets", visibleSize.width * 0.5f + 20, (visibleSize.height - playingSize.height), rot - 90);
+		bulletBox[0]->Init("Bullet.png", "1Bullets", visibleSize.width * 0.5f - 20, (visibleSize.height - playingSize.height), rot - 90);
+		bulletBox[1]->Init("Bullet.png", "2Bullets", visibleSize.width * 0.5f + 20, (visibleSize.height - playingSize.height), rot - 90);
 
-		bullet->BulletMove();
+		//bulletBox[1]->SetShoot(e->getLocationInView());
+		bulletBox[1]->BulletMove();
 
-		moveableItems->addChild(bullet, 1);
+		moveableItems->addChild(bulletBox[1], 1);
 	}
 	else if (Constant::GetInstance()->GetAttackLevel() == GameStats::TRIPLEROUND)
 	{
-		proBullet->Init("Bullet.png", "1Bullets", visibleSize.width * 0.5f - 25, (visibleSize.height - playingSize.height), rot - 90);
-		bullet->Init("Bullet.png", "2Bullets", visibleSize.width * 0.5f, (visibleSize.height - playingSize.height), rot - 90);
-		thiBullet->Init("Bullet.png", "3Bullets", visibleSize.width * 0.5f + 25, (visibleSize.height - playingSize.height), rot - 90);
+		bulletBox[0]->Init("Bullet.png", "1Bullets", visibleSize.width * 0.5f - 25, (visibleSize.height - playingSize.height), rot - 90);
+		bulletBox[1]->Init("Bullet.png", "2Bullets", visibleSize.width * 0.5f, (visibleSize.height - playingSize.height), rot - 90);
+		bulletBox[2]->Init("Bullet.png", "3Bullets", visibleSize.width * 0.5f + 25, (visibleSize.height - playingSize.height), rot - 90);
 
-		bullet->BulletMove();
-		thiBullet->BulletMove();
+		//bulletBox[1]->SetShoot(e->getLocationInView());
+		bulletBox[1]->BulletMove();
+		//bulletBox[2]->SetShoot(e->getLocationInView());
+		bulletBox[2]->BulletMove();
 
-		moveableItems->addChild(bullet, 1);
-		moveableItems->addChild(thiBullet, 1);
+		moveableItems->addChild(bulletBox[1], 1);
+		moveableItems->addChild(bulletBox[2], 1);
 	}
 	else if (Constant::GetInstance()->GetAttackLevel() == GameStats::SPLITROUND)
 	{
-		proBullet->Init("Bullet.png", "1Bullets", visibleSize.width * 0.5f - 25, (visibleSize.height - playingSize.height), rot-45);
-		bullet->Init("Bullet.png", "2Bullets", visibleSize.width * 0.5f, (visibleSize.height - playingSize.height), rot - 90);
-		thiBullet->Init("Bullet.png", "3Bullets", visibleSize.width * 0.5f + 25, (visibleSize.height - playingSize.height), rot-135);
+		bulletBox[0]->Init("Bullet.png", "1Bullets", visibleSize.width * 0.5f - 25, (visibleSize.height - playingSize.height), rot - 45);
+		bulletBox[1]->Init("Bullet.png", "2Bullets", visibleSize.width * 0.5f, (visibleSize.height - playingSize.height), rot - 90);
+		bulletBox[2]->Init("Bullet.png", "3Bullets", visibleSize.width * 0.5f + 25, (visibleSize.height - playingSize.height), rot - 135);
 
-		bullet->BulletMove();
-		thiBullet->BulletMove();
+		//bulletBox[1]->SetShoot(e->getLocationInView());
+		bulletBox[1]->BulletMove();
+		//bulletBox[2]->SetShoot(e->getLocationInView());
+		bulletBox[2]->BulletMove();
 
-		moveableItems->addChild(thiBullet, 1);
-		moveableItems->addChild(bullet, 1);
+		moveableItems->addChild(bulletBox[1], 1);
+		moveableItems->addChild(bulletBox[2], 1);
 	}
-	proBullet->BulletMove();
-	moveableItems->addChild(proBullet, 1);
 
+	//bulletBox[0]->SetShoot(e->getLocationInView());
+	bulletBox[0]->BulletMove();
 
+	//m_Bullets.push_back(proBullet);
+
+	// Add Bullets to Movable
+	moveableItems->addChild(bulletBox[0], 1);
+	b_mouseclicked = true;
 }
 
 

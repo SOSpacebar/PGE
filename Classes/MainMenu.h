@@ -1,6 +1,10 @@
 #ifndef __MAINMENU_SCENE_H__
 #define __MAINMENU_SCENE_H__
 
+#ifdef SDKBOX_ENABLED
+#include <PluginFaceBook/PluginFacebook.h>
+#endif
+
 #include "cocos2d.h"
 #include "Humans.h"
 //#include "Bullet.h"
@@ -9,8 +13,7 @@ using namespace ui;
 
 using namespace cocos2d;
 
-class MainMenu : public cocos2d::Scene
-{
+class MainMenu : public cocos2d::Scene {
 public:
     static cocos2d::Scene* createScene();
 

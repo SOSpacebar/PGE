@@ -47,8 +47,20 @@ public:
 	float GetHealth();
 	void SetMaxHealth(float _mhealth);
 	float GetMaxHealth();
+	void SetRegRate(float _rate);
+	float GetRegRate();
+	
+	void SetHealthLevel(GameStats::PlayerHealthLevel _lvl);
+	GameStats::PlayerHealthLevel GetHealthLevel();
 	void SetAttackLevel(GameStats::PlayerAttackLevel _lvl);
 	GameStats::PlayerAttackLevel GetAttackLevel();
+	
+	
+	
+	void SetScore(int _score);
+	int GetScore();
+	void SetLevel(int _level);
+	int GetLevel();
 
 	static Constant* GetInstance();
 	~Constant();
