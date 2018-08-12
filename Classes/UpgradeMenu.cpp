@@ -1,11 +1,10 @@
 #include "UpgradeMenu.h"
 #include "SimpleAudioEngine.h"
 #include "SceneManager.h"
+#include "HelloWorldScene.h"
 #include "Constants.h"
 #include "AudioManager.h"
-#include "../cocos2d/cocos/ui/CocosGUI.h"
 
-using namespace cocos2d::ui;
 
 USING_NS_CC;
 
@@ -130,12 +129,31 @@ bool UpgradeMenu::init()
 	this->addChild(label, 1);
 
 
+	Constant::GetInstance()->SetScore(Constant::GetInstance()->GetScore());
+
+	label = Label::createWithTTF("Money: " + std::to_string(Constant::GetInstance()->GetScore()), "fonts/Marker Felt.ttf", 30);
+	if (label == nullptr)
+	{
+		problemLoading("'fonts/Marker Felt.ttf'");
+	}
+	else
+	{
+		// position the label on the center of the screen
+		label->setPosition(Vec2(origin.x + visibleSize.width / 2,
+			origin.y + visibleSize.height /1.05 - label->getContentSize().height ));
+		label->setColor(Color3B(255, 255, 255));
+
+		// add the label as a child to this layer
+		this->addChild(label, 1);
+	}
+	int score = Constant::GetInstance()->GetScore();
+
 	/*************************************************
 
 	Building UPGRADE SECTIONS
 
 	*************************************************/
-	auto upgradeBuilding_0 = Button::create("BuildingUpgrade.png", "BuildingUpgradeComplete.png", "BuildingUpgradeComplete.png");
+	upgradeBuilding_0 = Button::create("BuildingUpgradeLocked.png");
 	upgradeBuilding_0->setScale(1.25, 1.25);
 	upgradeBuilding_0->setPosition(Vec2(origin.x + visibleSize.width / 6, origin.y + visibleSize.height / 1.35 + origin.y));
 	upgradeBuilding_0->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type)
@@ -144,18 +162,31 @@ bool UpgradeMenu::init()
 		{
 		case Widget::TouchEventType::BEGAN:
 			upgradeTitleText->setString("Building Upgrade Level 1");
-			upgradeText->setString("More Income will get from the level fight");
+			upgradeText->setString("More Income will get from the level fight \n Cost: 100");
+			//if (score >= 100)
+			//{
+			//	Constant::GetInstance()->SetScore((score -= 100));
+			//	label->setString("Money: " + std::to_string(Constant::GetInstance()->GetScore()));
+				upgradeBuilding_0->setVisible(false);
+				upgradeBuilding_0->setEnabled(false);
+			//}
 			break;
 		case Widget::TouchEventType::ENDED:
-
 			break;
 		default:
 			break;
 		}
 	});
 	this->addChild(upgradeBuilding_0, 2);
+	
+	upgradeBuilding_0_Up = Button::create("BuildingUpgradeComplete.png");
+	upgradeBuilding_0_Up->setScale(1.25, 1.25);
+	upgradeBuilding_0_Up->setPosition(Vec2(origin.x + visibleSize.width / 6, origin.y + visibleSize.height / 1.35 + origin.y));
+	upgradeBuilding_0_Up->setVisible(true);
+	upgradeBuilding_0_Up->setEnabled(false);
+	this->addChild(upgradeBuilding_0_Up, 1);
 
-	auto upgradeBuilding_1 = Button::create("BuildingUpgrade2Locked.png", "BuildingUpgrade2.png", "BuildingUpgrade2Complete.png");
+	upgradeBuilding_1 = Button::create("BuildingUpgrade2Locked.png");
 	upgradeBuilding_1->setScale(1.25, 1.25);
 	upgradeBuilding_1->setPosition(Vec2(origin.x + visibleSize.width / 3.5, origin.y + visibleSize.height / 1.25 + origin.y));
 	upgradeBuilding_1->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type)
@@ -164,17 +195,27 @@ bool UpgradeMenu::init()
 		{
 		case Widget::TouchEventType::BEGAN:
 			upgradeTitleText->setString("Building Upgrade Level 2v1");
-			upgradeText->setString("More and More income will be able to get");
+			upgradeText->setString("More and More income will be able to get \n Cost: 500");
+			upgradeBuilding_1->setVisible(false);
+			upgradeBuilding_1->setEnabled(false);
 			break;
 		case Widget::TouchEventType::ENDED:
+		
 			break;
 		default:
 			break;
 		}
 	});
 	this->addChild(upgradeBuilding_1, 2);
+	
+	upgradeBuilding_1_Up = Button::create("BuildingUpgrade2Complete.png");
+	upgradeBuilding_1_Up->setScale(1.25, 1.25);
+	upgradeBuilding_1_Up->setPosition(Vec2(origin.x + visibleSize.width / 3.5, origin.y + visibleSize.height / 1.25 + origin.y));
+	upgradeBuilding_1_Up->setVisible(true);
+	upgradeBuilding_1_Up->setEnabled(false);
+	this->addChild(upgradeBuilding_1_Up, 1);
 
-	auto upgradeBuilding_2 = Button::create("BuildingUpgrade2Locked.png", "BuildingUpgrade2.png", "BuildingUpgrade2Complete.png");
+	upgradeBuilding_2 = Button::create("BuildingUpgrade2Locked.png");
 	upgradeBuilding_2->setScale(1.25, 1.25);
 	upgradeBuilding_2->setPosition(Vec2(origin.x + visibleSize.width / 3.5, origin.y + visibleSize.height / 1.45 + origin.y));
 	upgradeBuilding_2->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type)
@@ -183,7 +224,9 @@ bool UpgradeMenu::init()
 		{
 		case Widget::TouchEventType::BEGAN:
 			upgradeTitleText->setString("Building Upgrade Level 2v2");
-			upgradeText->setString("More Income and Minimum \n health recovery increase");
+			upgradeText->setString("More Income and Minimum \n health recovery increase \n Cost: 1000");
+			upgradeBuilding_2->setVisible(false);
+			upgradeBuilding_2->setEnabled(false);
 			break;
 		case Widget::TouchEventType::ENDED:
 			break;
@@ -193,12 +236,19 @@ bool UpgradeMenu::init()
 	});
 	this->addChild(upgradeBuilding_2, 2);
 
+	upgradeBuilding_2_Up = Button::create("BuildingUpgrade2Complete.png");
+	upgradeBuilding_2_Up->setScale(1.25, 1.25);
+	upgradeBuilding_2_Up->setPosition(Vec2(origin.x + visibleSize.width / 3.5, origin.y + visibleSize.height / 1.45 + origin.y));
+	upgradeBuilding_2_Up->setVisible(true);
+	upgradeBuilding_2_Up->setEnabled(false);
+	this->addChild(upgradeBuilding_2_Up, 1);
+
 	/*************************************************
 
 	BULLET UPGRADE SECTIONS
 	
 	*************************************************/
-	auto upgradeWeapon_0 = Button::create("BulletUpgrade.png", "BulletUpgradeComplete.png", "BulletUpgradeLocked.png");
+	upgradeWeapon_0 = Button::create("BulletUpgradeLocked.png", "BulletUpgrade.png");
 	upgradeWeapon_0->setScale(1.25, 1.25);
 	upgradeWeapon_0->setPosition(Vec2(origin.x + visibleSize.width / 6, origin.y + visibleSize.height / 2.25 + origin.y));
 
@@ -208,7 +258,10 @@ bool UpgradeMenu::init()
 		{
 		case Widget::TouchEventType::BEGAN:
 			upgradeTitleText->setString("Bullet Upgrade Level 1");
-			upgradeText->setString("First Upgrade \n stronger missle on the run");
+			upgradeText->setString("First Upgrade \n stronger missle on the run \n Cost: 100");
+
+			upgradeWeapon_0->setVisible(false);
+			upgradeWeapon_0->setEnabled(false);
 			break;
 		case Widget::TouchEventType::ENDED:
 			break;
@@ -218,7 +271,14 @@ bool UpgradeMenu::init()
 	});
 	this->addChild(upgradeWeapon_0, 2);
 	
-	auto upgradeWeapon_1 = Button::create("BulletUpgrade2Locked.png", "BulletUpgrade2.png", "BulletUpgrade2Complete.png");
+	upgradeWeapon_0_Up = Button::create("BulletUpgradeComplete.png");
+	upgradeWeapon_0_Up->setScale(1.25, 1.25);
+	upgradeWeapon_0_Up->setPosition(Vec2(origin.x + visibleSize.width / 6, origin.y + visibleSize.height / 2.25 + origin.y));
+	upgradeWeapon_0_Up->setVisible(true);
+	upgradeWeapon_0_Up->setEnabled(false);
+	this->addChild(upgradeWeapon_0_Up, 1);
+
+	upgradeWeapon_1 = Button::create("BulletUpgrade2Locked.png", "BulletUpgrade2.png");
 	upgradeWeapon_1->setScale(1.25, 1.25);
 	upgradeWeapon_1->setPosition(Vec2(origin.x + visibleSize.width / 3.5, origin.y + visibleSize.height / 2.25 + origin.y));
 	upgradeWeapon_1->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type)
@@ -227,7 +287,9 @@ bool UpgradeMenu::init()
 		{
 		case Widget::TouchEventType::BEGAN:
 			upgradeTitleText->setString("Bullet Upgrade Level 2");
-			upgradeText->setString("Double the missle!!!!! \n Double the fun!!!!");
+			upgradeText->setString("Double the missle!!!!! \n Double the fun!!!! \n Cost: 300");
+			upgradeWeapon_1->setVisible(false);
+			upgradeWeapon_1->setEnabled(false);
 			Constant::GetInstance()->SetAttackLevel(GameStats::PlayerAttackLevel::DOUBLEROUND);
 			break;
 		case Widget::TouchEventType::ENDED:
@@ -237,8 +299,15 @@ bool UpgradeMenu::init()
 		}
 	});
 	this->addChild(upgradeWeapon_1, 2);
+	
+	upgradeWeapon_1_Up = Button::create("BulletUpgrade2Complete.png");
+	upgradeWeapon_1_Up->setScale(1.25, 1.25);
+	upgradeWeapon_1_Up->setPosition(Vec2(origin.x + visibleSize.width / 3.5, origin.y + visibleSize.height / 2.25 + origin.y));
+	upgradeWeapon_1_Up->setVisible(true);
+	upgradeWeapon_1_Up->setEnabled(false);
+	this->addChild(upgradeWeapon_1_Up, 1);
 
-	auto upgradeWeapon_2 = Button::create("BulletUpgrade3Locked.png", "BulletUpgrade3.png", "BulletUpgrade3Complete.png");
+	upgradeWeapon_2 = Button::create("BulletUpgrade3Locked.png", "BulletUpgrade3.png");
 	upgradeWeapon_2->setScale(1.25, 1.25);
 	upgradeWeapon_2->setPosition(Vec2(origin.x + visibleSize.width / 2.5, origin.y + visibleSize.height / 2 + origin.y));
 	upgradeWeapon_2->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type)
@@ -247,7 +316,9 @@ bool UpgradeMenu::init()
 		{
 		case Widget::TouchEventType::BEGAN:
 			upgradeTitleText->setString("Bullet Upgrade Level 3v2");
-			upgradeText->setString("Triple the missle!!!!! \n More focus on one direction and \n damage on one enemy increase more stronger");
+			upgradeText->setString("Triple the missle!!!!! \n More focus on one direction and \n damage on one enemy increase more stronger \n Cost: 800");
+			upgradeWeapon_2->setVisible(false);
+			upgradeWeapon_2->setEnabled(false);
 			Constant::GetInstance()->SetAttackLevel(GameStats::PlayerAttackLevel::TRIPLEROUND);
 			break;
 		case Widget::TouchEventType::ENDED:
@@ -258,7 +329,15 @@ bool UpgradeMenu::init()
 	});
 	this->addChild(upgradeWeapon_2, 2);
 
-	auto upgradeWeapon_3 = Button::create("BulletUpgrade4Locked.png", "BulletUpgrade4.png", "BulletUpgrade4sComplete.png");
+	upgradeWeapon_2_Up = Button::create("BulletUpgrade2Complete.png");
+	upgradeWeapon_2_Up->setScale(1.25, 1.25);
+	upgradeWeapon_2_Up->setPosition(Vec2(origin.x + visibleSize.width / 2.5, origin.y + visibleSize.height / 2 + origin.y));
+	upgradeWeapon_2_Up->setVisible(true);
+	upgradeWeapon_2_Up->setEnabled(false);
+	
+	this->addChild(upgradeWeapon_2_Up, 1);
+
+	upgradeWeapon_3 = Button::create("BulletUpgrade4Locked.png", "BulletUpgrade4.png");
 	upgradeWeapon_3->setScale(1.25, 1.25);
 	upgradeWeapon_3->setPosition(Vec2(origin.x + visibleSize.width / 2.5, origin.y + visibleSize.height / 2.6 + origin.y));
 	upgradeWeapon_3->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type)
@@ -267,7 +346,9 @@ bool UpgradeMenu::init()
 		{
 		case Widget::TouchEventType::BEGAN:
 			upgradeTitleText->setString("Bullet Upgrade Level 3v1");
-			upgradeText->setString("Triple the missle!!!!! \n Hit Omnidirection to all enemy around it");
+			upgradeText->setString("Triple the missle!!!!! \n Hit Omnidirection to all enemy around it \n Cost: 1000");
+			upgradeWeapon_3->setVisible(false);
+			upgradeWeapon_3->setEnabled(false);
 			Constant::GetInstance()->SetAttackLevel(GameStats::PlayerAttackLevel::SPLITROUND);
 			break;
 		case Widget::TouchEventType::ENDED:
@@ -277,12 +358,21 @@ bool UpgradeMenu::init()
 		}
 	});
 	this->addChild(upgradeWeapon_3, 2);
+
+	upgradeWeapon_3_Up = Button::create("BulletUpgrade4Complete.png");
+	upgradeWeapon_3_Up->setScale(1.25, 1.25);
+	upgradeWeapon_3_Up->setPosition(Vec2(origin.x + visibleSize.width / 2.5, origin.y + visibleSize.height / 2.6 + origin.y));
+	upgradeWeapon_3_Up->setVisible(true);
+	upgradeWeapon_3_Up->setEnabled(false);
+
+	this->addChild(upgradeWeapon_3_Up, 1);
+
 	/*************************************************
 
 	HEALTH UPGRADE SECTIONS
 
 	*************************************************/
-	auto upgradeHealth_0 = Button::create("HealthIncrease.png", "HealthIncreaseComplete.png", "HealthIncreaseLocked.png");
+	upgradeHealth_0 = Button::create("HealthIncreaseLocked.png", "HealthIncrease.png");
 	upgradeHealth_0->setScale(1.25, 1.25);
 	upgradeHealth_0->setPosition(Vec2(origin.x + visibleSize.width / 6, origin.y + visibleSize.height / 5.5 + origin.y));
 	upgradeHealth_0->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type)
@@ -291,7 +381,9 @@ bool UpgradeMenu::init()
 		{
 		case Widget::TouchEventType::BEGAN:
 			upgradeTitleText->setString("Health Upgrade Level 1");
-			upgradeText->setString("More Health increase in the game");
+			upgradeText->setString("More Health increase in the game \n Cost: 100");
+			upgradeHealth_0->setVisible(false);
+			upgradeHealth_0->setEnabled(false);
 			Constant::GetInstance()->SetHealthLevel(GameStats::PlayerHealthLevel::HEALTHLEVEL1);
 			break;
 		case Widget::TouchEventType::ENDED:
@@ -302,7 +394,15 @@ bool UpgradeMenu::init()
 	});
 	this->addChild(upgradeHealth_0, 2);
 
-	auto upgradeHealth_1 = Button::create("HealthIncrease2Locked.png", "HealthIncrease2.png","HealthIncrease2Complete.png");
+	upgradeHealth_0_Up = Button::create("HealthIncreaseComplete.png");
+	upgradeHealth_0_Up->setScale(1.25, 1.25);
+	upgradeHealth_0_Up->setPosition(Vec2(origin.x + visibleSize.width / 6, origin.y + visibleSize.height / 5.5 + origin.y));
+	upgradeHealth_0_Up->setVisible(true);
+	upgradeHealth_0_Up->setEnabled(false);
+
+	this->addChild(upgradeHealth_0_Up, 1);
+
+	upgradeHealth_1 = Button::create("HealthIncrease2Locked.png", "HealthIncrease2.png");
 	upgradeHealth_1->setScale(1.25, 1.25);
 	upgradeHealth_1->setPosition(Vec2(origin.x + visibleSize.width / 3.5, origin.y + visibleSize.height / 5.5 + origin.y));
 	upgradeHealth_1->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type)
@@ -311,7 +411,9 @@ bool UpgradeMenu::init()
 		{
 		case Widget::TouchEventType::BEGAN:
 			upgradeTitleText->setString("Health Upgrade Level 2");
-			upgradeText->setString("More and More Health increase in the game");
+			upgradeText->setString("More and More Health increase in the game \n Cost: 500");
+			upgradeHealth_1->setVisible(false);
+			upgradeHealth_1->setEnabled(false);
 			Constant::GetInstance()->SetHealthLevel(GameStats::PlayerHealthLevel::HEALTHLEVEL2);
 			break;
 		case Widget::TouchEventType::ENDED:
@@ -322,7 +424,15 @@ bool UpgradeMenu::init()
 	});
 	this->addChild(upgradeHealth_1, 2);
 
-	auto upgradeHealth_2 = Button::create("HealthIncrease2Locked.png", "HealthIncrease2.png", "HealthIncrease2Complete.png");
+	upgradeHealth_1_Up = Button::create("HealthIncrease2Complete.png");
+	upgradeHealth_1_Up->setScale(1.25, 1.25);
+	upgradeHealth_1_Up->setPosition(Vec2(origin.x + visibleSize.width / 3.5, origin.y + visibleSize.height / 5.5 + origin.y));
+	upgradeHealth_1_Up->setVisible(true);
+	upgradeHealth_1_Up->setEnabled(false);
+
+	this->addChild(upgradeHealth_1_Up, 1);
+
+	upgradeHealth_2 = Button::create("HealthIncrease4Locked.png", "HealthIncrease4.png");
 	upgradeHealth_2->setScale(1.25, 1.25);
 	upgradeHealth_2->setPosition(Vec2(origin.x + visibleSize.width / 2.5, origin.y + visibleSize.height / 4 + origin.y));
 	upgradeHealth_2->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type)
@@ -331,7 +441,9 @@ bool UpgradeMenu::init()
 		{
 		case Widget::TouchEventType::BEGAN:
 			upgradeTitleText->setString("Health Upgrade Level 3v1");
-			upgradeText->setString("Recovery Overtime");
+			upgradeText->setString("Recovery Overtime \n Cost: 1000");
+			upgradeHealth_2->setVisible(false);
+			upgradeHealth_2->setEnabled(false);
 			Constant::GetInstance()->SetHealthLevel(GameStats::PlayerHealthLevel::HEALTHLEVEL3_1);
 			break;
 		case Widget::TouchEventType::ENDED:
@@ -341,8 +453,16 @@ bool UpgradeMenu::init()
 		}
 	});
 	this->addChild(upgradeHealth_2, 2);
+	
+	upgradeHealth_2_Up = Button::create("HealthIncrease4Complete.png");
+	upgradeHealth_2_Up->setScale(1.25, 1.25);
+	upgradeHealth_2_Up->setPosition(Vec2(origin.x + visibleSize.width / 2.5, origin.y + visibleSize.height / 4 + origin.y));
+	upgradeHealth_2_Up->setVisible(true);
+	upgradeHealth_2_Up->setEnabled(false);
 
-	auto upgradeHealth_3 = Button::create("HealthIncrease2Locked.png", "HealthIncrease2.png", "HealthIncrease2Complete.png");
+	this->addChild(upgradeHealth_2_Up, 1);
+
+	upgradeHealth_3 = Button::create("HealthIncrease3Locked.png", "HealthIncrease3.png");
 	upgradeHealth_3->setScale(1.25, 1.25);
 	upgradeHealth_3->setPosition(Vec2(origin.x + visibleSize.width / 2.5, origin.y + visibleSize.height / 8 + origin.y));
 	upgradeHealth_3->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type)
@@ -351,7 +471,9 @@ bool UpgradeMenu::init()
 		{
 		case Widget::TouchEventType::BEGAN:
 			upgradeTitleText->setString("Health Upgrade Level 3v2");
-			upgradeText->setString("Health Increase x3");
+			upgradeText->setString("Health Increase x3 \n Cost: 1500");
+			upgradeHealth_3->setVisible(false);
+			upgradeHealth_3->setEnabled(false);
 			Constant::GetInstance()->SetHealthLevel(GameStats::PlayerHealthLevel::HEALTHLEVEL3_2);
 			break;
 		case Widget::TouchEventType::ENDED:
@@ -361,6 +483,14 @@ bool UpgradeMenu::init()
 		}
 	});
 	this->addChild(upgradeHealth_3, 2);
+
+	upgradeHealth_3_Up = Button::create("HealthIncrease3Complete.png");
+	upgradeHealth_3_Up->setScale(1.25, 1.25);
+	upgradeHealth_3_Up->setPosition(Vec2(origin.x + visibleSize.width / 2.5, origin.y + visibleSize.height / 8 + origin.y));
+	upgradeHealth_3_Up->setVisible(true);
+	upgradeHealth_3_Up->setEnabled(false);
+
+	this->addChild(upgradeHealth_3_Up, 1);
 
 	// OTHERS
 	auto Back = Button::create("Back.png", "BackPress.png");
@@ -381,6 +511,7 @@ bool UpgradeMenu::init()
 	});
 	this->addChild(Back, 2);
 
+	//TO NEXT STAGE
 	auto NewStage = Button::create("Back.png", "BackPress.png");
 	NewStage->setRotation(180);
 	NewStage->setScale(1, 1);
