@@ -51,8 +51,6 @@ private:
 	GameHumans males;
 	GameHumans females;
 
-	GameBuilding buildings;
-
 	int asteroidsCount;
 	float spawnTimer;
 	Size visibleSize;

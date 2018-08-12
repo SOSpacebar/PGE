@@ -15,13 +15,13 @@ enum EHumanSprite {
 class GameHumans : public GameObject
 {
 public:
-	void Init(const char * pngName, const char * name, float posX, float posY, float rotation,float scale, bool fM);
+	void Init(const char * pngName, const char * name, float posX, float posY, float speed,float scale, bool fM);
 	void MoveChar(EHumanSprite dir);
 	void update(float dt);
 
 	void stop();                                                                              
 
-	void RotateChar(EHumanSprite dir);
+	//void RotateChar(EHumanSprite dir);
 
 	void HumanMove(float posX, float posY);
 

@@ -89,10 +89,21 @@ bool MainMenu::init()
 	{
 		humans.push_back(new GameHumans);
 	}
-	humans[0]->Init("Humans/Man_Right_1.png", "maleSprite", 0, visibleSize.height * 0.1f, 0, 9, 0);
-	humans[1]->Init("Humans/Female_Right_1.png", "femaleSprite", visibleSize.width , visibleSize.height * 0.1f, 0, 9, 1);
-	humans[2]->Init("Humans/Man_Right_1.png", "maleSprite", visibleSize.width*0.5f, visibleSize.height * 0.3f, 0, 5, 0);
-	humans[3]->Init("Humans/Female_Right_1.png", "femaleSprite", visibleSize.width*0.5f, visibleSize.height * 0.3f, 0, 5, 1);
+	humans[0]->Init("Humans/Man_Right_1.png", "maleSprite", 0, visibleSize.height * 0.05f, 2, -6, 0);
+	humans[1]->Init("Humans/Female_Right_1.png", "femaleSprite", visibleSize.width , visibleSize.height * 0.05f, 2, -6, 1);
+	humans[2]->Init("Humans/Man_Right_1.png", "maleSprite", visibleSize.width*0.5f, visibleSize.height * 0.25f, 4, -5, 0);
+	humans[3]->Init("Humans/Female_Right_1.png", "femaleSprite", visibleSize.width*0.5f, visibleSize.height * 0.25f, 4, -5, 1);
+	
+	//humans[0]->setScaleY(-3);
+	//humans[0]->setScaleX(-3);
+	//humans[1]->setScaleY(-3);
+	//humans[1]->setScaleX(-3);
+	//humans[2]->setScaleY(-3);
+	//humans[2]->setScaleX(-3);
+	//humans[3]->setScaleY(-3);
+	//humans[3]->setScaleX(-3);
+
+
 	nodeItems->addChild(humans[0], 1);
 	nodeItems->addChild(humans[1], 1);
 	nodeItems->addChild(humans[2], 1);

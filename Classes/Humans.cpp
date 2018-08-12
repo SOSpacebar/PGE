@@ -1,13 +1,13 @@
 #include "Humans.h"
 #include "Constants.h"
 
-void GameHumans::Init(const char * pngName, const char * name, float posX, float posY, float rotation, float scale,bool fM)
+void GameHumans::Init(const char * pngName, const char * name, float posX, float posY, float speed, float scale,bool fM)
 {
 	// Load Main Sprite
 	this->setTexture(pngName);
 	this->setAnchorPoint(Vec2(0.5, 0.5));
 	this->setPosition(posX, posY);
-	this->setRotation(rotation);
+	//this->setRotation(rotation);
 	this->setName(name);
 	this->setScale(scale);
 	eDir = eStopHuman;
@@ -35,7 +35,7 @@ void GameHumans::Init(const char * pngName, const char * name, float posX, float
 	Humans->addComponent(physicsBody);
 	eDir = eStopHuman;*/
 	
-	fSpeed = 0.001f;
+	fSpeed = speed;
 
 	this->scheduleUpdate();
 }
@@ -51,34 +51,34 @@ void GameHumans::MoveChar(EHumanSprite DirX)
 	{
 		if (fMale == 1)
 		{
-			MoveAnimFrames.pushBack(SpriteFrame::create("Humans/Man_Right_1.png", Rect(0, 0, 50, 48)));
-			MoveAnimFrames.pushBack(SpriteFrame::create("Humans/Man_Right_2.png", Rect(0, 0, 50, 48)));
-			MoveAnimFrames.pushBack(SpriteFrame::create("Humans/Man_Right_3.png", Rect(0, 0, 50, 48)));
-			MoveAnimFrames.pushBack(SpriteFrame::create("Humans/Man_Right_4.png", Rect(0, 0, 50, 48)));
+			MoveAnimFrames.pushBack(SpriteFrame::create("Humans/Man_Right_1.png", Rect(0, 0, 50, 39.3f)));
+			MoveAnimFrames.pushBack(SpriteFrame::create("Humans/Man_Right_2.png", Rect(0, 0, 50, 39.3f)));
+			MoveAnimFrames.pushBack(SpriteFrame::create("Humans/Man_Right_3.png", Rect(0, 0, 50, 39.3f)));
+			MoveAnimFrames.pushBack(SpriteFrame::create("Humans/Man_Right_4.png", Rect(0, 0, 50, 39.3f)));
 		}
 		else
 		{
-			MoveAnimFrames.pushBack(SpriteFrame::create("Humans/Female_Right_1.png", Rect(0, 0, 50, 48)));
-			MoveAnimFrames.pushBack(SpriteFrame::create("Humans/Female_Right_2.png", Rect(0, 0, 50, 48)));
-			MoveAnimFrames.pushBack(SpriteFrame::create("Humans/Female_Right_3.png", Rect(0, 0, 50, 48)));
-			MoveAnimFrames.pushBack(SpriteFrame::create("Humans/Female_Right_4.png", Rect(0, 0, 50, 48)));
+			MoveAnimFrames.pushBack(SpriteFrame::create("Humans/Female_Right_1.png", Rect(0, 0, 50, 39.3f)));
+			MoveAnimFrames.pushBack(SpriteFrame::create("Humans/Female_Right_2.png", Rect(0, 0, 50, 39.3f)));
+			MoveAnimFrames.pushBack(SpriteFrame::create("Humans/Female_Right_3.png", Rect(0, 0, 50, 39.3f)));
+			MoveAnimFrames.pushBack(SpriteFrame::create("Humans/Female_Right_4.png", Rect(0, 0, 50, 39.3f)));
 		}
 	}
 	else if (eDir < 0)
 	{
 		if (fMale == 1)
 		{
-			MoveAnimFrames.pushBack(SpriteFrame::create("Humans/Man_Left_1.png", Rect(0, 0, 50, 48)));
-			MoveAnimFrames.pushBack(SpriteFrame::create("Humans/Man_Left_2.png", Rect(0, 0, 50, 48)));
-			MoveAnimFrames.pushBack(SpriteFrame::create("Humans/Man_Left_3.png", Rect(0, 0, 50, 48)));
-			MoveAnimFrames.pushBack(SpriteFrame::create("Humans/Man_Left_4.png", Rect(0, 0, 50, 48)));
+			MoveAnimFrames.pushBack(SpriteFrame::create("Humans/Man_Left_1.png", Rect(0, 0, 50, 39.3f)));
+			MoveAnimFrames.pushBack(SpriteFrame::create("Humans/Man_Left_2.png", Rect(0, 0, 50, 39.3f)));
+			MoveAnimFrames.pushBack(SpriteFrame::create("Humans/Man_Left_3.png", Rect(0, 0, 50, 39.3f)));
+			MoveAnimFrames.pushBack(SpriteFrame::create("Humans/Man_Left_4.png", Rect(0, 0, 50, 39.3f)));
 		}
 		else
 		{
-			MoveAnimFrames.pushBack(SpriteFrame::create("Humans/Female_Left_1.png", Rect(0, 0, 50, 48)));
-			MoveAnimFrames.pushBack(SpriteFrame::create("Humans/Female_Left_2.png", Rect(0, 0, 50, 48)));
-			MoveAnimFrames.pushBack(SpriteFrame::create("Humans/Female_Left_3.png", Rect(0, 0, 50, 48)));
-			MoveAnimFrames.pushBack(SpriteFrame::create("Humans/Female_Left_4.png", Rect(0, 0, 50, 48)));
+			MoveAnimFrames.pushBack(SpriteFrame::create("Humans/Female_Left_1.png", Rect(0, 0, 50, 39.3f)));
+			MoveAnimFrames.pushBack(SpriteFrame::create("Humans/Female_Left_2.png", Rect(0, 0, 50, 39.3f)));
+			MoveAnimFrames.pushBack(SpriteFrame::create("Humans/Female_Left_3.png", Rect(0, 0, 50, 39.3f)));
+			MoveAnimFrames.pushBack(SpriteFrame::create("Humans/Female_Left_4.png", Rect(0, 0, 50, 39.3f)));
 		}
 	}
 	else
@@ -121,7 +121,7 @@ void GameHumans::stop(void)
 
 void GameHumans::update(float dt)
 {
-	auto moveEvent = MoveBy::create(0.0f, Vec2(10.0f, 0.f)*eDir);
+	auto moveEvent = MoveBy::create(0.0f, Vec2(fSpeed, 0.f)*eDir);
 	this->runAction(moveEvent);
 
 	if (eDir == EHumanSprite::eStopHuman)

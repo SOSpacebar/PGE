@@ -16,25 +16,25 @@ Scene* HelloWorld::createScene()
 	//auto layer = HelloWorld::create();
 	//scene->addChild(layer);
 
-    return scene;
+	return scene;
 }
 
 // Print useful error message instead of segfaulting when files are not there.
 static void problemLoading(const char* filename)
 {
-    printf("Error while loading: %s\n", filename);
-    printf("Depending on how you compiled you might have to add 'Resources/' in front of filenames in HelloWorldScene.cpp\n");
+	printf("Error while loading: %s\n", filename);
+	printf("Depending on how you compiled you might have to add 'Resources/' in front of filenames in HelloWorldScene.cpp\n");
 }
 
 // on "init" you need to initialize your instance
 bool HelloWorld::init()
 {
-    //////////////////////////////
-    // 1. super init first
-    if ( !Scene::initWithPhysics() )
-    {
-        return false;
-    }
+	//////////////////////////////
+	// 1. super init first
+	if (!Scene::initWithPhysics())
+	{
+		return false;
+	}
 
 	//GRAVITY
 	this->getPhysicsWorld()->setGravity(Vec2(0, -98));
@@ -46,8 +46,8 @@ bool HelloWorld::init()
 
 	this->scheduleUpdate();
 
-    visibleSize = Director::getInstance()->getVisibleSize();
-    Vec2 origin = Director::getInstance()->getVisibleOrigin();
+	visibleSize = Director::getInstance()->getVisibleSize();
+	Vec2 origin = Director::getInstance()->getVisibleOrigin();
 
 	// Playing Size
 	playingSize = Size(visibleSize.width, visibleSize.height - (visibleSize.height / 8));
@@ -79,20 +79,22 @@ bool HelloWorld::init()
 
 	//nodeItems->addChild(males.getSprite(), 1);
 	//nodeItems->addChild(females.getSprite(), 1);
+	int humanSpeed = 1;
 
-	for (int i = 0; i < 4; ++i)
+	for (int i = 0; i < 6; ++i)
 	{
 		GameHumans *human = new GameHumans();
 		if (i % 2 == 0) //Male
-			human->Init("Humans/Man_Right_1.png", "maleSprite", random(0.f, visibleSize.width), visibleSize.height * 0.2f, 0, 2, 1);
+			human->Init("Humans/Man_Right_1.png", "maleSprite", random(0.f, visibleSize.width), visibleSize.height * 0.15f, humanSpeed, 2, 1);
 		else
-			human->Init("Humans/Female_Right_1.png", "femaleSprite", random(0.f, visibleSize.width), visibleSize.height * 0.2f, 0, 2, 0);
+			human->Init("Humans/Female_Right_1.png", "femaleSprite", random(0.f, visibleSize.width), visibleSize.height * 0.15f, humanSpeed, 2, 0);
+		humanSpeed += 1;
 
-		moveableItems->addChild(human, 1);
+		groundItems->addChild(human, 2);
 	}
 
 	// Spawn Manager
-	spawner.Init(moveableItems);
+	spawner.Init(moveableItems2);
 
 	// Set anchor point and position of object
 	sprite->setAnchorPoint(Vec2::ZERO);
@@ -112,7 +114,7 @@ bool HelloWorld::init()
 		newNode->setPosition(sX, sY);
 		newNode->setScaleY(1.2f);
 		sX += newNode->getContentSize().width;
-		
+
 		auto physicsBody = PhysicsBody::createBox(Size(newNode->getContentSize().width, newNode->getContentSize().height),
 			PhysicsMaterial(1.0f, 0.0f, 0.0f));
 		physicsBody->setDynamic(false);
@@ -123,7 +125,7 @@ bool HelloWorld::init()
 
 	float bS = 1.7f;
 	int bX = (visibleSize.width - playingSize.width);// - background->getContentSize().width;
-	int bY = (visibleSize.height - playingSize.height)-(sprite->getContentSize().height*1.8); //- background->getContentSize().height;
+	int bY = (visibleSize.height - playingSize.height) - (sprite->getContentSize().height*1.8); //- background->getContentSize().height;
 
 	auto newBackgroundNode = Sprite::createWithSpriteFrame(background->getSpriteFrame());
 	newBackgroundNode->setAnchorPoint(Vec2::ZERO);
@@ -146,6 +148,48 @@ bool HelloWorld::init()
 	//auto delaySequence = Sequence::create(delay, delay->clone(), nullptr);
 	//auto sequence = Sequence::create(moveEvent, moveEvent->reverse(), delaySequence, nullptr);
 	//humans->runAction(sequence);
+
+	if (Constant::GetInstance()->GetBuilding() == 1 || Constant::GetInstance()->GetBuilding() == 2 || Constant::GetInstance()->GetBuilding() == 3)
+	{
+		auto building1 = Sprite::create("Buildings/buildings.png");
+		building1->setAnchorPoint(Vec2::ZERO);
+		building1->setPosition(visibleSize.width * 0.275f, (visibleSize.height - playingSize.height + 2));
+		building1->setScale(2);
+
+		groundItems->addChild(building1, 1);
+	}
+	if (Constant::GetInstance()->GetBuilding() == 2 || Constant::GetInstance()->GetBuilding() == 3)
+	{
+		auto building2 = Sprite::create("Buildings/building_big_3.png");
+		building2->setAnchorPoint(Vec2::ZERO);
+		building2->setPosition(visibleSize.width * 0.12f, (visibleSize.height - playingSize.height + 2));
+		building2->setScale(1.5f);
+
+		auto building3 = Sprite::create("Buildings/building_big_4.png");
+		building3->setAnchorPoint(Vec2::ZERO);
+		building3->setPosition(visibleSize.width * 0.73f, (visibleSize.height - playingSize.height + 2));
+		building3->setScale(1.5f);
+
+		groundItems->addChild(building2, 1);
+		groundItems->addChild(building3, 1);
+	}
+	if (Constant::GetInstance()->GetBuilding() == 3)
+	{
+		auto building4 = Sprite::create("Buildings/building_big_2.png");
+		building4->setAnchorPoint(Vec2::ZERO);
+		building4->setPosition(visibleSize.width * 0.89f, (visibleSize.height - playingSize.height + 2));
+		building4->setScale(1.5f);
+
+		auto building5 = Sprite::create("Buildings/building_big_1.png");
+		building5->setAnchorPoint(Vec2::ZERO);
+		building5->setPosition(visibleSize.width * 0.008f, (visibleSize.height - playingSize.height + 2));
+		building5->setScale(1.5f);
+
+		groundItems->addChild(building4, 1);
+		groundItems->addChild(building5, 1);
+	}
+
+
 
 	// Add the note container into the scene graph
 	this->addChild(nodeItems, 1);
@@ -227,8 +271,8 @@ bool HelloWorld::init()
 
 	// Collision CallBack
 	auto contactListener = EventListenerPhysicsContact::create();
-    contactListener->onContactBegin = CC_CALLBACK_1(HelloWorld::OnContactBegin, this);
-    _eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
+	contactListener->onContactBegin = CC_CALLBACK_1(HelloWorld::OnContactBegin, this);
+	_eventDispatcher->addEventListenerWithSceneGraphPriority(contactListener, this);
 
 	// Set into Constants
 	int healthLvl = (int)Constant::GetInstance()->GetHealthLevel();
@@ -243,7 +287,7 @@ bool HelloWorld::init()
 	Constant::GetInstance()->SetHealth(Constant::GetInstance()->GetMaxHealth());
 	Constant::GetInstance()->SetGameObjectCount(0);
 	Constant::GetInstance()->SetScore(Constant::GetInstance()->GetScore());
-	
+
 	// set the filling of the gauge in percent; from 0-100%
 	progressTimer->setPercentage(Constant::GetInstance()->GetHealth());
 
@@ -260,54 +304,54 @@ bool HelloWorld::init()
 
 
 
-    /////////////////////////////
-    // 2. add a menu item with "X" image, which is clicked to quit the program
-    //    you may modify it.
+	/////////////////////////////
+	// 2. add a menu item with "X" image, which is clicked to quit the program
+	//    you may modify it.
 
-    // add a "close" icon to exit the progress. it's an autorelease object
-    //auto closeItem = MenuItemImage::create(
-    //                                       "CloseNormal.png",
-    //                                       "CloseSelected.png",
-    //                                       CC_CALLBACK_1(HelloWorld::menuCloseCallback, this));
+	// add a "close" icon to exit the progress. it's an autorelease object
+	//auto closeItem = MenuItemImage::create(
+	//                                       "CloseNormal.png",
+	//                                       "CloseSelected.png",
+	//                                       CC_CALLBACK_1(HelloWorld::menuCloseCallback, this));
 
-    //if (closeItem == nullptr ||
-    //    closeItem->getContentSize().width <= 0 ||
-    //    closeItem->getContentSize().height <= 0)
-    //{
-    //    problemLoading("'CloseNormal.png' and 'CloseSelected.png'");
-    //}
-    //else
-    //{
-    //    float x = origin.x + visibleSize.width - closeItem->getContentSize().width/2;
-    //    float y = origin.y + closeItem->getContentSize().height/2;
-    //    closeItem->setPosition(Vec2(x,y));
-    //}
+	//if (closeItem == nullptr ||
+	//    closeItem->getContentSize().width <= 0 ||
+	//    closeItem->getContentSize().height <= 0)
+	//{
+	//    problemLoading("'CloseNormal.png' and 'CloseSelected.png'");
+	//}
+	//else
+	//{
+	//    float x = origin.x + visibleSize.width - closeItem->getContentSize().width/2;
+	//    float y = origin.y + closeItem->getContentSize().height/2;
+	//    closeItem->setPosition(Vec2(x,y));
+	//}
 
-    //// create menu, it's an autorelease object
-    //auto menu = Menu::create(closeItem, NULL);
-    //menu->setPosition(Vec2::ZERO);
-    //this->addChild(menu, 1);
+	//// create menu, it's an autorelease object
+	//auto menu = Menu::create(closeItem, NULL);
+	//menu->setPosition(Vec2::ZERO);
+	//this->addChild(menu, 1);
 
-    /////////////////////////////
-    // 3. add your codes below...
+	/////////////////////////////
+	// 3. add your codes below...
 
-    // add a label shows "Hello World"
-    // create and initialize a label
-    label = Label::createWithTTF("Day: " + std::to_string(Constant::GetInstance()->GetLevel()) + "\nMoney: "+ std::to_string(Constant::GetInstance()->GetScore()), "fonts/Marker Felt.ttf", 35);
-    if (label == nullptr)
-    {
-        problemLoading("'fonts/Marker Felt.ttf'");
-    }
-    else
-    {
-        // position the label on the center of the screen
-        label->setPosition(Vec2(origin.x + visibleSize.width/2,
-                                origin.y + visibleSize.height - label->getContentSize().height));
+	// add a label shows "Hello World"
+	// create and initialize a label
+	label = Label::createWithTTF("Day: " + std::to_string(Constant::GetInstance()->GetLevel ()) + "\nMoney: " + std::to_string(Constant::GetInstance()->GetScore()), "fonts/Marker Felt.ttf", 35);
+	if (label == nullptr)
+	{
+		problemLoading("'fonts/Marker Felt.ttf'");
+	}
+	else
+	{
+		// position the label on the center of the screen
+		label->setPosition(Vec2(origin.x + visibleSize.width / 2,
+			origin.y + visibleSize.height - label->getContentSize().height));
 		label->setColor(Color3B(0, 0, 0));
 
-        // add the label as a child to this layer
-        this->addChild(label, 1);
-    }
+		// add the label as a child to this layer
+		this->addChild(label, 1);
+	}
 
 	auto LeftButton = Button::create("Left_Buttons.png", "Left_Buttons.png");
 	LeftButton->setScale(1, 1);
@@ -328,7 +372,7 @@ bool HelloWorld::init()
 	});
 	this->addChild(LeftButton, 2);
 
-	
+
 	auto RightButton = Button::create("Right_Buttons.png", "Right_Buttons.png");
 	RightButton->setScale(1, 1);
 	RightButton->setPosition(Vec2(origin.x + visibleSize.width / 5, origin.y + visibleSize.height / 13 + origin.y));
@@ -367,23 +411,23 @@ bool HelloWorld::init()
 		}
 	});
 	this->addChild(ShootButton, 2);
-    return true;
+	return true;
 }
 
 
 void HelloWorld::menuCloseCallback(Ref* pSender)
 {
-    //Close the cocos2d-x game scene and quit the application
-    Director::getInstance()->end();
+	//Close the cocos2d-x game scene and quit the application
+	Director::getInstance()->end();
 
-    #if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    exit(0);
+#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
+	exit(0);
 #endif
 
-    /*To navigate back to native iOS screen(if present) without quitting the application  ,do not use Director::getInstance()->end() and exit(0) as given above,instead trigger a custom event created in RootViewController.mm as below*/
+	/*To navigate back to native iOS screen(if present) without quitting the application  ,do not use Director::getInstance()->end() and exit(0) as given above,instead trigger a custom event created in RootViewController.mm as below*/
 
-    //EventCustom customEndEvent("game_scene_close_event");
-    //_eventDispatcher->dispatchEvent(&customEndEvent);
+	//EventCustom customEndEvent("game_scene_close_event");
+	//_eventDispatcher->dispatchEvent(&customEndEvent);
 
 
 }
@@ -435,7 +479,7 @@ void HelloWorld::update(float delta)
 	mainCharacter.Update(delta);
 	spawner.Update(delta);
 
-	
+
 	//spawnTimer += delta;
 	//
 	//if (spawnTimer > 1.f)
@@ -473,10 +517,10 @@ void HelloWorld::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 {
 	switch (keyCode)
 	{
-	/*case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
+		/*case EventKeyboard::KeyCode::KEY_RIGHT_ARROW:
 		mainCharacter.MoveChar(EAction::eRight);
 		break;
-	case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
+		case EventKeyboard::KeyCode::KEY_LEFT_ARROW:
 		mainCharacter.MoveChar(EAction::eLeft);
 		break;*/
 	case EventKeyboard::KeyCode::KEY_A:
@@ -511,7 +555,7 @@ void HelloWorld::onMouseMove(Event * mouse)
 
 	mainCharacter.SetCharAim(eventMouse->getLocationInView());
 	/*if (!b_mouseclicked)
-		Bullet.SetShoot(eventMouse->getLocationInView());*/
+	Bullet.SetShoot(eventMouse->getLocationInView());*/
 }
 
 void HelloWorld::onMouseUp(Event * mouse)
@@ -524,16 +568,20 @@ void HelloWorld::onMouseUp(Event * mouse)
 	int bulletSize = (int)Constant::GetInstance()->GetAttackLevel() + 1;
 	std::vector<GameBullet*> bulletBox;
 
-	while (bulletBox.size() < bulletSize) {
+	for(size_t i=0; i<bulletSize; i++)
+	{
+		if (i == 3)
+			break;
+
 		bulletBox.push_back(new GameBullet());
 	}
 
-	if(Constant::GetInstance()->GetAttackLevel() == GameStats::SINGLEROUND)
+	if (Constant::GetInstance()->GetAttackLevel() == GameStats::SINGLEROUND)
 		bulletBox[0]->Init("Bullet.png", "Bullets", visibleSize.width * 0.5f, (visibleSize.height - playingSize.height), 0, dir.x, dir.y);
 	else if (Constant::GetInstance()->GetAttackLevel() == GameStats::DOUBLEROUND)
 	{
-		bulletBox[0]->Init("Bullet.png", "1Bullets", visibleSize.width * 0.5f-20, (visibleSize.height - playingSize.height), 0, dir.x, dir.y);
-		bulletBox[1]->Init("Bullet.png", "2Bullets", visibleSize.width * 0.5f+20, (visibleSize.height - playingSize.height), 0, dir.x, dir.y);
+		bulletBox[0]->Init("Bullet.png", "1Bullets", visibleSize.width * 0.5f - 20, (visibleSize.height - playingSize.height), 0, dir.x, dir.y);
+		bulletBox[1]->Init("Bullet.png", "2Bullets", visibleSize.width * 0.5f + 20, (visibleSize.height - playingSize.height), 0, dir.x, dir.y);
 
 		bulletBox[1]->SetShoot(e->getLocationInView());
 		bulletBox[1]->BulletMove();
@@ -559,7 +607,7 @@ void HelloWorld::onMouseUp(Event * mouse)
 		bulletBox[0]->Init("Bullet.png", "1Bullets", visibleSize.width * 0.5f - 25, (visibleSize.height - playingSize.height), -45, dir.x, dir.y);
 		bulletBox[1]->Init("Bullet.png", "2Bullets", visibleSize.width * 0.5f, (visibleSize.height - playingSize.height), 90, dir.x, dir.y);
 		bulletBox[2]->Init("Bullet.png", "3Bullets", visibleSize.width * 0.5f + 25, (visibleSize.height - playingSize.height), 45, dir.x, dir.y);
-		
+
 		bulletBox[1]->SetShoot(e->getLocationInView());
 		bulletBox[1]->BulletMove();
 		bulletBox[2]->SetShoot(e->getLocationInView());
@@ -581,7 +629,7 @@ void HelloWorld::onMouseUp(Event * mouse)
 
 void HelloWorld::onMouseDown(Event * mouse)
 {
-	
+
 }
 
 void HelloWorld::onMouseScroll(Event * mouse)
@@ -646,11 +694,7 @@ void HelloWorld::JustShoot()
 	int bulletSize = (int)Constant::GetInstance()->GetAttackLevel() + 1;
 	std::vector<GameBullet*> bulletBox;
 
-	for (size_t i = 0; i < bulletSize; i++)
-	{
-		if (i == 3)
-			break;
-
+	while (bulletBox.size() < bulletSize) {
 		bulletBox.push_back(new GameBullet());
 	}
 

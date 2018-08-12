@@ -55,8 +55,8 @@ public:
 	void SetAttackLevel(GameStats::PlayerAttackLevel _lvl);
 	GameStats::PlayerAttackLevel GetAttackLevel();
 	
-	void SetBuildingTF(bool building);
-	bool GetBuildingTF();
+	void SetBuilding(int building);
+	int GetBuilding();
 	
 	void SetScore(int _score);
 	int GetScore();

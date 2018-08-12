@@ -80,12 +80,12 @@ int GameStats::GetLevel()
 	return m_level;
 }
 
-void GameStats::SetBuildingTF(bool building)
+void GameStats::SetBuilding(int building)
 {
 	m_building = building;
 }
 
-bool GameStats::GetBuildingTF()
+int GameStats::GetBuilding()
 {
 	return m_building;
 }

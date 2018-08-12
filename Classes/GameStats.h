@@ -38,14 +38,14 @@ public:
 	int GetScore();
 	void SetLevel(int _level);
 	int GetLevel();
-	void SetBuildingTF(bool building);
-	bool GetBuildingTF();
+	void SetBuilding(int building);
+	int GetBuilding();
 
 	GameStats()
 	{
 		m_score = 0;
 		m_level = 0;
-		m_building = false;
+		m_building = 0;
 		m_player.m_health = 0;
 		m_player.m_maxHealth = 0;
 		m_player.m_regRate = 0;
@@ -65,7 +65,7 @@ private:
 	int m_gameObjectCounter;
 	int m_score;
 	int m_level;
-	bool m_building;
+	int m_building;
 
 };
 

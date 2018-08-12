@@ -170,6 +170,7 @@ bool UpgradeMenu::init()
 			//	label->setString("Money: " + std::to_string(Constant::GetInstance()->GetScore()));
 				upgradeBuilding_0->setVisible(false);
 				upgradeBuilding_0->setEnabled(false);
+				Constant::GetInstance()->SetBuilding(1);
 			//}
 			break;
 		case Widget::TouchEventType::ENDED:
@@ -199,6 +200,7 @@ bool UpgradeMenu::init()
 			upgradeText->setString("More and More income will be able to get \n Cost: 500");
 			upgradeBuilding_1->setVisible(false);
 			upgradeBuilding_1->setEnabled(false);
+			Constant::GetInstance()->SetBuilding(2);
 			break;
 		case Widget::TouchEventType::ENDED:
 		
@@ -228,6 +230,7 @@ bool UpgradeMenu::init()
 			upgradeText->setString("More Income and Minimum \n health recovery increase \n Cost: 1000");
 			upgradeBuilding_2->setVisible(false);
 			upgradeBuilding_2->setEnabled(false);
+			Constant::GetInstance()->SetBuilding(3);
 			break;
 		case Widget::TouchEventType::ENDED:
 			break;
