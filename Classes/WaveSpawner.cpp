@@ -74,7 +74,7 @@ void WaveSpawner::SpawnAsteroid()
 {
 	GameAsteroid* asteroids = new GameAsteroid();
 	float asteroidRandX = random(0, (int)(Constant::GetInstance()->GetVisableSize().width - 10));
-	asteroids->Init("Asteroid.png", "Asteroids", asteroidRandX, (Constant::GetInstance()->GetVisableSize().height - 10), 0);
+	asteroids->Init("Asteroid.png", "Asteroids", asteroidRandX, (Constant::GetInstance()->GetVisableSize().height - 10), 0,1);
 	spriteNode->addChild(asteroids);
 }
 

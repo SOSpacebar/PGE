@@ -2,7 +2,7 @@
 #include "Constants.h"
 #include "Character.h"
 
-void GameAsteroid::Init(const char * pngName, const char * name, float posX, float posY, float rotation, GameChar* player)
+void GameAsteroid::Init(const char * pngName, const char * name, float posX, float posY, float rotation,float scale, GameChar* player)
 {
 	// Load Main Sprite
 	//this->Sprite::create(pngName);
@@ -10,6 +10,7 @@ void GameAsteroid::Init(const char * pngName, const char * name, float posX, flo
 	this->setAnchorPoint(Vec2(0.5, 0.5));
 	this->setPosition(posX, posY);
 	this->setRotation(rotation);
+	this->setScale(scale);
 	this->setName(name);
 	this->SetActive(true);
 

@@ -17,7 +17,7 @@ enum EAsteroid {
 class GameAsteroid : public GameObject
 {
 public:
-	void Init(const char * pngName, const char * name, float posX, float posY, float Rotation, GameChar* player = NULL);
+	void Init(const char * pngName, const char * name, float posX, float posY, float Rotation,float scale, GameChar* player = NULL);
 	void MoveChar(EAsteroid dir);
 	void update(float dt);
 

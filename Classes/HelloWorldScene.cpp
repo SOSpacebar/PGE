@@ -85,9 +85,9 @@ bool HelloWorld::init()
 	{
 		GameHumans *human = new GameHumans();
 		if (i % 2 == 0) //Male
-			human->Init("Humans/Man_Right_1.png", "maleSprite", random(0.f, visibleSize.width), visibleSize.height * 0.15f, humanSpeed, 2, 1);
+			human->Init("Humans/Man_Right_1.png", "maleSprite", random(0.f, visibleSize.width), visibleSize.height * 0.15f, humanSpeed, 1, 1);
 		else
-			human->Init("Humans/Female_Right_1.png", "femaleSprite", random(0.f, visibleSize.width), visibleSize.height * 0.15f, humanSpeed, 2, 0);
+			human->Init("Humans/Female_Right_1.png", "femaleSprite", random(0.f, visibleSize.width), visibleSize.height * 0.15f, humanSpeed, 1, 0);
 		humanSpeed += 1;
 
 		groundItems->addChild(human, 2);
@@ -577,11 +577,11 @@ void HelloWorld::onMouseUp(Event * mouse)
 	}
 
 	if (Constant::GetInstance()->GetAttackLevel() == GameStats::SINGLEROUND)
-		bulletBox[0]->Init("Bullet.png", "Bullets", visibleSize.width * 0.5f, (visibleSize.height - playingSize.height), 0, dir.x, dir.y);
+		bulletBox[0]->Init("Bullet.png", "Bullets", visibleSize.width * 0.5f, (visibleSize.height - playingSize.height), 0, 0.8f, dir.x, dir.y);
 	else if (Constant::GetInstance()->GetAttackLevel() == GameStats::DOUBLEROUND)
 	{
-		bulletBox[0]->Init("Bullet.png", "1Bullets", visibleSize.width * 0.5f - 20, (visibleSize.height - playingSize.height), 0, dir.x, dir.y);
-		bulletBox[1]->Init("Bullet.png", "2Bullets", visibleSize.width * 0.5f + 20, (visibleSize.height - playingSize.height), 0, dir.x, dir.y);
+		bulletBox[0]->Init("Bullet.png", "1Bullets", visibleSize.width * 0.5f - 20, (visibleSize.height - playingSize.height), 0, 0.8f, dir.x, dir.y);
+		bulletBox[1]->Init("Bullet.png", "2Bullets", visibleSize.width * 0.5f + 20, (visibleSize.height - playingSize.height), 0, 0.8f, dir.x, dir.y);
 
 		bulletBox[1]->SetShoot(e->getLocationInView());
 		bulletBox[1]->BulletMove();
@@ -590,9 +590,9 @@ void HelloWorld::onMouseUp(Event * mouse)
 	}
 	else if (Constant::GetInstance()->GetAttackLevel() == GameStats::TRIPLEROUND)
 	{
-		bulletBox[0]->Init("Bullet.png", "1Bullets", visibleSize.width * 0.5f - 25, (visibleSize.height - playingSize.height), 0, dir.x, dir.y);
-		bulletBox[1]->Init("Bullet.png", "2Bullets", visibleSize.width * 0.5f, (visibleSize.height - playingSize.height), 0, dir.x, dir.y);
-		bulletBox[2]->Init("Bullet.png", "3Bullets", visibleSize.width * 0.5f + 25, (visibleSize.height - playingSize.height), 0, dir.x, dir.y);
+		bulletBox[0]->Init("Bullet.png", "1Bullets", visibleSize.width * 0.5f - 25, (visibleSize.height - playingSize.height), 0, 0.8f, dir.x, dir.y);
+		bulletBox[1]->Init("Bullet.png", "2Bullets", visibleSize.width * 0.5f, (visibleSize.height - playingSize.height), 0, 0.8f, dir.x, dir.y);
+		bulletBox[2]->Init("Bullet.png", "3Bullets", visibleSize.width * 0.5f + 25, (visibleSize.height - playingSize.height), 0, 0.8f, dir.x, dir.y);
 
 		bulletBox[1]->SetShoot(e->getLocationInView());
 		bulletBox[1]->BulletMove();
@@ -604,9 +604,9 @@ void HelloWorld::onMouseUp(Event * mouse)
 	}
 	else if (Constant::GetInstance()->GetAttackLevel() == GameStats::SPLITROUND)
 	{
-		bulletBox[0]->Init("Bullet.png", "1Bullets", visibleSize.width * 0.5f - 25, (visibleSize.height - playingSize.height), -45, dir.x, dir.y);
-		bulletBox[1]->Init("Bullet.png", "2Bullets", visibleSize.width * 0.5f, (visibleSize.height - playingSize.height), 90, dir.x, dir.y);
-		bulletBox[2]->Init("Bullet.png", "3Bullets", visibleSize.width * 0.5f + 25, (visibleSize.height - playingSize.height), 45, dir.x, dir.y);
+		bulletBox[0]->Init("Bullet.png", "1Bullets", visibleSize.width * 0.5f - 25, (visibleSize.height - playingSize.height), -45, 0.8f, dir.x, dir.y);
+		bulletBox[1]->Init("Bullet.png", "2Bullets", visibleSize.width * 0.5f, (visibleSize.height - playingSize.height), 90, 0.8f, dir.x, dir.y);
+		bulletBox[2]->Init("Bullet.png", "3Bullets", visibleSize.width * 0.5f + 25, (visibleSize.height - playingSize.height), 45, 0.8f, dir.x, dir.y);
 
 		bulletBox[1]->SetShoot(e->getLocationInView());
 		bulletBox[1]->BulletMove();
@@ -699,11 +699,11 @@ void HelloWorld::JustShoot()
 	}
 
 	if (Constant::GetInstance()->GetAttackLevel() == GameStats::SINGLEROUND)
-		bulletBox[0]->Init("Bullet.png", "Bullets", visibleSize.width * 0.5f, (visibleSize.height - playingSize.height), rot - 90);
+		bulletBox[0]->Init("Bullet.png", "Bullets", visibleSize.width * 0.5f, (visibleSize.height - playingSize.height), rot - 90, 0.8f);
 	else if (Constant::GetInstance()->GetAttackLevel() == GameStats::DOUBLEROUND)
 	{
-		bulletBox[0]->Init("Bullet.png", "1Bullets", visibleSize.width * 0.5f - 20, (visibleSize.height - playingSize.height), rot - 90);
-		bulletBox[1]->Init("Bullet.png", "2Bullets", visibleSize.width * 0.5f + 20, (visibleSize.height - playingSize.height), rot - 90);
+		bulletBox[0]->Init("Bullet.png", "1Bullets", visibleSize.width * 0.5f - 20, (visibleSize.height - playingSize.height), rot - 90, 0.8f);
+		bulletBox[1]->Init("Bullet.png", "2Bullets", visibleSize.width * 0.5f + 20, (visibleSize.height - playingSize.height), rot - 90, 0.8f);
 
 		//bulletBox[1]->SetShoot(e->getLocationInView());
 		bulletBox[1]->BulletMove();
@@ -712,9 +712,9 @@ void HelloWorld::JustShoot()
 	}
 	else if (Constant::GetInstance()->GetAttackLevel() == GameStats::TRIPLEROUND)
 	{
-		bulletBox[0]->Init("Bullet.png", "1Bullets", visibleSize.width * 0.5f - 25, (visibleSize.height - playingSize.height), rot - 90);
-		bulletBox[1]->Init("Bullet.png", "2Bullets", visibleSize.width * 0.5f, (visibleSize.height - playingSize.height), rot - 90);
-		bulletBox[2]->Init("Bullet.png", "3Bullets", visibleSize.width * 0.5f + 25, (visibleSize.height - playingSize.height), rot - 90);
+		bulletBox[0]->Init("Bullet.png", "1Bullets", visibleSize.width * 0.5f - 25, (visibleSize.height - playingSize.height), rot - 90, 0.8f);
+		bulletBox[1]->Init("Bullet.png", "2Bullets", visibleSize.width * 0.5f, (visibleSize.height - playingSize.height), rot - 90, 0.8f);
+		bulletBox[2]->Init("Bullet.png", "3Bullets", visibleSize.width * 0.5f + 25, (visibleSize.height - playingSize.height), rot - 90, 0.8f);
 
 		//bulletBox[1]->SetShoot(e->getLocationInView());
 		bulletBox[1]->BulletMove();
@@ -726,9 +726,9 @@ void HelloWorld::JustShoot()
 	}
 	else if (Constant::GetInstance()->GetAttackLevel() == GameStats::SPLITROUND)
 	{
-		bulletBox[0]->Init("Bullet.png", "1Bullets", visibleSize.width * 0.5f - 25, (visibleSize.height - playingSize.height), rot - 45);
-		bulletBox[1]->Init("Bullet.png", "2Bullets", visibleSize.width * 0.5f, (visibleSize.height - playingSize.height), rot - 90);
-		bulletBox[2]->Init("Bullet.png", "3Bullets", visibleSize.width * 0.5f + 25, (visibleSize.height - playingSize.height), rot - 135);
+		bulletBox[0]->Init("Bullet.png", "1Bullets", visibleSize.width * 0.5f - 25, (visibleSize.height - playingSize.height), rot - 45, 0.8f);
+		bulletBox[1]->Init("Bullet.png", "2Bullets", visibleSize.width * 0.5f, (visibleSize.height - playingSize.height), rot - 90, 0.8f);
+		bulletBox[2]->Init("Bullet.png", "3Bullets", visibleSize.width * 0.5f + 25, (visibleSize.height - playingSize.height), rot - 135, 0.8f);
 
 		//bulletBox[1]->SetShoot(e->getLocationInView());
 		bulletBox[1]->BulletMove();

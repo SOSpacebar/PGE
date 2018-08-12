@@ -2,7 +2,7 @@
 #include "AudioManager.h"
 #include "Constants.h"
 
-void GameBullet::Init(const char * pngName, const char * name, float posX, float posY,float Rotation, float mouseX, float mouseY)
+void GameBullet::Init(const char * pngName, const char * name, float posX, float posY,float Rotation,float scale, float mouseX, float mouseY)
 {
 	// Load Main Sprite
 	//this = Sprite::create(pngName);
@@ -10,6 +10,7 @@ void GameBullet::Init(const char * pngName, const char * name, float posX, float
 	this->setAnchorPoint(Vec2(0.5, 0.5));
 	this->setPosition(posX, posY);
 	this->setRotation(Rotation);
+	this->setScale(scale);
 	this->setName(name);
 	this->SetActive(true);
 
@@ -33,12 +34,13 @@ void GameBullet::Init(const char * pngName, const char * name, float posX, float
 	//this->scheduleUpdate();
 }
 
-void GameBullet::Init(const char * pngName, const char * name, float posX, float posY, float Rotation)
+void GameBullet::Init(const char * pngName, const char * name, float posX, float posY, float Rotation,float scale)
 {
 	this->setTexture(pngName);
 	this->setAnchorPoint(Vec2(0.5, 0.5));
 	this->setPosition(posX, posY);
 	this->setRotation(Rotation);
+	this->setScale(scale);
 	this->setName(name);
 	this->SetActive(true);
 
