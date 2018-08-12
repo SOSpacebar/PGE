@@ -79,3 +79,13 @@ int GameStats::GetLevel()
 {
 	return m_level;
 }
+
+void GameStats::SetBuildingTF(bool building)
+{
+	m_building = building;
+}
+
+bool GameStats::GetBuildingTF()
+{
+	return m_building;
+}
