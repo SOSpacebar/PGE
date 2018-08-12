@@ -73,6 +73,16 @@ GameStats::PlayerAttackLevel Constant::GetAttackLevel()
 	return m_stats.GetPlayerAttackLevel();
 }
 
+void Constant::SetBuildingTF(bool building)
+{
+	m_stats.SetBuildingTF(building);
+}
+
+bool Constant::GetBuildingTF()
+{
+	return m_stats.GetBuildingTF();
+}
+
 void Constant::SetScore(int _score)
 {
 	m_stats.SetScore(_score);
