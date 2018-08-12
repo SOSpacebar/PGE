@@ -31,6 +31,7 @@ void GameAsteroid::Init(const char * pngName, const char * name, float posX, flo
 
 	emitter = ParticleGalaxy::create();
 	emitter->retain();
+	emitter->setPositionType(ParticleSystem::PositionType::RELATIVE);
 	emitter->setPosition(this->getPosition());
 	addChild(emitter, 10);
 
@@ -44,9 +45,6 @@ void GameAsteroid::MoveChar(EAsteroid dir)
 
 void GameAsteroid::update(float dt)
 {
-	emitter->setPosition(this->getPosition());
-
-
 	if (eDir != EAsteroid::eStopAsteroid)
 	{
 		auto moveEvent = MoveBy::create(0.0f, Vec2(eDir, 0.f));

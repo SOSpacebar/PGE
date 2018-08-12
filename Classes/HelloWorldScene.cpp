@@ -74,11 +74,22 @@ bool HelloWorld::init()
 
 	// Load Main Sprite
 	mainCharacter.Init("MainCannon.png", "mainSprite", visibleSize.width * 0.5f, (visibleSize.height - playingSize.height), 0);
-	males.Init("Humans/Man_Right_1.png", "maleSprite", (visibleSize.width * 0.5f) + 150, visibleSize.height * 0.2f, 0, 2, 0);
-	females.Init("Humans/Female_Right_1.png", "femaleSprite", (visibleSize.width * 0.5f) - 150, visibleSize.height * 0.2f, 0, 2, 1);
+	//males.Init("Humans/Man_Right_1.png", "maleSprite", (visibleSize.width * 0.5f) + 150, visibleSize.height * 0.2f, 0, 2, 0);
+	//females.Init("Humans/Female_Right_1.png", "femaleSprite", (visibleSize.width * 0.5f) - 150, visibleSize.height * 0.2f, 0, 2, 1);
 
-	nodeItems->addChild(males.getSprite(), 1);
-	nodeItems->addChild(females.getSprite(), 1);
+	//nodeItems->addChild(males.getSprite(), 1);
+	//nodeItems->addChild(females.getSprite(), 1);
+
+	for (int i = 0; i < 4; ++i)
+	{
+		GameHumans *human = new GameHumans();
+		if (i % 2 == 0) //Male
+			human->Init("Humans/Man_Right_1.png", "maleSprite", random(0.f, visibleSize.width), visibleSize.height * 0.2f, 0, 2, 1);
+		else
+			human->Init("Humans/Female_Right_1.png", "femaleSprite", random(0.f, visibleSize.width), visibleSize.height * 0.2f, 0, 2, 0);
+
+		moveableItems->addChild(human, 1);
+	}
 
 	// Spawn Manager
 	spawner.Init(moveableItems);
@@ -455,15 +466,6 @@ void HelloWorld::update(float delta)
 	//else if (percent > 100.f)
 	//{
 	//	SceneManager::GetInstance()->RunSceneWithType(SceneType::GAMEPLAY, TransitionType::FADE);
-	//}
-
-	//if (Asteroid.size() < asteroidsCount)
-	//{
-	//	
-
-	//	Asteroid.push_back(Asteroids);
-
-	//	
 	//}
 }
 

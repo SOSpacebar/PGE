@@ -57,8 +57,8 @@ void GameBullet::Init(const char * pngName, const char * name, float posX, float
 
 	emitter = ParticleFire::create();
 	emitter->retain();
-	emitter->setPosition(this->getPosition());
-	emitter->setPositionType(kCCPositionTypeRelative);
+	//emitter->setPosition(this->getPosition());
+	emitter->setPositionType(ParticleSystem::PositionType::RELATIVE);
 	this->addChild(emitter, 10);
 
 	//this->scheduleUpdate();

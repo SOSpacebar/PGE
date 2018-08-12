@@ -82,18 +82,21 @@ bool MainMenu::init()
 	//auto sprite = Sprite::create("ground.png");
 	auto background = Sprite::create("MainMenu2.png");
 
-
-
-
 	// Load Main Sprite
-	males.Init("Humans/Man_Right_1.png", "maleSprite", 0, visibleSize.height * 0.1f, 0, 9, 0);
-	females.Init("Humans/Female_Right_1.png", "femaleSprite", visibleSize.width , visibleSize.height * 0.1f, 0, 9, 1);
-	smallMales.Init("Humans/Man_Right_1.png", "maleSprite", visibleSize.width*0.5f, visibleSize.height * 0.3f, 0, 5, 0);
-	smallFemales.Init("Humans/Female_Right_1.png", "femaleSprite", visibleSize.width*0.5f, visibleSize.height * 0.3f, 0, 5, 1);
-	nodeItems->addChild(smallMales.getSprite(), 1);
-	nodeItems->addChild(smallFemales.getSprite(), 1);
-	nodeItems->addChild(males.getSprite(), 1);
-	nodeItems->addChild(females.getSprite(), 1);
+	std::vector<GameHumans*> humans;
+
+	for (size_t i = 0; i < 4; i++)
+	{
+		humans.push_back(new GameHumans);
+	}
+	humans[0]->Init("Humans/Man_Right_1.png", "maleSprite", 0, visibleSize.height * 0.1f, 0, 9, 0);
+	humans[1]->Init("Humans/Female_Right_1.png", "femaleSprite", visibleSize.width , visibleSize.height * 0.1f, 0, 9, 1);
+	humans[2]->Init("Humans/Man_Right_1.png", "maleSprite", visibleSize.width*0.5f, visibleSize.height * 0.3f, 0, 5, 0);
+	humans[3]->Init("Humans/Female_Right_1.png", "femaleSprite", visibleSize.width*0.5f, visibleSize.height * 0.3f, 0, 5, 1);
+	nodeItems->addChild(humans[0], 1);
+	nodeItems->addChild(humans[1], 1);
+	nodeItems->addChild(humans[2], 1);
+	nodeItems->addChild(humans[3], 1);
 	
 	//// Loading Bullet Sprites
 	//Bullet.Init("Bullet.png", "Bullets", 100, (visibleSize.height - playingSize.height), 0);
@@ -388,10 +391,10 @@ void MainMenu::menuCloseCallback(Ref* pSender)
 void MainMenu::update(float delta)
 {
 	//mainCharacter.Update(delta);
-	males.Update(delta);
-	females.Update(delta);
-	smallMales.Update(delta);
-	smallFemales.Update(delta);
+	//males.update(delta);
+	//females.update(delta);
+	//smallMales.update(delta);
+	//smallFemales.update(delta);
 	//for (auto bullet : m_Bullets) {
 	//	// bullet->BulletMove();
 	//}

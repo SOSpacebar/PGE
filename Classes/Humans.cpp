@@ -4,12 +4,12 @@
 void GameHumans::Init(const char * pngName, const char * name, float posX, float posY, float rotation, float scale,bool fM)
 {
 	// Load Main Sprite
-	humans = Sprite::create(pngName);
-	humans->setAnchorPoint(Vec2(0.5, 0.5));
-	humans->setPosition(posX, posY);
-	humans->setRotation(rotation);
-	humans->setName(name);
-	humans->setScale(scale);
+	this->setTexture(pngName);
+	this->setAnchorPoint(Vec2(0.5, 0.5));
+	this->setPosition(posX, posY);
+	this->setRotation(rotation);
+	this->setName(name);
+	this->setScale(scale);
 	eDir = eStopHuman;
 
 	stop();
@@ -20,9 +20,9 @@ void GameHumans::Init(const char * pngName, const char * name, float posX, float
 
 	//auto moveEvent = MoveBy::create(5, Vec2(Constant::GetInstance()->GetVisableSize().width, 0));
 	//moveEvent->setTag(1);
-	//humans->runAction(moveEvent);
+	//this->runAction(moveEvent);
 	//auto sequence = Sequence::create(moveEvent, moveEvent->reverse(), nullptr);
-	//humans->runAction(RepeatForever::create(sequence));
+	//this->runAction(RepeatForever::create(sequence));
 
 	/*auto physicsBody = PhysicsBody::createBox(Size(Humans->getContentSize().width, Humans->getContentSize().height),
 		PhysicsMaterial(1.0f, 0.0f, 0.0f));
@@ -37,12 +37,13 @@ void GameHumans::Init(const char * pngName, const char * name, float posX, float
 	
 	fSpeed = 0.001f;
 
+	this->scheduleUpdate();
 }
 
 void GameHumans::MoveChar(EHumanSprite DirX)
 {
 	eDir = DirX;
-	humans->stopAllActions();
+	this->stopAllActions();
 
 	Vector<SpriteFrame*> MoveAnimFrames;
 	MoveAnimFrames.reserve(3);
@@ -88,13 +89,13 @@ void GameHumans::MoveChar(EHumanSprite DirX)
 	Animation* MoveAnimation = Animation::createWithSpriteFrames(MoveAnimFrames, 0.5f);
 	Animate* animateMove = Animate::create(MoveAnimation);
 
-	humans->runAction(RepeatForever::create(animateMove));
+	this->runAction(RepeatForever::create(animateMove));
 }
 
 void GameHumans::stop(void)
 {
 	eDir = eStopHuman;
-	humans->stopAllActions();
+	this->stopAllActions();
 
 	if (fMale == 1)
 	{
@@ -115,13 +116,13 @@ void GameHumans::stop(void)
 	Animation* animation = Animation::createWithSpriteFrames(animFrames, 0.5f);
 	Animate* animateIdle = Animate::create(animation);
 
-	humans->runAction(RepeatForever::create(animateIdle));*/
+	this->runAction(RepeatForever::create(animateIdle));*/
 }
 
-void GameHumans::Update(float dt)
+void GameHumans::update(float dt)
 {
 	auto moveEvent = MoveBy::create(0.0f, Vec2(10.0f, 0.f)*eDir);
-	humans->runAction(moveEvent);
+	this->runAction(moveEvent);
 
 	if (eDir == EHumanSprite::eStopHuman)
 	{
@@ -134,12 +135,12 @@ void GameHumans::Update(float dt)
 		
 
 	
-	if(humans->getPosition().x > Constant::GetInstance()->GetVisableSize().width/* && humans->getPosition().x > Constant::GetInstance()->GetVisableSize().width - 100*/)
+	if(this->getPosition().x > Constant::GetInstance()->GetVisableSize().width/* && this->getPosition().x > Constant::GetInstance()->GetVisableSize().width - 100*/)
 	{
 		if (eDir != EHumanSprite::eLeftHuman)
 			MoveChar(EHumanSprite::eLeftHuman);
 	}
-	if (humans->getPosition().x < 0 /*&& humans->getPosition().x < 10*/)
+	if (this->getPosition().x < 0 /*&& this->getPosition().x < 10*/)
 	{
 		if (eDir != EHumanSprite::eRightHuman)
 			MoveChar(EHumanSprite::eRightHuman);
@@ -153,12 +154,12 @@ void GameHumans::Update(float dt)
 
 void GameHumans::HumanMove(float posX, float posY)
 {
-	humans->stopAllActions();
+	this->stopAllActions();
 	//float diffX = posX - Bullets->getPosition().x;
 	//float diffY = posY - Bullets->getPosition().y;
 	float diffX = posX;
 	float diffY = posY;
 	Vec2 vec = Vec2(diffX, diffY);
 	auto moveEvent = MoveBy::create(vec.length() * fSpeed, vec * 2);
-	humans->runAction(moveEvent);
+	this->runAction(moveEvent);
 }
