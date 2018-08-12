@@ -2,6 +2,7 @@
 #define HUMANS_H
 
 #include "cocos2d.h"
+#include "GameObject.h"
 
 using namespace cocos2d;
 
@@ -11,12 +12,12 @@ enum EHumanSprite {
 	eRightHuman
 };
 
-class GameHumans
+class GameHumans : public GameObject
 {
 public:
 	void Init(const char * pngName, const char * name, float posX, float posY, float rotation,float scale, bool fM);
 	void MoveChar(EHumanSprite dir);
-	void Update(float dt);
+	void update(float dt);
 
 	void stop();                                                                              
 
@@ -24,11 +25,11 @@ public:
 
 	void HumanMove(float posX, float posY);
 
-	Sprite* getSprite(void) { return humans; }
+//	Sprite* getSprite(void) { return humans; }
 
 private:
 	EHumanSprite eDir;
-	Sprite* humans;
+	//Sprite* humans;
 	float fSpeed;
 	bool fMale;
 	//int playingSizeWidth;

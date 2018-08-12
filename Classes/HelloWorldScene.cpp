@@ -74,11 +74,22 @@ bool HelloWorld::init()
 
 	// Load Main Sprite
 	mainCharacter.Init("MainCannon.png", "mainSprite", visibleSize.width * 0.5f, (visibleSize.height - playingSize.height), 0);
-	males.Init("Humans/Man_Right_1.png", "maleSprite", (visibleSize.width * 0.5f) + 150, visibleSize.height * 0.2f, 0, 2, 0);
-	females.Init("Humans/Female_Right_1.png", "femaleSprite", (visibleSize.width * 0.5f) - 150, visibleSize.height * 0.2f, 0, 2, 1);
+	//males.Init("Humans/Man_Right_1.png", "maleSprite", (visibleSize.width * 0.5f) + 150, visibleSize.height * 0.2f, 0, 2, 0);
+	//females.Init("Humans/Female_Right_1.png", "femaleSprite", (visibleSize.width * 0.5f) - 150, visibleSize.height * 0.2f, 0, 2, 1);
 
-	nodeItems->addChild(males.getSprite(), 1);
-	nodeItems->addChild(females.getSprite(), 1);
+	//nodeItems->addChild(males.getSprite(), 1);
+	//nodeItems->addChild(females.getSprite(), 1);
+
+	for (int i = 0; i < 4; ++i)
+	{
+		GameHumans *human = new GameHumans();
+		if (i % 2 == 0) //Male
+			human->Init("Humans/Man_Right_1.png", "maleSprite", random(0.f, visibleSize.width), visibleSize.height * 0.2f, 0, 2, 1);
+		else
+			human->Init("Humans/Female_Right_1.png", "femaleSprite", random(0.f, visibleSize.width), visibleSize.height * 0.2f, 0, 2, 0);
+
+		moveableItems->addChild(human, 1);
+	}
 
 	// Spawn Manager
 	spawner.Init(moveableItems);
@@ -282,7 +293,7 @@ bool HelloWorld::init()
 
     // add a label shows "Hello World"
     // create and initialize a label
-    label = Label::createWithTTF("Score: "+ std::to_string(Constant::GetInstance()->GetScore()), "fonts/Marker Felt.ttf", 45);
+    label = Label::createWithTTF("Money: "+ std::to_string(Constant::GetInstance()->GetScore()), "fonts/Marker Felt.ttf", 35);
     if (label == nullptr)
     {
         problemLoading("'fonts/Marker Felt.ttf'");
@@ -390,7 +401,7 @@ bool HelloWorld::OnContactBegin(cocos2d::PhysicsContact & contact)
 			nodeB->getNode()->removeFromParentAndCleanup(true);
 			int score = Constant::GetInstance()->GetScore();
 			Constant::GetInstance()->SetScore((score += 10));
-			label->setString("Score: " + std::to_string(Constant::GetInstance()->GetScore()));
+			label->setString("Money: " + std::to_string(Constant::GetInstance()->GetScore()));
 
 			Constant::GetInstance()->SetGameObjectCount(Constant::GetInstance()->GetGameObjectCount() - 2);
 			log("Delete GameObject Count %d", Constant::GetInstance()->GetGameObjectCount());
@@ -455,15 +466,6 @@ void HelloWorld::update(float delta)
 	//else if (percent > 100.f)
 	//{
 	//	SceneManager::GetInstance()->RunSceneWithType(SceneType::GAMEPLAY, TransitionType::FADE);
-	//}
-
-	//if (Asteroid.size() < asteroidsCount)
-	//{
-	//	
-
-	//	Asteroid.push_back(Asteroids);
-
-	//	
 	//}
 }
 
