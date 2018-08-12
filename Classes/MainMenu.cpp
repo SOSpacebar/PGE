@@ -4,7 +4,9 @@
 #include "Constants.h"
 #include "AudioManager.h"
 #include "../cocos2d/cocos/ui/CocosGUI.h"
-
+#ifdef SDKBOX_ENABLED
+#include <PluginFaceBook/PluginFacebook.h>
+#endif // #define CC_PlatForm_IOS
 using namespace cocos2d::ui;
 
 USING_NS_CC;
@@ -34,6 +36,11 @@ static void problemLoading(const char* filename)
 // on "init" you need to initialize your instance
 bool MainMenu::init()
 {
+    // Logout Facebook
+#ifdef SDKBOX_ENABLED
+    sdkbox::PluginFacebook::logout();
+#endif
+    
     //////////////////////////////
     // 1. super init first
     if ( !Scene::initWithPhysics() )
@@ -262,6 +269,37 @@ bool MainMenu::init()
 		}
 	});
 	this->addChild(Exit, 2);
+    
+    //FaceBook
+    auto fbButton = Button::create("Fb.png", "Fb.png");
+    fbButton->setPosition(Vec2(origin.x + visibleSize.width / 2,
+                           (origin.y + visibleSize.height - fbButton->getContentSize().height) / 1));
+    fbButton->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type)
+                                {
+                                    switch (type)
+                                    {
+                                        case Widget::TouchEventType::BEGAN:
+                                        {
+                                            break;
+                                        }
+                                        case Widget::TouchEventType::ENDED:
+
+#ifdef SDKBOX_ENABLED
+                                            if (!sdkbox::PluginFacebook::isLoggedIn()){
+                                                sdkbox::PluginFacebook::login();
+                                            }
+                                            
+                                            sdkbox::FBShareInfo info;
+                                            info.type = sdkbox::FB_LINK;
+                                            info.title = "Raining Asteroids";
+                                            info.link = "https://www.facebook.com/hayashikiyoi";
+                                            info.text = "Wow, I've just got a high score of 0";
+                                            sdkbox::PluginFacebook::dialog(info);
+#endif
+                                            break;
+                                    }
+                                });
+    this->addChild(fbButton, 2);
     /////////////////////////////
     // 2. add a menu item with "X" image, which is clicked to quit the program
     //    you may modify it.

@@ -227,15 +227,15 @@ bool Settings::init()
 
 
 	//Master Sounds
-	ui::Slider *sliderMainSound = ui::Slider::create();
+	Slider *sliderMainSound = Slider::create();
 	sliderMainSound->loadBarTexture("Slider_Back.png");
 	sliderMainSound->loadSlidBallTextureNormal("SliderNode_Normal.png");
 	sliderMainSound->loadProgressBarTexture("Slider_PressBar.png");
 	sliderMainSound->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type) {
 		switch (type) {
-		case ui::Widget::TouchEventType::BEGAN:
+		case Widget::TouchEventType::BEGAN:
 			break;
-		case ui::Widget::TouchEventType::ENDED:
+		case Widget::TouchEventType::ENDED:
 			break;
 		default: break;
 		}});
@@ -249,15 +249,15 @@ bool Settings::init()
 	this->addChild(MainSoundtext, 1);
 
 	//SFX Sounds
-	ui::Slider *sliderSoundEffects = ui::Slider::create();
+	Slider *sliderSoundEffects = Slider::create();
 	sliderSoundEffects->loadBarTexture("Slider_Back.png");
 	sliderSoundEffects->loadSlidBallTextureNormal("SliderNode_Normal.png");
 	sliderSoundEffects->loadProgressBarTexture("Slider_PressBar.png");
 	sliderSoundEffects->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type) {
 		switch (type) {
-		case ui::Widget::TouchEventType::BEGAN:
+		case Widget::TouchEventType::BEGAN:
 			break;
-		case ui::Widget::TouchEventType::ENDED:
+		case Widget::TouchEventType::ENDED:
 			break;
 		default: break;
 		}});
@@ -271,15 +271,15 @@ bool Settings::init()
 	this->addChild(SoundEffecttext, 1);
 
 	//SFX Backgrounds
-	ui::Slider *sliderBackgrounds = ui::Slider::create();
+	Slider *sliderBackgrounds = Slider::create();
 	sliderBackgrounds->loadBarTexture("Slider_Back.png");
 	sliderBackgrounds->loadSlidBallTextureNormal("SliderNode_Normal.png");
 	sliderBackgrounds->loadProgressBarTexture("Slider_PressBar.png");
 	sliderBackgrounds->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type) {
 		switch (type) {
-		case ui::Widget::TouchEventType::BEGAN:
+		case Widget::TouchEventType::BEGAN:
 			break;
-		case ui::Widget::TouchEventType::ENDED:
+		case Widget::TouchEventType::ENDED:
 			break;
 		default: break;
 		}});
@@ -305,9 +305,9 @@ bool Settings::init()
 	{
 		switch (type)
 		{
-		case ui::Widget::TouchEventType::BEGAN:
+		case Widget::TouchEventType::BEGAN:
 			break;
-		case ui::Widget::TouchEventType::ENDED:
+		case Widget::TouchEventType::ENDED:
 			break;
 		default:
 			break;
@@ -322,9 +322,9 @@ bool Settings::init()
 	{
 		switch (type)
 		{
-		case ui::Widget::TouchEventType::BEGAN:
+		case Widget::TouchEventType::BEGAN:
 			break;
-		case ui::Widget::TouchEventType::ENDED:
+		case Widget::TouchEventType::ENDED:
 			SceneManager::GetInstance()->RunSceneWithType(SceneType::MAINMENU, TransitionType::CROSSFADE);
 			break;
 		default:

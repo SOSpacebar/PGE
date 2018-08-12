@@ -142,11 +142,11 @@ bool UpgradeMenu::init()
 	{
 		switch (type)
 		{
-		case ui::Widget::TouchEventType::BEGAN:
+		case Widget::TouchEventType::BEGAN:
 			upgradeTitleText->setString("Building Upgrade Level 1");
 			upgradeText->setString("More Income will get from the level fight");
 			break;
-		case ui::Widget::TouchEventType::ENDED:
+		case Widget::TouchEventType::ENDED:
 
 			break;
 		default:
