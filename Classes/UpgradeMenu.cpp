@@ -381,6 +381,25 @@ bool UpgradeMenu::init()
 	});
 	this->addChild(Back, 2);
 
+	auto NewStage = Button::create("Back.png", "BackPress.png");
+	NewStage->setRotation(180);
+	NewStage->setScale(1, 1);
+	NewStage->setPosition(Vec2(origin.x + visibleSize.width / 1.08, origin.y + visibleSize.height / 1.13 + origin.y));
+	NewStage->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type)
+	{
+		switch (type)
+		{
+		case Widget::TouchEventType::BEGAN:
+			break;
+		case Widget::TouchEventType::ENDED:
+			SceneManager::GetInstance()->RunSceneWithType(SceneType::GAMEPLAY, TransitionType::CROSSFADE);
+			break;
+		default:
+			break;
+		}
+	});
+	this->addChild(NewStage, 2);
+
     return true;
 }
 

@@ -208,7 +208,7 @@ bool MainMenu::init()
 		case Widget::TouchEventType::BEGAN:
 			break;
 		case Widget::TouchEventType::ENDED:
-			SceneManager::GetInstance()->RunSceneWithType(SceneType::GAMEPLAY, TransitionType::CROSSFADE);
+			SceneManager::GetInstance()->RunSceneWithType(SceneType::LOADING, TransitionType::CROSSFADE);
 			break;
 		default:
 			break;
@@ -216,27 +216,27 @@ bool MainMenu::init()
 	});
 	this->addChild(Start, 2);
 
-	auto Upgrade = Button::create("Upgrade.png", "UpgradePress.png");
-	Upgrade->setPosition(Vec2(origin.x + visibleSize.width / 2,
-		(origin.y + visibleSize.height - Upgrade->getContentSize().height) / 2.5));
-	Upgrade->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type)
-	{
-		switch (type)
-		{
-		case Widget::TouchEventType::BEGAN:
-			break;
-		case Widget::TouchEventType::ENDED:
-			SceneManager::GetInstance()->RunSceneWithType(SceneType::UPGRADESCENE, TransitionType::CROSSFADE);
-			break;
-		default:
-			break;
-		}
-	});
-	this->addChild(Upgrade, 2);
+	//auto Upgrade = Button::create("Upgrade.png", "UpgradePress.png");
+	//Upgrade->setPosition(Vec2(origin.x + visibleSize.width / 2,
+	//	(origin.y + visibleSize.height - Upgrade->getContentSize().height) / 2.5));
+	//Upgrade->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type)
+	//{
+	//	switch (type)
+	//	{
+	//	case Widget::TouchEventType::BEGAN:
+	//		break;
+	//	case Widget::TouchEventType::ENDED:
+	//		SceneManager::GetInstance()->RunSceneWithType(SceneType::UPGRADESCENE, TransitionType::CROSSFADE);
+	//		break;
+	//	default:
+	//		break;
+	//	}
+	//});
+	//this->addChild(Upgrade, 2);
 
 	auto Setting = Button::create("Settings.png", "SettingPress.png");
 	Setting->setPosition(Vec2(origin.x + visibleSize.width / 2,
-		(origin.y + visibleSize.height - Setting->getContentSize().height) / 3.5));
+		(origin.y + visibleSize.height - Setting->getContentSize().height) / 3));
 	Setting->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type)
 	{
 		switch (type)
@@ -272,8 +272,9 @@ bool MainMenu::init()
     
     //FaceBook
     auto fbButton = Button::create("Fb.png", "Fb.png");
-    fbButton->setPosition(Vec2(origin.x + visibleSize.width / 2,
-                           (origin.y + visibleSize.height - fbButton->getContentSize().height) / 1));
+	fbButton->setScale(0.4f);
+    fbButton->setPosition(Vec2(origin.x + visibleSize.width / 15,
+                           (origin.y + visibleSize.height - fbButton->getContentSize().height) / 0.75));
     fbButton->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type)
                                 {
                                     switch (type)

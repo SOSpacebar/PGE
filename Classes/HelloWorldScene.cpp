@@ -1,4 +1,5 @@
 #include "HelloWorldScene.h"
+#include "SceneManager.h"
 #include "Constants.h"
 
 USING_NS_CC;
@@ -235,6 +236,10 @@ bool HelloWorld::init()
 	// set the filling of the gauge in percent; from 0-100%
 	progressTimer->setPercentage(Constant::GetInstance()->GetHealth());
 
+	if (Constant::GetInstance()->GetHealth() <= 0)
+	{
+		SceneManager::GetInstance()->RunSceneWithType(SceneType::LOSESCENE, TransitionType::CROSSFADE);
+	}
 	// add the progress timer as a child to the clipper, so the gauge will follow the
 	// image form
 	clipper->addChild(progressTimer);
