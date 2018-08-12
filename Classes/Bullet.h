@@ -34,6 +34,7 @@ private:
 	float fSpeed;
 	float rotation;
 	float dirX, dirY;
+	ParticleSystem* emitter;
 };
 
 #endif

@@ -389,6 +389,23 @@ bool HelloWorld::OnContactBegin(cocos2d::PhysicsContact & contact)
 
 			Constant::GetInstance()->SetGameObjectCount(Constant::GetInstance()->GetGameObjectCount() - 2);
 			log("Delete GameObject Count %d", Constant::GetInstance()->GetGameObjectCount());
+
+			//EFFECTS ON Explosion 
+			auto _emitter = ParticleExplosion::create();
+			_emitter->retain();
+			_emitter->setStartSizeVar(3.f);
+			_emitter->setStartSize(5.f);
+			_emitter->setPosition(nodeA->getPosition());
+			_emitter->setLifeVar(0);
+			_emitter->setLife(1);
+			_emitter->setSpeed(100);
+			_emitter->setSpeedVar(0);
+			_emitter->setEmissionRate(10000);
+			_emitter->setStartColor(Color4F::RED);
+			_emitter->setEndColor(Color4F::ORANGE);
+			addChild(_emitter, 10);
+
+			_emitter->setAutoRemoveOnFinish(true);
 		}
 	}
 
