@@ -1,4 +1,5 @@
 #include "Asteroid.h"
+#include "AudioManager.h"
 #include "Constants.h"
 #include "Character.h"
 
@@ -57,6 +58,7 @@ void GameAsteroid::update(float dt)
 
 	if (this->getPosition().y < 0)
 	{
+		AudioManager::GetInstance()->SFXPlay("Crash");
 		this->removeFromParentAndCleanup(true);
 		float hp = Constant::GetInstance()->GetHealth();
 		Constant::GetInstance()->SetHealth((Constant::GetInstance()->GetHealth() - 5.f));

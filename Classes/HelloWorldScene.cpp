@@ -1,5 +1,6 @@
 #include "HelloWorldScene.h"
 #include "SceneManager.h"
+#include "AudioManager.h"
 #include "Constants.h"
 
 USING_NS_CC;
@@ -449,6 +450,8 @@ bool HelloWorld::OnContactBegin(cocos2d::PhysicsContact & contact)
 
 			Constant::GetInstance()->SetGameObjectCount(Constant::GetInstance()->GetGameObjectCount() - 2);
 			log("Delete GameObject Count %d", Constant::GetInstance()->GetGameObjectCount());
+
+			AudioManager::GetInstance()->SFXPlay("Explosion");
 
 			//EFFECTS ON Explosion 
 			auto _emitter = ParticleExplosion::create();
