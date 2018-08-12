@@ -57,8 +57,12 @@ void GameBullet::Init(const char * pngName, const char * name, float posX, float
 
 	emitter = ParticleFire::create();
 	emitter->retain();
-	//emitter->setPosition(this->getPosition());
-	emitter->setPositionType(ParticleSystem::PositionType::RELATIVE);
+	//emitter->setSourcePosition(this->getPosition());
+	Vec2 Node = this->convertToNodeSpace(this->getPosition());
+	emitter->setPosition(Node);
+	emitter->setPositionType(ParticleSystem::PositionType::FREE);
+	emitter->setScale(0.4f);
+	emitter->setLife(1.f);
 	this->addChild(emitter, 10);
 
 	//this->scheduleUpdate();

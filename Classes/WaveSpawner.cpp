@@ -22,7 +22,9 @@ void WaveSpawner::Update(float dt)
 			if (Constant::GetInstance()->GetGameObjectCount() <= 0)
 			{
 				if (nextWave > waves.size())
+				{
 					SceneManager::GetInstance()->RunSceneWithType(SceneType::UPGRADESCENE, TransitionType::FADE);
+				}
 				else
 					nextWave++;
 			}

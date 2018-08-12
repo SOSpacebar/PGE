@@ -31,8 +31,11 @@ void GameAsteroid::Init(const char * pngName, const char * name, float posX, flo
 
 	emitter = ParticleGalaxy::create();
 	emitter->retain();
-	emitter->setPositionType(ParticleSystem::PositionType::RELATIVE);
-	emitter->setPosition(this->getPosition());
+	Vec2 Node = this->convertToNodeSpace(this->getPosition());
+	emitter->setPosition(Node);
+	emitter->setPositionType(ParticleSystem::PositionType::FREE);
+	emitter->setScale(0.4f);
+	emitter->setLife(1.f);
 	addChild(emitter, 10);
 
 	//this->scheduleUpdate();

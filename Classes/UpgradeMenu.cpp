@@ -130,6 +130,7 @@ bool UpgradeMenu::init()
 
 
 	Constant::GetInstance()->SetScore(Constant::GetInstance()->GetScore());
+	Constant::GetInstance()->SetLevel(Constant::GetInstance()->GetLevel() + 1);
 
 	label = Label::createWithTTF("Money: " + std::to_string(Constant::GetInstance()->GetScore()), "fonts/Marker Felt.ttf", 30);
 	if (label == nullptr)
@@ -523,7 +524,7 @@ bool UpgradeMenu::init()
 		case Widget::TouchEventType::BEGAN:
 			break;
 		case Widget::TouchEventType::ENDED:
-			SceneManager::GetInstance()->RunSceneWithType(SceneType::GAMEPLAY, TransitionType::CROSSFADE);
+			SceneManager::GetInstance()->RunSceneWithType(SceneType::LOADING, TransitionType::CROSSFADE);
 			break;
 		default:
 			break;

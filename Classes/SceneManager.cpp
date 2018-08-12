@@ -19,7 +19,7 @@ SceneManager* SceneManager::GetInstance()
 }
 
 SceneManager::SceneManager() :
-	_sceneTypeToReturn(SceneType::MAINMENU),
+	_sceneTypeToReturn(SceneType::NONE),
 	_currentSceneType(SceneType::MAINMENU)
 {
 
@@ -32,6 +32,9 @@ SceneManager::~SceneManager()
 
 void SceneManager::RunSceneWithType(const SceneType sceneType, const TransitionType tType)
 {
+	if (_sceneTypeToReturn == sceneType)
+		return;
+
 	Scene *sceneToRun = nullptr;
 
 	switch (sceneType) {

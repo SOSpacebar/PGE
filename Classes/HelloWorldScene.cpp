@@ -293,7 +293,7 @@ bool HelloWorld::init()
 
     // add a label shows "Hello World"
     // create and initialize a label
-    label = Label::createWithTTF("Money: "+ std::to_string(Constant::GetInstance()->GetScore()), "fonts/Marker Felt.ttf", 35);
+    label = Label::createWithTTF("Day: " + std::to_string(Constant::GetInstance()->GetLevel()) + "\nMoney: "+ std::to_string(Constant::GetInstance()->GetScore()), "fonts/Marker Felt.ttf", 35);
     if (label == nullptr)
     {
         problemLoading("'fonts/Marker Felt.ttf'");
@@ -401,7 +401,7 @@ bool HelloWorld::OnContactBegin(cocos2d::PhysicsContact & contact)
 			nodeB->getNode()->removeFromParentAndCleanup(true);
 			int score = Constant::GetInstance()->GetScore();
 			Constant::GetInstance()->SetScore((score += 10));
-			label->setString("Money: " + std::to_string(Constant::GetInstance()->GetScore()));
+			label->setString("Day: " + std::to_string(Constant::GetInstance()->GetLevel()) + "\nMoney: " + std::to_string(Constant::GetInstance()->GetScore()));
 
 			Constant::GetInstance()->SetGameObjectCount(Constant::GetInstance()->GetGameObjectCount() - 2);
 			log("Delete GameObject Count %d", Constant::GetInstance()->GetGameObjectCount());
@@ -646,7 +646,11 @@ void HelloWorld::JustShoot()
 	int bulletSize = (int)Constant::GetInstance()->GetAttackLevel() + 1;
 	std::vector<GameBullet*> bulletBox;
 
-	while (bulletBox.size() < bulletSize) {
+	for (size_t i = 0; i < bulletSize; i++)
+	{
+		if (i == 3)
+			break;
+
 		bulletBox.push_back(new GameBullet());
 	}
 
