@@ -38,7 +38,7 @@ bool MainMenu::init()
 {
     // Logout Facebook
 #ifdef SDKBOX_ENABLED
-    sdkbox::PluginFacebook::logout();
+    //sdkbox::PluginFacebook::logout();
 #endif
     
     //////////////////////////////

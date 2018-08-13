@@ -60,7 +60,7 @@ static int register_all_packages()
 bool AppDelegate::applicationDidFinishLaunching() {
     
 #ifdef SDKBOX_ENABLED
-    sdkbox::PluginFacebook::init();
+    //sdkbox::PluginFacebook::init();
 #endif
     
     // initialize director

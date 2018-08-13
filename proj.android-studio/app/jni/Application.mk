@@ -6,7 +6,7 @@ APP_CPPFLAGS := -frtti \
 -fsigned-char
 APP_LDFLAGS := -latomic
 
-APP_ABI := armeabi
+APP_ABI := armeabi-v7a
 APP_SHORT_COMMANDS := true
 APP_DEPRECATED_HEADERS := true
 

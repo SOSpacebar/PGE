@@ -338,7 +338,7 @@ bool HelloWorld::init()
 
 	// add a label shows "Hello World"
 	// create and initialize a label
-	label = Label::createWithTTF("Day: " + std::to_string(Constant::GetInstance()->GetLevel ()) + "\nMoney: " + std::to_string(Constant::GetInstance()->GetScore()), "fonts/Marker Felt.ttf", 35);
+	label = Label::createWithTTF("Day: " + to_string(Constant::GetInstance()->GetLevel ()) + "\nMoney: " + to_string(Constant::GetInstance()->GetScore()), "fonts/Marker Felt.ttf", 35);
 	if (label == nullptr)
 	{
 		problemLoading("'fonts/Marker Felt.ttf'");
@@ -361,10 +361,10 @@ bool HelloWorld::init()
 	{
 		switch (type)
 		{
-		case ui::Widget::TouchEventType::BEGAN:
+		case Widget::TouchEventType::BEGAN:
 			mainCharacter.RotateCharByDirLeft();
 			break;
-		case ui::Widget::TouchEventType::ENDED:
+		case Widget::TouchEventType::ENDED:
 			mainCharacter.StopRotation();
 			break;
 		default:
@@ -381,10 +381,10 @@ bool HelloWorld::init()
 	{
 		switch (type)
 		{
-		case ui::Widget::TouchEventType::BEGAN:
+		case Widget::TouchEventType::BEGAN:
 			mainCharacter.RotateCharByDirRight();
 			break;
-		case ui::Widget::TouchEventType::ENDED:
+		case Widget::TouchEventType::ENDED:
 			mainCharacter.StopRotation();
 			break;
 		default:
@@ -400,9 +400,9 @@ bool HelloWorld::init()
 	{
 		switch (type)
 		{
-		case ui::Widget::TouchEventType::BEGAN:
+		case Widget::TouchEventType::BEGAN:
 			break;
-		case ui::Widget::TouchEventType::ENDED:
+		case Widget::TouchEventType::ENDED:
 		{
 			JustShoot();
 			break;
@@ -446,7 +446,7 @@ bool HelloWorld::OnContactBegin(cocos2d::PhysicsContact & contact)
 			nodeB->getNode()->removeFromParentAndCleanup(true);
 			int score = Constant::GetInstance()->GetScore();
 			Constant::GetInstance()->SetScore((score += 10));
-			label->setString("Day: " + std::to_string(Constant::GetInstance()->GetLevel()) + "\nMoney: " + std::to_string(Constant::GetInstance()->GetScore()));
+			label->setString("Day: " + to_string(Constant::GetInstance()->GetLevel()) + "\nMoney: " + to_string(Constant::GetInstance()->GetScore()));
 
 			Constant::GetInstance()->SetGameObjectCount(Constant::GetInstance()->GetGameObjectCount() - 2);
 			log("Delete GameObject Count %d", Constant::GetInstance()->GetGameObjectCount());
@@ -547,8 +547,6 @@ void HelloWorld::onKeyPressed(EventKeyboard::KeyCode keyCode, Event* event)
 	default:
 		break;
 	}
-
-	log("Key with keycode %d pressed", keyCode);
 }
 
 void HelloWorld::onMouseMove(Event * mouse)

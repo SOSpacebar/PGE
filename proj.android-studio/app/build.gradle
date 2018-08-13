@@ -3,13 +3,13 @@ import org.apache.tools.ant.taskdefs.condition.Os
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion PROP_COMPILE_SDK_VERSION.toInteger()
-    buildToolsVersion "26.0.2"
+    compileSdkVersion 26
+    buildToolsVersion '27.0.3'
 
     defaultConfig {
         applicationId "com.SIDM.Practical"
-        minSdkVersion PROP_MIN_SDK_VERSION
-        targetSdkVersion PROP_TARGET_SDK_VERSION
+        minSdkVersion 15
+        targetSdkVersion 20
         versionCode 1
         versionName "1.0"
 
@@ -94,7 +94,7 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile project(':libcocos2dx')
+    api fileTree(dir: 'libs', include: ['*.jar'])
+    api project(':libcocos2dx')
 }
-dependencies { compile 'com.facebook.android:facebook-android-sdk:[4,5)' }
+dependencies { api 'com.facebook.android:facebook-android-sdk:[4,5)' }

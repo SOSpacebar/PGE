@@ -132,7 +132,7 @@ bool UpgradeMenu::init()
 	Constant::GetInstance()->SetScore(Constant::GetInstance()->GetScore());
 	Constant::GetInstance()->SetLevel(Constant::GetInstance()->GetLevel() + 1);
 
-	label = Label::createWithTTF("Money: " + std::to_string(Constant::GetInstance()->GetScore()), "fonts/Marker Felt.ttf", 30);
+	label = Label::createWithTTF("Money: " + to_string(Constant::GetInstance()->GetScore()), "fonts/Marker Felt.ttf", 30);
 	if (label == nullptr)
 	{
 		problemLoading("'fonts/Marker Felt.ttf'");
