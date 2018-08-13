@@ -181,6 +181,24 @@ bool LoseMenu::init()
 		return true;
 	};
 	_eventDispatcher->addEventListenerWithSceneGraphPriority(touchListener, this);
+
+	auto Start = Button::create("Exit.png", "ExitPress.png");
+	Start->setPosition(Vec2(origin.x + visibleSize.width / 2,
+		(origin.y + visibleSize.height - Exit->getContentSize().height) / 5.5));
+	Start->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type)
+	{
+		switch (type)
+		{
+		case Widget::TouchEventType::BEGAN:
+			break;
+		case Widget::TouchEventType::ENDED:
+			SceneManager::GetInstance()->RunSceneWithType(SceneType::MAINMENU, TransitionType::CROSSFADE);
+			break;
+		default:
+			break;
+		}
+	});
+	this->addChild(Start, 2);
     /////////////////////////////
     // 2. add a menu item with "X" image, which is clicked to quit the program
     //    you may modify it.

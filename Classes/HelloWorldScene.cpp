@@ -506,6 +506,10 @@ void HelloWorld::update(float delta)
 
 	progressTimer->setPercentage(Constant::GetInstance()->GetHealth());
 
+	if (Constant::GetInstance()->GetHealth() <= 0)
+	{
+		SceneManager::GetInstance()->RunSceneWithType(SceneType::LOSESCENE, TransitionType::CROSSFADE);
+	}
 	//if (health > 0)
 	//{
 	//	health -= delta * 15;
