@@ -194,8 +194,8 @@ bool HelloWorld::init()
 
 	// Add the note container into the scene graph
 	this->addChild(nodeItems, 1);
-	this->addChild(moveableItems, 2);
 	this->addChild(groundItems, 2);
+	this->addChild(moveableItems, 2);
 	this->addChild(moveableItems2, 3);
 
 	//Health Bar

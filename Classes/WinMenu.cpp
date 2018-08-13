@@ -216,10 +216,10 @@ bool WinMenu::init()
                                     });
     this->addChild(fbButton, 2);
 
-	auto Start = Button::create("Exit.png", "ExitPress.png");
-	Start->setPosition(Vec2(origin.x + visibleSize.width / 2,
+	auto Exit = Button::create("Exit.png", "ExitPress.png");
+	Exit->setPosition(Vec2(origin.x + visibleSize.width / 2,
 		(origin.y + visibleSize.height - Exit->getContentSize().height) / 5.5));
-	Start->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type)
+	Exit->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type)
 	{
 		switch (type)
 		{
@@ -232,7 +232,7 @@ bool WinMenu::init()
 			break;
 		}
 	});
-	this->addChild(Start, 2);
+	this->addChild(Exit, 2);
     /////////////////////////////
     // 2. add a menu item with "X" image, which is clicked to quit the program
     //    you may modify it.
