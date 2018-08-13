@@ -194,8 +194,8 @@ bool HelloWorld::init()
 
 	// Add the note container into the scene graph
 	this->addChild(nodeItems, 1);
-	this->addChild(moveableItems, 2);
 	this->addChild(groundItems, 2);
+	this->addChild(moveableItems, 2);
 	this->addChild(moveableItems2, 3);
 
 	//Health Bar
@@ -506,6 +506,10 @@ void HelloWorld::update(float delta)
 
 	progressTimer->setPercentage(Constant::GetInstance()->GetHealth());
 
+	if (Constant::GetInstance()->GetHealth() <= 0)
+	{
+		SceneManager::GetInstance()->RunSceneWithType(SceneType::LOSESCENE, TransitionType::CROSSFADE);
+	}
 	//if (health > 0)
 	//{
 	//	health -= delta * 15;

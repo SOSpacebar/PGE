@@ -215,6 +215,24 @@ bool WinMenu::init()
                                         }
                                     });
     this->addChild(fbButton, 2);
+
+	auto Exit = Button::create("Exit.png", "ExitPress.png");
+	Exit->setPosition(Vec2(origin.x + visibleSize.width / 2,
+		(origin.y + visibleSize.height - Exit->getContentSize().height) / 5.5));
+	Exit->addTouchEventListener([&](Ref* sender, Widget::TouchEventType type)
+	{
+		switch (type)
+		{
+		case Widget::TouchEventType::BEGAN:
+			break;
+		case Widget::TouchEventType::ENDED:
+			SceneManager::GetInstance()->RunSceneWithType(SceneType::MAINMENU, TransitionType::CROSSFADE);
+			break;
+		default:
+			break;
+		}
+	});
+	this->addChild(Exit, 2);
     /////////////////////////////
     // 2. add a menu item with "X" image, which is clicked to quit the program
     //    you may modify it.

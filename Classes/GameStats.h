@@ -43,7 +43,7 @@ public:
 
 	GameStats()
 	{
-		m_score = 0;
+		m_score = 2000;
 		m_level = 0;
 		m_building = 0;
 		m_player.m_health = 0;
